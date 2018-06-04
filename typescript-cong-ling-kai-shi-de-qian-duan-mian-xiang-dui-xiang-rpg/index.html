@@ -1,0 +1,890 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>TypeScript：从零开始的前端面向对象RPG</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=9948a6c51d">
+
+    <link rel="shortcut icon" href="../favicon.png" type="image/png">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="amp/index.html">
+    
+    <meta property="og:site_name" content="LordMOS">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="TypeScript：从零开始的前端面向对象RPG">
+    <meta property="og:description" content="耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》 抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。 道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！ 创世界：准备工作 上路之前，你要准备好一些东西，比如Node.js和npm。安装Node.js的传送门在这里。然后还需要一个世界转换器TypeScript： npm install -g typescript TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如： ts-the-rpg.ts（v1 function hello(hero) {     console.log(&amp;quot;Hello , &amp;quot; + hero); } var">
+    <meta property="og:url" content="http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/">
+    <meta property="article:published_time" content="2018-06-04T07:35:44.000Z">
+    <meta property="article:modified_time" content="2018-06-04T07:44:48.000Z">
+    <meta property="article:tag" content="TypeScript">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="TypeScript：从零开始的前端面向对象RPG">
+    <meta name="twitter:description" content="耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》 抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。 道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！ 创世界：准备工作 上路之前，你要准备好一些东西，比如Node.js和npm。安装Node.js的传送门在这里。然后还需要一个世界转换器TypeScript： npm install -g typescript TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如： ts-the-rpg.ts（v1 function hello(hero) {     console.log(&amp;quot;Hello , &amp;quot; + hero); } var">
+    <meta name="twitter:url" content="http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Hui Zhong">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="TypeScript">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "LordMOS",
+        "logo": "http://localhost:2368/content/images/2018/06/2.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Hui Zhong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2018/06/emo-2.gif",
+            "width": 200,
+            "height": 200
+        },
+        "url": "http://localhost:2368/author/hui/",
+        "sameAs": []
+    },
+    "headline": "TypeScript：从零开始的前端面向对象RPG",
+    "url": "http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/",
+    "datePublished": "2018-06-04T07:35:44.000Z",
+    "dateModified": "2018-06-04T07:44:48.000Z",
+    "keywords": "TypeScript",
+    "description": "耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》 抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。 道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！ 创世界：准备工作 上路之前，你要准备好一些东西，比如Node.js和npm。安装Node.js的传送门在这里。然后还需要一个世界转换器TypeScript： npm install -g typescript TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如： ts-the-rpg.ts（v1 function hello(hero) {     console.log(&amp;quot;Hello , &amp;quot; + hero); } var",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=9948a6c51d"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "da54f220680d"
+});
+</script>
+    <meta name="generator" content="Ghost 1.23">
+    <link rel="alternate" type="application/rss+xml" title="LordMOS" href="../rss/index.html">
+
+</head>
+<body class="post-template tag-typescript">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../"><img src="../content/images/2018/06/2.jpg" alt="LordMOS"></a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
+    <li class="nav-angular" role="menuitem"><a href="../tag/angular/">Angular</a></li>
+    <li class="nav-typescript" role="menuitem"><a href="../tag/typescript/">TypeScript</a></li>
+    <li class="nav-ionic" role="menuitem"><a href="../tag/ionic/">ionic</a></li>
+    <li class="nav-ecmascript" role="menuitem"><a href="../tag/ecmascript/">ECMAScript</a></li>
+    <li class="nav-" role="menuitem"><a href="../tag/other-stuff/">杂记</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-typescript no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2018-06-04">4 六月 2018</time>
+                        <span class="date-divider">/</span> <a href="../tag/typescript/">TypeScript</a>
+                </section>
+                <h1 class="post-full-title">TypeScript：从零开始的前端面向对象RPG</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><blockquote>
+<p>耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》</p>
+</blockquote>
+<p>抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。</p>
+<p>道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！</p>
+<h1 id="">创世界：准备工作</h1>
+<p>上路之前，你要准备好一些东西，比如Node.js和npm。<a href="https://nodejs.org/zh-cn/">安装Node.js的传送门在这里。</a>然后还需要一个世界转换器TypeScript：</p>
+<pre><code>npm install -g typescript
+</code></pre>
+<p>TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v1</p>
+</blockquote>
+<pre><code>function hello(hero) {
+    console.log("Hello , " + hero);
+}
+var hero = "勇者";
+
+hello(hero);
+</code></pre>
+<p>我们需要将<code>ts-the-rpg.ts</code>变成JavaScript世界的才能玩。</p>
+<pre><code>tsc ts-the-rpg.ts
+</code></pre>
+<p>这个时候我们发现生成了<code>ts-the-rpg.js</code>。我们打开看看，发现，怎么这两个世界一模一样？</p>
+<p>没错，这两个世界几乎一样。但是接下来不一样的来了：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v2）</p>
+</blockquote>
+<pre><code>function hello(hero: string) {
+    console.log("Hello , " + hero);
+}
+var hero1 = "勇者";
+var hero2 = 2;
+
+hello(hero1);
+hello(hero2);
+</code></pre>
+<p>你在转换世界的时候发现，怎么出了一个问题？</p>
+<pre><code>ts-the-rpg.ts(8,7): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+</code></pre>
+<p>看起来有一个怪物混入了勇者的队伍之中啊。勇者都有自己的名字，你却是一个数字？你想蒙混过关？世界转换器就会告诉你，你很危险了勇者。</p>
+<p>但是即使这样，世界转换器很公正，它还是把TypeScript世界的一切带到了JavaScript世界。因为JavaScript世界中，勇者、怪物，傻傻分不清楚。转换后的世界：</p>
+<blockquote>
+<p>ts-the-rpg.js</p>
+</blockquote>
+<pre><code>function hello(hero) {
+    console.log("Hello , " + hero);
+}
+var hero1 = "勇者";
+var hero2 = 2;
+hello(hero1);
+hello(hero2);
+</code></pre>
+<p>你是一个创世者，也是一个游戏玩家，世界转换器告诉了你这个世界有问题，但是你的世界你来决定。我建议，为了这个世界不至于在最后分崩离析，还是好好处理完问题再上路吧。</p>
+<p>数据类型，是构建这个世界的基础。这个世界本身由这么几个基本数据类型组成：<a href="https://www.typescriptlang.org/docs/handbook/basic-types.html">string、number、array、enum、any……等等</a>。我们怎么判断它是不是这种类型的怎么做？只要把类型带在你的声明之中。比如<code>function hello(hero: string)</code>就表示，你必须是一个<code>string</code>类型的数据，才能通过这里。</p>
+<h1 id="">新手村：欢迎你，勇者</h1>
+<p>“你好，勇者！”突然你看到了一阵光，看板娘站在光中，笑靥如画。</p>
+<p>你想起来了，你是一个勇者。等等，什么是勇者？你作为一个创世者，深深的陷入了思考，最后得出一个结论：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v3）</p>
+</blockquote>
+<pre><code>var hero = {
+    name: "勇者",
+    hp: 10
+}
+function hello(hero) {
+    console.log("Hello , " + hero.name);
+}
+hello(hero);
+</code></pre>
+<p>不对，这样做不是依然什么样的牛鬼蛇神都能以勇者的身份进入这个世界吗？嗯，作为一个先知，我告诉你怎么做：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v4）</p>
+</blockquote>
+<pre><code>// 定义什么是勇者
+class Hero {
+    name: string;   // 每个勇者都有一个名字
+    hp: number;     // 每个勇者有自己的HP值
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero("勇者", 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log("Hello , " + hero.name);
+}
+
+hello(hero);
+hello("我也是一个勇者啊！");
+</code></pre>
+<p>我们先来试试看转换这个世界，之后再来解释一下为什么这么做。开始转换：</p>
+<pre><code>ts-the-rpg.ts(21,7): error TS2345: Argument of type 'string' is not assignable to parameter of type 'Hero'.
+</code></pre>
+<p>最后一个假装是勇者的字符串想要蒙混过关，被转换器拦住了。等等，转换器怎么知道勇者长什么样？</p>
+<p>没错，我们这时候祭出了勇者召唤的特殊形式：<code>class</code>。我们通过定义一个叫Hero的数据类型来告诉世界，这个世界开始有勇者了。那么以后，我们就可以在入口处判断你是不是一个Hero。</p>
+<p><code>class</code>由这么几个部分组成：它是什么（定义的数据类型名）、它由什么构成（类的成员数据）、它能做什么（定义数据类型的行为）、它需要哪些素材才能被召唤出来（构造函数）。</p>
+<p>从<code>ts-the-rpg.ts（v4）</code>上看，我们定义了它是勇者（<code>class Hero</code>），它有名字（<code>name: string;</code>）和血量（<code>hp: number;</code>），召唤他的规则就是必须要给他起个名字并提供血量（<code>constructor(name: string, hp: number){ this.name = name; this.hp = hp; }</code>）,然后通过特殊仪式召唤它（<code>var hero = new Hero("勇者", 10);</code>）。</p>
+<p>那你会问，如果有一个史莱姆，伪装的特别像一个勇者，就像下面这样，世界转换器会怎么做？</p>
+<blockquote>
+<p>ts-the-rpg.ts（v5）</p>
+</blockquote>
+<pre><code>// 定义什么是勇者
+class Hero {
+    name: string;   // 每个勇者都有一个名字
+    hp: number;     // 每个勇者有自己的HP值
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero("勇者", 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log("Hello , " + hero.name);
+}
+
+hello(hero);
+// 伪装成勇者的史莱姆
+hello({ name: "我不是史莱姆", hp: 1 });
+</code></pre>
+<p>我们试着转换到普通世界后，怎么世界转换器什么都没做？于是你陷入了深深的恐惧。没错，这样召唤一个勇者肯定一瞬间就被危险的史莱姆识破并且伪装，这个时候我们需要把勇者不为人知的一面隐藏起来，比如勇者有hp这件事。</p>
+<blockquote>
+<p>ts-the-rpg.ts（v6）</p>
+</blockquote>
+<pre><code>// 定义什么是勇者
+class Hero {
+    name: string;           // 每个勇者都有一个名字
+    private hp: number;     // 每个勇者有自己的HP值，但是受保护
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero("勇者", 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log("Hello , " + hero.name);
+}
+
+hello(hero);
+hello({ name: "我不是史莱姆", hp: 1 });
+</code></pre>
+<p>这时候我们转换这个世界，你看史莱姆被拦在了外面：</p>
+<pre><code>ts-the-rpg.ts(21,7): error TS2345: Argument of type '{ name: string; hp: number; }' is not assignable to parameter of type 'Hero'.
+
+Property 'hp' is private in type 'Hero' but not in type '{ name: string; hp: number; }'.
+</code></pre>
+<p>没错，你一个堂堂史莱姆，把hp值这种对于勇者如此重要的属性暴露在外面，这种作风肯定不是勇者所为，你出去。</p>
+<p>这时候史莱姆又来搞事情，它想，如果这样，我也隐藏我的hp，除了定义不一样，其他的都一摸一样，那样我一定能进去。</p>
+<blockquote>
+<p>ts-the-rpg.ts（v7）</p>
+</blockquote>
+<pre><code>// 定义什么是勇者
+class Hero {
+    name: string;           // 每个勇者都有一个名字
+    private hp: number;     // 每个勇者有自己的HP值，但是受保护
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 定义什么是史莱姆
+class Slime {
+    name: string;           // 每个史莱姆都有一个名字
+    private hp: number;     // 每个史莱姆有自己的HP值，但是受保护
+    // 召唤一个史莱姆的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero("勇者", 10);
+var slime = new Slime("勇者", 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log("Hello , " + hero.name);
+}
+
+hello(hero);
+hello(slime);
+</code></pre>
+<p>这时候世界转换器非常聪明：</p>
+<pre><code>ts-the-rpg.ts(33,7): error TS2345: Argument of type 'Slime' is not assignable to parameter of type 'Hero'.
+
+Types have separate declarations of a private property 'hp'.
+</code></pre>
+<p>你作为一只史莱姆，身上流着史莱姆的血，你的血的味道，我一闻就能闻出来不一样。史莱姆直接被推了出去。</p>
+<p>那你肯定这时候肯定觉得很奇怪<code>ts-the-rpg.ts（v5）</code>和<code>ts-the-rpg.ts（v7）</code>同样是将史莱姆伪装成了勇者，为什么v5成功了，v7却失败了？</p>
+<p>世界转换器在这里是这么做处理的：</p>
+<ol>
+<li>
+<p>v5部分因为所有的部分都是公开的，那么他只会判断是否存在，这种原理别处称作“鸭子模型”，就是说“呱呱叫又会游泳的鸟那就肯定是鸭子”，在这里就是“有名字有hp的肯定是勇者”，所以就放行了，这是一种弱的类型检查机制，可以抵挡住大部分的伪装。</p>
+</li>
+<li>
+<p>在v7中，有部分是隐藏的，那么不只会判断隐藏的部分是不是存在的，还会判断它是否来自不同的定义。</p>
+</li>
+</ol>
+<p>好了，一切都安全了。你到这里应该明白了TypeScript世界的一部分，类型检查。这个特性能够在某种程度上保护你程序的安全，不至于让你在每个通道内设置关卡，判断进来的东西是勇者还是史莱姆，或者是伪装成勇者的史莱姆。在JavaScript的世界里，你需要处处小心，勇者即使进了城也要被处处浪费时间去盘问，而在TypeScript中，勇者只需要在城门口被盘问一边，确定你是勇者后，你在城里能得到所有你能得到的东西，而不用再一遍一遍的被盘问：“你是不是勇者？”</p>
+<h1 id="">转职：你依然是个勇者</h1>
+<p>你站在新手村中心，不知所措的时候，边上有三个导师，分别在招揽着自己的学徒，分别是战士、魔法师和弓箭手：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v8）</p>
+</blockquote>
+<pre><code>class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log("fireball");
+    }
+}
+
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log("shoot");
+    }
+}
+</code></pre>
+<p>没错，三种职业有着自己的攻击方式。勇者你要学什么呢？</p>
+<blockquote>
+<p>ts-the-rpg.ts（v9）</p>
+</blockquote>
+<pre><code>class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 通过extends继承了勇者之力
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+// 通过extends继承了勇者之力
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log("fireball");
+    }
+}
+
+// 通过extends继承了勇者之力
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log("shoot");
+    }
+}
+
+function forest(hero: Hero) {
+    console.log("Enter Forest !!");
+}
+
+var hero1 = new Warrior("warrior", 10, "sword");
+var hero2 = new Magician("magician", 10, "wand");
+var hero3 = new Archer("archer", 10, "bow");
+
+forest(hero1);
+forest(hero2);
+forest(hero3);
+</code></pre>
+<p>世界转换器转换后发现，竟然战士、法师和弓箭手都能进入森林！</p>
+<p>你要知道，即使你选择了职业，但是你体内的勇者之名和勇者之血都通过<code>extends Hero</code>方式继承了下来。你的召唤方式变了，但是你的召唤规则里还通过<code>super(name, hp);</code>这个方式保留着你的内心，这个就像是当初召唤你的方式，<code>new Hero(name , hp)</code>。所以即使这时候你们用着不同的武器，有着不同的攻击方式，却依然内心都还是个勇者。</p>
+<h1 id="">技能训练：技能虽好，可不要偷师哦！</h1>
+<p>这时候你犹豫了，你想去三个练功房都看看，再来考虑转职的事情：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v10）</p>
+</blockquote>
+<pre><code>class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 通过extends继承了勇者之力
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+// 通过extends继承了勇者之力
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log("fireball");
+    }
+}
+
+// 通过extends继承了勇者之力
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log("shoot");
+    }
+}
+
+function trainWarrior(hero: Warrior) {}
+function trainMagician(hero: Magician) {}
+function trainArcher(hero: Archer) {}
+
+var hero = new Hero("普通勇者", 10);
+
+trainWarrior(hero);
+trainMagician(hero);
+trainArcher(hero);
+</code></pre>
+<p>毫不意外，你被三个练功房都踢了出来。</p>
+<pre><code>ts-the-rpg.ts(60,14): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Warrior'.
+
+Property 'weapon' is missing in type 'Hero'.
+
+ts-the-rpg.ts(61,15): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Magician'.
+
+Property 'weapon' is missing in type 'Hero'.
+
+ts-the-rpg.ts(62,13): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Archer'.
+
+Property 'weapon' is missing in type 'Hero'.
+</code></pre>
+<p>三个房间的导师都说，你没有武器，学不了技能。村长这个时候走过来告诉你真相：即使你有了武器，你也学不了。对，职人是继承了勇者的内心，职人永远都是勇者，而勇者没有转职，没有职人才有的能力，你永远只是个勇者，不是一个职人。这就是继承的真相。</p>
+<blockquote>
+<p>职人是勇者，勇者不是职人。</p>
+</blockquote>
+<blockquote>
+<p>职人是勇者，勇者不是职人。</p>
+</blockquote>
+<blockquote>
+<p>职人是勇者，勇者不是职人。</p>
+</blockquote>
+<p>你默默念了三遍。铭记在心。</p>
+<h1 id="">各式各样的武器：选一件吧少年</h1>
+<p>实际上专职没有那么简单，你的武器不仅仅是个名字而已，这时候你的老师让你去挑一把武器带过来。你去了武器铺。武器铺的铁匠大叔一看到你是一个勇者，非常热心的跟你介绍了不同的武器。</p>
+<blockquote>
+<p>ts-the-rpg.ts（v11）</p>
+</blockquote>
+<pre><code>class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+class Wand extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    fireball() {
+        console.log("fireball");
+    }
+}
+
+class Bow extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    shoot() {
+        console.log("shoot");
+    }
+}
+</code></pre>
+<p>你说你要转职成战士，你只看剑。他很热情，问问你是不是要附魔。有火焰效果和寒冰效果，然后可以给你打造一把独一无二的剑：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v12）</p>
+</blockquote>
+<pre><code>class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+interface Fire {
+    fire();
+}
+
+interface Ice {
+    ice();
+}
+</code></pre>
+<p>你想了想说，都要。铁匠一愣，笑了笑，你小子为难老夫！好，难不倒老夫，于是你的剑做好了：</p>
+<blockquote>
+<p>ts-the-rpg.ts（v12）</p>
+</blockquote>
+<pre><code>class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log("swing");
+    }
+}
+
+interface Fire {
+    fire();
+}
+
+interface Ice {
+    ice();
+}
+
+class SwordOfIceAndFire extends Sword implements Ice, Fire {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log("swing");
+        this.ice();
+        this.fire();
+    }
+    ice() {
+        console.log("ice");
+    }
+    fire() {
+        console.log("fire");
+    }
+}
+</code></pre>
+<p>没错，interface在面向对象中就好像是附魔属性，只要你愿意，可以通过implements无限的往一把剑上叠加能力。但是，即使你无限叠加了能力，它还是一把剑，而不能成为魔杖或者弓箭。</p>
+<p>冒险才刚刚开始，而我们的教程到了尾声。我们再来回顾一下有哪些概念：</p>
+<ol>
+<li>类和类型检查：一个史莱姆伪装的再好，还是史莱姆。</li>
+<li>继承是什么：勇者转职之后还是勇者，不管他变成了剑士、魔法师还是弓箭手。</li>
+<li>子类和父类的继承关系：一个职人是勇者，但是一个勇者不是职人。</li>
+<li>接口是什么：附魔属性。</li>
+<li>通过接口扩展类：只要你愿意，可以无限的往一把剑上叠加能力，让它成为一把新的剑。但是，即使你无限叠加了能力，它还是一把剑，而不能成为魔杖或者弓箭。</li>
+</ol>
+<p>希望通过这个教程帮助你理解TypeScript中面向对象的基础。</p>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/hui/">Hui Zhong</a></h4>
+            <p>Read <a href="../author/hui/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/hui/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card" style="background-image: url(https://casper.ghost.org/v1.0.0/images/blog-cover.jpg)">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— LordMOS —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/typescript/">TypeScript</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../typescript-fan-xing/">TypeScript：泛型</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/typescript/">1 post →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-other-stuff no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../2018nian-he-chun-web-appyou-guan-de-sui-sui-nian/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">杂记</span>
+                <h2 class="post-card-title">2018年和纯Web App有关的碎碎念</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>琐事缠身小半年，2018年也过去了四分之一，很久没有更新专栏，向大家道歉——对不起我偷懒了（逃）。 我司前端用Angular.js/Angular/ionic一把梭做项目也有一段时间了，各种业务，从最基本的仓库管理系统、Web IM、物联网的集控系统和市面上看到的绝大多数应用，基本都有做过（毕竟是一个外包公司）。做得越久越发现，我们做的事情慢慢的会从Hybrid App到纯Web App过度，为什么这么说？现在Web的解决方案越来越多了，即使他是experimental的解决方案。 从最早2016年开始，我用Angular.js做Web IM，那时候我还不知道RX.js，写起来要多痛苦有多痛苦。现在，我觉得拿Rx.</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../author/hui/" class="static-avatar"><img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="../">
+                <img src="../content/images/2018/06/10.png" alt="LordMOS icon">
+            <span>LordMOS</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">TypeScript：从零开始的前端面向对象RPG</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=TypeScript%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%89%8D%E7%AB%AF%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1RPG&amp;url=http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../">LordMOS</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=9948a6c51d"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>

@@ -1,0 +1,424 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ionic的未来展望（上）：关于Stencil.js和吐槽</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=9948a6c51d">
+
+    <link rel="shortcut icon" href="../favicon.png" type="image/png">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="amp/index.html">
+    
+    <meta property="og:site_name" content="LordMOS">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="ionic的未来展望（上）：关于Stencil.js和吐槽">
+    <meta property="og:description" content="写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。 什么是Stencil.js ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\Ember.js\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频Using Web Components in Ionic (Polymer Summit 2017)，来自YouTube）。 Stencil在文档中写到： Stencil is a compiler that generates Web Components (more specifically, Custom">
+    <meta property="og:url" content="http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/">
+    <meta property="article:published_time" content="2018-06-04T07:48:21.000Z">
+    <meta property="article:modified_time" content="2018-06-04T07:48:21.000Z">
+    <meta property="article:tag" content="ionic">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ionic的未来展望（上）：关于Stencil.js和吐槽">
+    <meta name="twitter:description" content="写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。 什么是Stencil.js ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\Ember.js\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频Using Web Components in Ionic (Polymer Summit 2017)，来自YouTube）。 Stencil在文档中写到： Stencil is a compiler that generates Web Components (more specifically, Custom">
+    <meta name="twitter:url" content="http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Hui Zhong">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="ionic">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "LordMOS",
+        "logo": "http://localhost:2368/content/images/2018/06/2.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Hui Zhong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2018/06/emo-2.gif",
+            "width": 200,
+            "height": 200
+        },
+        "url": "http://localhost:2368/author/hui/",
+        "sameAs": []
+    },
+    "headline": "ionic的未来展望（上）：关于Stencil.js和吐槽",
+    "url": "http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/",
+    "datePublished": "2018-06-04T07:48:21.000Z",
+    "dateModified": "2018-06-04T07:48:21.000Z",
+    "keywords": "ionic",
+    "description": "写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。 什么是Stencil.js ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\\Ember.js\\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频Using Web Components in Ionic (Polymer Summit 2017)，来自YouTube）。 Stencil在文档中写到： Stencil is a compiler that generates Web Components (more specifically, Custom",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=9948a6c51d"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "da54f220680d"
+});
+</script>
+    <meta name="generator" content="Ghost 1.23">
+    <link rel="alternate" type="application/rss+xml" title="LordMOS" href="../rss/index.html">
+
+</head>
+<body class="post-template tag-ionic">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../"><img src="../content/images/2018/06/2.jpg" alt="LordMOS"></a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
+    <li class="nav-angular" role="menuitem"><a href="../tag/angular/">Angular</a></li>
+    <li class="nav-typescript" role="menuitem"><a href="../tag/typescript/">TypeScript</a></li>
+    <li class="nav-ionic" role="menuitem"><a href="../tag/ionic/">ionic</a></li>
+    <li class="nav-ecmascript" role="menuitem"><a href="../tag/ecmascript/">ECMAScript</a></li>
+    <li class="nav-" role="menuitem"><a href="../tag/other-stuff/">杂记</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-ionic no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2018-06-04">4 六月 2018</time>
+                        <span class="date-divider">/</span> <a href="../tag/ionic/">ionic</a>
+                </section>
+                <h1 class="post-full-title">ionic的未来展望（上）：关于Stencil.js和吐槽</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><blockquote>
+<p>写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。</p>
+</blockquote>
+<h1 id="stenciljs">什么是Stencil.js</h1>
+<p>ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\Ember.js\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频<a href="https://www.youtube.com/watch?v=UfD-k7aHkQE&amp;t=11s">Using Web Components in Ionic (Polymer Summit 2017)</a>，来自YouTube）。</p>
+<p>Stencil在文档中写到：</p>
+<blockquote>
+<p>Stencil is a compiler that generates Web Components (more specifically, Custom Elements). Stencil combines the best concepts of the most popular frameworks into a simple build-time tool.</p>
+</blockquote>
+<p>但是看完文档我想说这玩意儿跟Framework基本上也差不多了。他们用到了以下这些工具或技术：</p>
+<ul>
+<li>Virtual DOM</li>
+<li>Async rendering (inspired by React Fiber)</li>
+<li>Reactive data-binding</li>
+<li>TypeScript</li>
+<li>JSX</li>
+</ul>
+<p>通过这些工具，Stencil.js可以将你写的Web Component编译成Web Element（就是普通的HTML Element），使其可以在任何框架中很好的工作。而且，由于经过优化，编译速度得到了提升，渲染效率也得到了提高（据说是得益于React团队的启发）。</p>
+<blockquote>
+<p>吐槽一下，这个思路其实很棒也很蠢：很棒的原因在于，我们可以直接使用第三方通过Stencil开发的视图组件在各个框架中使用。很蠢的地方在于，Framework高度自洽，所有的东西都封装好了，如果你需要修改某个Stencil开发的组件，就不得不用到相关的工具，这时候你需要学习怎么样用Stencil去开发，维护成本感觉提高了不少。总之，这不是什么令人兴奋的好事。</p>
+</blockquote>
+<h1 id="stencil">Stencil里都有什么</h1>
+<p>Stencil的目的是为了开发一套工具，使通过Stencil开发的组件在各个框架中都能使用，那么最重要的部分肯定是组件（Component）。他们使用了TypeScript和JSX，最终组件看起来像是这样子的：</p>
+<blockquote>
+<p>my-first-component.tsx</p>
+</blockquote>
+<pre><code>import { Component, Prop } from '@stencil/core';
+@Component({
+    tag: 'my-first-component',
+    styleUrl: 'my-first-component.scss'
+})
+export class MyComponent {
+    // Indicate that name should be a public property on the component
+    @Prop() name: string;
+    render() {
+        return (
+            &lt;p&gt; My name is {this.name} &lt;/p&gt;
+        );
+    }
+}
+</code></pre>
+<p>没错，满满的Angular和React混搭的感觉（可能更像用TS开发React多一点）。渲染函数中直接放入HTML代码片段，通过@Prop()装饰器装饰相应数据（Reactive Data）。外部在使用的时候，可以直接通过<code>&lt;my-first-component name="Max"&gt;&lt;/my-first-component&gt;</code>就可以进行组件的加载。</p>
+<blockquote>
+<p>吐槽一下，我只是不喜欢把HTML写在JS或TS里。这种代码风格让我无法接受。哪怕你写一个装饰器叫做@Template，指向一个HTML文件，然后再在编译前将HTML文件内联进自动化生成的渲染函数里，我都觉得好很多。</p>
+</blockquote>
+<p>其次就是装饰器。装饰器在TS中是一个很重要的存在，他协助我们能够更快的去定义一些行为而减少代码量。比如@Component装饰器就表示这个类他是一个组件，我们在处理这个类的时候就把它当作一个组件去处理。</p>
+<p>在Stencil中，也提供了不少的装饰器，包括：</p>
+<ul>
+<li>@Prop()：属性，作为组件的外部数据输入来使用。</li>
+<li>@Watch()：当属性发生变化的时候进行事件监听。</li>
+<li>@State()：状态，通常作为组件内部数据与渲染的绑定，即状态发生变化，视图会重新渲染。</li>
+<li>@Method()：组件对外暴露的接口。</li>
+<li>@Element()：就是一个HTMLElement。</li>
+<li>@Event()@Listen()：事件通知和监听。</li>
+</ul>
+<p>等等。大家可以去看看相关的文档，这里就不赘述这些装饰器的用法了。</p>
+<p>除此之外，还有全局上下文（Context用于缓存全局数据，生命周期属于页面）、路由等功能。剩下的就是一些服务端渲染、预渲染、PWA等等工具的支持。</p>
+<h1 id="stenciljsionic">Stencil.js在ionic中的应用</h1>
+<p>在ionic 4.0.0中，最核心的部分就是Stencil。ionic团队将angular从核心部分剥离：ionic-angular将会被剥离到@ionic/angular中。而Stencil.js，将会进入核心部分@ionic/core。我觉得将来我们甚至会看到@ionic/react、@ionic/vue存在的可能性。</p>
+<p>最后，附上<a href="https://stenciljs.com/">Stencil.js官网</a>和<a href="https://github.com/ionic-team/stencil">GitHub地址</a></p>
+<blockquote>
+<p>写在最后：后面的文章我来聊聊ionic团队在做的另外一个东西，就是正在Alpha测试的Capacitor，以及我对ionic团队这两个项目的一些思考。</p>
+</blockquote>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/hui/">Hui Zhong</a></h4>
+            <p>Read <a href="../author/hui/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/hui/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card" style="background-image: url(https://casper.ghost.org/v1.0.0/images/blog-cover.jpg)">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— LordMOS —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/ionic/">ionic</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-er-zhun-bei-pian/">使用Angular和ionic构建Hybrid App（二）—— 准备篇</a></li>
+                            <li><a href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/">使用Angular和ionic构建Hybrid App（一）—— 介绍篇</a></li>
+                            <li><a href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-san-dao-hang-sheng-ming-zhou-qi-he-liu-lan-qi/">使用Angular和ionic构建Hybrid App（三）—— 导航、生命周期和浏览器</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/ionic/">See all 4 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-ionic no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../ionicde-wei-lai-zhan-wang-xia-guan-yu-capacitorhe-dui-ionictuan-dui-de-kan-fa/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ionic</span>
+                <h2 class="post-card-title">ionic的未来展望（下）：关于Capacitor和对ionic团队的看法</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>写在前面：上篇文章我们在聊Stencil.js，一个ionic团队从去年年底就开始的项目。Stencil.js致力于解决前端框架过多而组件不通用的问题，因此引入一个新的框架（笑，他们自己管Stencil.js叫做Compiler），希望使用Stencil.js做出来的组件大家都能用。现在我们再来聊聊Capacitor，另一个ionic团队开的新坑。 什么是Capacitor Capacitor致力于帮助开发者构建跨平台的渐进式应用的构建。他们同时支持构建PWA，Electron App，iOS和Android应用。希望一次编写，处处部署。ionic团队管这个叫做Native Progressive Web Apps。 其实Capacitor有点类似于Cordova（也支持部分的Cordova插件，但不是全部的），只不过多支持了PWA和Electron而已。构建的思路也是一样，将Web和Native分离，再通过Plugin和Bridge使Web应用具备Native的能力。</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../author/hui/" class="static-avatar"><img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-angular no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../shen-ru-angular-zu-jian-component-dong-tai-jia-zai/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">Angular</span>
+                <h2 class="post-card-title">深入Angular：组件(Component)动态加载</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>对于一个系统的框架设计来说，业务是一种桎梏，如果在框架中做了太多业务有关的事情，那么这个框架就变得狭隘且难以复用，它变成了你业务逻辑的一部分。在从会写代码开始，许多人就在追求代码上的自由：动态、按需加载你需要的部分。此时框架才满足足够抽象和需求无关的这种条件。所以高度抽象的前提是高度动态，今天我们先来聊聊关于Angular动态加载组件（这里的所有组件均指Component，下同）相关的问题。 Angular如何在组件中声明式加载组件 在开始之前，我们按照管理，通过angular-cli创建一个工程，并且生成一个a组件。 ng new dynamic-loader cd dynamic-loader ng g component a 使用ng serve运行这个工程后，我们可以看到一行app works!</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../author/hui/" class="static-avatar"><img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">7 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="../">
+                <img src="../content/images/2018/06/10.png" alt="LordMOS icon">
+            <span>LordMOS</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">ionic的未来展望（上）：关于Stencil.js和吐槽</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=ionic%E7%9A%84%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B%EF%BC%88%E4%B8%8A%EF%BC%89%EF%BC%9A%E5%85%B3%E4%BA%8EStencil.js%E5%92%8C%E5%90%90%E6%A7%BD&amp;url=http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../">LordMOS</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=9948a6c51d"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>

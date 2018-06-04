@@ -1,0 +1,246 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>ECMAScript - LordMOS</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../../assets/built/screen.css?v=9948a6c51d">
+
+    <link rel="shortcut icon" href="../../favicon.png" type="image/png">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:site_name" content="LordMOS">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ECMAScript - LordMOS">
+    <meta property="og:url" content="http://localhost:2368/tag/ecmascript/">
+    <meta property="article:modified_time" content="2018-06-04T07:41:10.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="ECMAScript - LordMOS">
+    <meta name="twitter:url" content="http://localhost:2368/tag/ecmascript/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Series",
+    "publisher": {
+        "@type": "Organization",
+        "name": "LordMOS",
+        "logo": "http://localhost:2368/content/images/2018/06/2.jpg"
+    },
+    "url": "http://localhost:2368/tag/ecmascript/",
+    "name": "ECMAScript",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../../public/ghost-sdk.js?v=9948a6c51d"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "da54f220680d"
+});
+</script>
+    <meta name="generator" content="Ghost 1.23">
+    <link rel="alternate" type="application/rss+xml" title="LordMOS" href="../../rss/index.html">
+
+</head>
+<body class="tag-template tag-ecmascript">
+
+    <div class="site-wrapper">
+
+        
+<header class="site-header outer no-cover">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../../"><img src="../../content/images/2018/06/2.jpg" alt="LordMOS"></a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../../">Home</a></li>
+    <li class="nav-angular" role="menuitem"><a href="../angular/">Angular</a></li>
+    <li class="nav-typescript" role="menuitem"><a href="../typescript/">TypeScript</a></li>
+    <li class="nav-ionic" role="menuitem"><a href="../ionic/">ionic</a></li>
+    <li class="nav-ecmascript nav-current" role="menuitem"><a href="index.html">ECMAScript</a></li>
+    <li class="nav-" role="menuitem"><a href="../other-stuff/">杂记</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+        <div class="site-header-content">
+            <h1 class="site-title">ECMAScript</h1>
+            <h2 class="site-description">
+                    A collection of 4 posts
+            </h2>
+        </div>
+    </div>
+</header>
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+        <div class="post-feed">
+                <article class="post-card post tag-ecmascript no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../../she-ji-mo-shi-ecmascriptshi-xian-san-she-ji-mo-shi-gai-lan/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ECMAScript</span>
+                <h2 class="post-card-title">设计模式ECMAScript实现：三、设计模式概览</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>现在我们对前端的讨论逐渐开始分化，一边是和交互有关的CSS、HTML，另一边开始关注前端的工程化。工程化在很大一部分在讨论的东西跟设计模式类似——其实设计模式本质上讨论的是可复用的面向对象框架。随着前端组件化程度越来越完善，我们应该对面向对象的方式如何解决问题或多或少有些了解，但如果我在一开始就列一个表格告诉大家有这么多设计模式未免有些枯燥，因此我在这个系列的第三篇文章再来讨论这个话题。 设计模式本身也在演化。前面两篇文章提到的一部分设计模式在《Design Patterns : Elements of Reusable Object-Oriented Software》（下文简称《设计模式》）这本书中有完整的介绍。另外这本书也讨论了在设计框架时候我们需要使用何种设计模式来进行实现，但是随着业务逻辑越来越复杂，许多当时没有被设计出来的模式也从原有的模式中演化出来，如Promise\Rxjs从观察者模式演化而来，依赖注入是工厂方法的一种复杂的变种。因此了解旧的设计模式以及演化过程对使用新的设计模式大有裨益。因此在这篇文章中我们回来看看这些旧的设计模式有哪些。另外，由于《设计模式》</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../../author/hui/" class="static-avatar"><img class="author-profile-image" src="../../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+                <article class="post-card post tag-ecmascript no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../../she-ji-mo-shi-ecmascriptshi-xian-er-cong-dan-li-mo-shi-dao-kong-zhi-fan-zhuan/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ECMAScript</span>
+                <h2 class="post-card-title">设计模式ECMAScript实现：二、从单例模式到控制反转</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>单例模式 单例模式在许多地方都会用到，比如你需要使用一个全局统一的数据、或者一个库，不需要将其多次实例化到内存中。我们来看一下最基本的一种单例模式： 示例 let moduleA = (function(){     let instance = undefined;          class A {         constructor() {             this.name = "A";         }     }          return {         getInstance : () =&gt; {             if(!instance) {                 instance = new A();             }             return instance;         }     } })(); 通常我们可以通过这种方式去定义一个全局唯一的service\provider（</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../../author/hui/" class="static-avatar"><img class="author-profile-image" src="../../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">3 min read</span>
+
+        </footer>
+    </div>
+</article>
+                <article class="post-card post tag-ecmascript no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../../she-ji-mo-shi-ecmascriptshi-xian-yi-cong-hui-diao-han-shu-dao-rx-js/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ECMAScript</span>
+                <h2 class="post-card-title">设计模式ECMAScript实现：一、从回调函数到Rx.js</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>回调函数 我们经常会用到回调函数，在数据变化时发起通知，或者在某些事件发生时处理这些事件，都会用到回调函数。一般我们会这么实现一个回调函数。 举例：原型链方式 let AClass = function(onAddListener) {     this.onAddListener = onAddListener; }      AClass.prototype.add = (number) =&gt; {     this.onAddListener(number); }      let BClass = function() { }      BClass.prototype.onAdd = (number) =&gt; {     console.log(</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../../author/hui/" class="static-avatar"><img class="author-profile-image" src="../../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">6 min read</span>
+
+        </footer>
+    </div>
+</article>
+                <article class="post-card post tag-ecmascript no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../../han-shu-shi-bian-cheng-ji-chu-han-shu-thisyu-bi-bao/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ECMAScript</span>
+                <h2 class="post-card-title">函数式编程基础：函数、this与闭包</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>什么是函数？ 函数的本质是数据的映射。函数接受一个输入，并输出映射结果。 函数的返回值 函数必然会有一个返回值，不论你是function表达式还是lambda表达式。如果没有显示写return语句，则默认返回值为undefined。 function表达式中的this指针 在function表达式中，this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象。 举例： let a = function() {     console.log(this) } a(); // Window { ... } let b = {     str: 'Hi',     fun: function() {         console.log(this)     } } b.</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../../author/hui/" class="static-avatar"><img class="author-profile-image" src="../../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">4 min read</span>
+
+        </footer>
+    </div>
+</article>
+        </div>
+    </div>
+</main>
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../../">LordMOS</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="../../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../../assets/js/jquery.fitvids.js?v=9948a6c51d"></script>
+
+    <script>
+        // maxPages is a global variable that is needed to determine
+        // if we need to load more pages for the infinitescroll, or if
+        // we reached the last page already.
+        var maxPages = parseInt('1');
+    </script>
+    <script src="../../assets/js/infinitescroll.js?v=9948a6c51d"></script>
+
+    
+
+    
+
+</body>

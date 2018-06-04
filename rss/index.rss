@@ -1,0 +1,2644 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>LordMOS</title><description>Blog of LordMOS</description><link>http://localhost:2368/</link><image><url>http://localhost:2368/favicon.png</url><title>LordMOS</title><link>http://localhost:2368/</link></image><generator>Ghost 1.23</generator><lastBuildDate>Mon, 04 Jun 2018 08:26:11 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>设计模式ECMAScript实现：三、设计模式概览</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;现在我们对前端的讨论逐渐开始分化，一边是和交互有关的CSS、HTML，另一边开始关注前端的工程化。工程化在很大一部分在讨论的东西跟设计模式类似——其实设计模式本质上讨论的是可复用的面向对象框架。随着前端组件化程度越来越完善，我们应该对面向对象的方式如何解决问题或多或少有些了解，但如果我在一开始就列一个表格告诉大家有这么多设计模式未免有些枯燥，因此我在这个系列的第三篇文章再来讨论这个话题。&lt;/p&gt;
+&lt;p&gt;设计模式本身也在演化。前面两篇文章提到的一部分设计模式在《Design Patterns : Elements of Reusable Object-Oriented Software》（下文简称《设计模式》）这本书中有完整的介绍。另外这本书也讨论了在设计框架时候我们需要使用何种设计模式来进行实现，但是随着业务逻辑越来越复杂，许多当时没有被设计出来的模式也从原有的模式中演化出来，如Promise\Rxjs从观察者模式演化而来，依赖注入是工厂方法的一种复杂的变种。因此了解旧的设计模式以及演化过程对使用新的设计模式大有裨益。因此在这篇文章中我们回来看看这些旧的设计模式有哪些。另外，由于《设计模式》中的例子都是C++来实现，有能力的朋友也可以自己来翻看这本书。&lt;/p&gt;
+&lt;p&gt;在《设计模式》中，将设计模式分为以下三类。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;创建型模式：描述了不同场景下不同的数据应该被如何生成、获取。其中，在《设计模式》中提到的创建型模式有以下这些：&lt;/p&gt;
+&lt;p&gt;Abstract Factory : 抽象工厂&lt;br&gt;&lt;/p&gt;&lt;/li&gt;&lt;/ol&gt;&lt;/div&gt;</description><link>http://localhost:2368/she-ji-mo-shi-ecmascriptshi-xian-san-she-ji-mo-shi-gai-lan/</link><guid isPermaLink="false">5b14f054dea7fc165a4cba54</guid><category>ECMAScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:55:08 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;现在我们对前端的讨论逐渐开始分化，一边是和交互有关的CSS、HTML，另一边开始关注前端的工程化。工程化在很大一部分在讨论的东西跟设计模式类似——其实设计模式本质上讨论的是可复用的面向对象框架。随着前端组件化程度越来越完善，我们应该对面向对象的方式如何解决问题或多或少有些了解，但如果我在一开始就列一个表格告诉大家有这么多设计模式未免有些枯燥，因此我在这个系列的第三篇文章再来讨论这个话题。&lt;/p&gt;
+&lt;p&gt;设计模式本身也在演化。前面两篇文章提到的一部分设计模式在《Design Patterns : Elements of Reusable Object-Oriented Software》（下文简称《设计模式》）这本书中有完整的介绍。另外这本书也讨论了在设计框架时候我们需要使用何种设计模式来进行实现，但是随着业务逻辑越来越复杂，许多当时没有被设计出来的模式也从原有的模式中演化出来，如Promise\Rxjs从观察者模式演化而来，依赖注入是工厂方法的一种复杂的变种。因此了解旧的设计模式以及演化过程对使用新的设计模式大有裨益。因此在这篇文章中我们回来看看这些旧的设计模式有哪些。另外，由于《设计模式》中的例子都是C++来实现，有能力的朋友也可以自己来翻看这本书。&lt;/p&gt;
+&lt;p&gt;在《设计模式》中，将设计模式分为以下三类。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;创建型模式：描述了不同场景下不同的数据应该被如何生成、获取。其中，在《设计模式》中提到的创建型模式有以下这些：&lt;/p&gt;
+&lt;p&gt;Abstract Factory : 抽象工厂&lt;br&gt;
+Builder : 生成器&lt;br&gt;
+Factory Method : 工厂方法&lt;br&gt;
+Prototype : 原型&lt;br&gt;
+Singleton : 单例&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;结构型模式：描述了不同场景下不同的数据应该被如何组合、管理。其中，在《设计模式》中提到的结构型模式有以下这些：&lt;/p&gt;
+&lt;p&gt;Adapter : 适配器&lt;br&gt;
+Bridge : 桥接&lt;br&gt;
+Composite : 组成&lt;br&gt;
+Decorator : 装饰&lt;br&gt;
+Facade : 外观&lt;br&gt;
+Flyweight : 享元&lt;br&gt;
+Proxy : 代理&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;行为模式：描述了不同场景下不同的数据应该被如何处理、使用。其中，在《设计模式》中提到的行为模式有以下这些：&lt;/p&gt;
+&lt;p&gt;Chain Of Responsibility : 责任链&lt;br&gt;
+Command : 命令&lt;br&gt;
+Interpreter : 解释器&lt;br&gt;
+Iterator : 迭代器&lt;br&gt;
+Mediator : 中介者&lt;br&gt;
+Memento : 备忘录&lt;br&gt;
+Observer : 观察者&lt;br&gt;
+State : 状态&lt;br&gt;
+Strategy : 策略&lt;br&gt;
+Template Method : 模版方法&lt;br&gt;
+Visitor : 访问者&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在《从回调函数到Rx.js》中提到的设计模式属于行为模式，而在《从单例模式到控制反转》中提到的设计模式属于创建型模式。将来我们还会对剩下的设计模式及其演化做一系列介绍。&lt;/p&gt;
+&lt;p&gt;另外，在《Learning JavaScript Design Patterns》这本书中，对JavaScript中经常使用到的设计模式也进行了一部分的总结。有兴趣的朋友可以翻翻这本书。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>设计模式ECMAScript实现：二、从单例模式到控制反转</title><description>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;单例模式&lt;/h2&gt;
+&lt;p&gt;单例模式在许多地方都会用到，比如你需要使用一个全局统一的数据、或者一个库，不需要将其多次实例化到内存中。我们来看一下最基本的一种单例模式：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let moduleA = (function(){
+    let instance = undefined;
+    
+    class A {
+        constructor() {
+            this.name = &amp;quot;A&amp;quot;;
+        }
+    }
+    
+    return {
+        getInstance : () =&amp;gt; {
+            if(!instance) {
+                instance = new A();
+            }
+            return instance;
+        }
+    }
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通常我们可以通过这种方式去定义一个全局唯一的service\provider（比如负责提供某一组Ajax请求的一个对象，就是一个service）。&lt;/p&gt;
+&lt;h2 id="inversionofcontrol"&gt;控制反转(Inversion of Control)&lt;/h2&gt;
+&lt;p&gt;很多时候，我们在组装一个完整的数据需要显式的去组装，比如我是一个厨师，我需要一个苹果和一个橘子来榨汁，那我们一般会怎么做呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Apple {
+    constructor() {
+        this.name&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/she-ji-mo-shi-ecmascriptshi-xian-er-cong-dan-li-mo-shi-dao-kong-zhi-fan-zhuan/</link><guid isPermaLink="false">5b14f03bdea7fc165a4cba51</guid><category>ECMAScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:54:44 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;单例模式&lt;/h2&gt;
+&lt;p&gt;单例模式在许多地方都会用到，比如你需要使用一个全局统一的数据、或者一个库，不需要将其多次实例化到内存中。我们来看一下最基本的一种单例模式：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let moduleA = (function(){
+    let instance = undefined;
+    
+    class A {
+        constructor() {
+            this.name = &amp;quot;A&amp;quot;;
+        }
+    }
+    
+    return {
+        getInstance : () =&amp;gt; {
+            if(!instance) {
+                instance = new A();
+            }
+            return instance;
+        }
+    }
+})();
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通常我们可以通过这种方式去定义一个全局唯一的service\provider（比如负责提供某一组Ajax请求的一个对象，就是一个service）。&lt;/p&gt;
+&lt;h2 id="inversionofcontrol"&gt;控制反转(Inversion of Control)&lt;/h2&gt;
+&lt;p&gt;很多时候，我们在组装一个完整的数据需要显式的去组装，比如我是一个厨师，我需要一个苹果和一个橘子来榨汁，那我们一般会怎么做呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Apple {
+    constructor() {
+        this.name = &amp;quot;apple&amp;quot;;
+    }
+    
+    getApple() {
+        return this.name;
+    }
+}
+    
+class Orange {
+    constructor() {
+        this.name = &amp;quot;orange&amp;quot;;
+    }
+    
+    getOrange() {
+        return this.name;
+    }
+}
+    
+class Cooker {
+    constructor(apple,orange) {
+        this.apple = apple;
+        this.orange = orange;
+    }
+    
+}
+    
+new Cooker(new Apple(), new Orange());
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这时候你会发现，厨师既要关心苹果，又要关心橘子，真是太麻烦了，为什么不找一个配菜员帮你解决这个事情呢？如果在厨师需要一个苹果的时候，配菜员主动给个苹果，那就好了。&lt;/p&gt;
+&lt;p&gt;我们将数据生产的控制交给一个专门的角色去做，而用户只在需要某个数据的时候叫那个角色提供，这种模式就叫做“控制反转”。而控制反转模式的一种实现就叫做“依赖注入(Dependency Injection)”。&lt;/p&gt;
+&lt;h2 id=""&gt;实现一个简单的依赖注入&lt;/h2&gt;
+&lt;p&gt;我们在使用依赖注入的时候通常需要定义一个可以被依赖注入的类型，以及我们在使用一个模块时候需要通过声明的方式来引用这些被注入的对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let injector = (function(){
+    let instance = undefined;
+    
+    class Injector {
+        constructor() {
+            this.inject = {}
+        }
+        
+        define(name, func) {
+            // TODO exception handler is needed
+            this.inject[name] = func();
+        }
+        
+        use(injectList, func) {
+            // TODO exception handler is needed
+            let injectable = [];
+            injectList.map((name) =&amp;gt; {
+                injectable.push(this.inject[name])
+            })
+            func.apply(this, injectable);
+        }
+    }
+    
+    return {
+        getInstance : () =&amp;gt; {
+            if(!instance) {
+                instance = new Injector();
+            }
+            return instance;
+        }
+    }
+})();
+    
+// 使用依赖注入
+// 代码中还有一部分没有完成，就是对入参的判断（这时候TypeScript的好就体现出来了lol），以及可以被注入的数据相互依赖的实现。
+
+injector.getInstance().define(&amp;quot;Apple&amp;quot;, () =&amp;gt; {
+    class Apple {
+        constructor() {
+            this.name = &amp;quot;apple&amp;quot;;
+        }
+        
+        getApple() {
+            return this.name;
+        }
+    }
+    return new Apple();
+})
+    
+injector.getInstance().define(&amp;quot;Orange&amp;quot;, () =&amp;gt; {
+    class Orange {
+        constructor() {
+            this.name = &amp;quot;orange&amp;quot;;
+        }
+        
+        getOrange() {
+            return this.name;
+        }
+    }
+    return new Orange();
+})
+    
+injector.getInstance().use([&amp;quot;Apple&amp;quot;, &amp;quot;Orange&amp;quot;], (apple,orange) =&amp;gt; {
+    console.log(apple.getApple()); // 'apple'
+    console.log(orange.getOrange()); // 'orange'
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这种形式其实类似于require.js，我们将模块分两种，一种是我们需要依赖的，一种是我们需要实现的业务逻辑。然而这只是一个小小的演示代码，Ng\vue等前端框架也大量的采用了依赖注入来帮助用户维护代码，有兴趣的同学也可以仔细读读大神们的代码。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>设计模式ECMAScript实现：一、从回调函数到Rx.js</title><description>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;回调函数&lt;/h2&gt;
+&lt;p&gt;我们经常会用到回调函数，在数据变化时发起通知，或者在某些事件发生时处理这些事件，都会用到回调函数。一般我们会这么实现一个回调函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：原型链方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let AClass = function(onAddListener) {
+    this.onAddListener = onAddListener;
+}
+    
+AClass.prototype.add = (number) =&amp;gt; {
+    this.onAddListener(number);
+}
+    
+let BClass = function() { }
+    
+BClass.prototype.onAdd = (number) =&amp;gt; {
+    console.log(&amp;quot;added &amp;quot; + number)
+}
+    
+let b = new BClass();
+let a = new AClass((number) =&amp;gt; b.onAdd(number)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/she-ji-mo-shi-ecmascriptshi-xian-yi-cong-hui-diao-han-shu-dao-rx-js/</link><guid isPermaLink="false">5b14f026dea7fc165a4cba4e</guid><category>ECMAScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:54:24 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;回调函数&lt;/h2&gt;
+&lt;p&gt;我们经常会用到回调函数，在数据变化时发起通知，或者在某些事件发生时处理这些事件，都会用到回调函数。一般我们会这么实现一个回调函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：原型链方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let AClass = function(onAddListener) {
+    this.onAddListener = onAddListener;
+}
+    
+AClass.prototype.add = (number) =&amp;gt; {
+    this.onAddListener(number);
+}
+    
+let BClass = function() { }
+    
+BClass.prototype.onAdd = (number) =&amp;gt; {
+    console.log(&amp;quot;added &amp;quot; + number)
+}
+    
+let b = new BClass();
+let a = new AClass((number) =&amp;gt; b.onAdd(number));
+a.add(5);
+// added 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;举例：面向对象方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class AClass {
+    constructor(onAddListener) {
+        this.onAddListener = onAddListener;
+    }
+    
+    add(number) {
+        this.onAddListener(number);
+    }
+}
+    
+class BClass {
+    onAdd(number) {
+        console.log(&amp;quot;added &amp;quot; + number)
+    }
+}
+    
+let b = new BClass();
+let a = new AClass((number) =&amp;gt; b.onAdd(number));
+a.add(5);
+// added 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="promise"&gt;Promise&lt;/h2&gt;
+&lt;p&gt;Promise其实就是一种回调机制，这种机制为异步处理提供了更丰富的状态：成功和失败。而我们无须在构造时就提供回调函数给目标，而是更显式的在调用目标接口后处理回调。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：原型链方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let AClass = function() { }
+    
+AClass.prototype.add = (number) =&amp;gt; {
+    return new Promise((resolve, reject) =&amp;gt; {
+        if(typeof number == 'number') {
+            resolve(number);
+        } else {
+            reject();
+        }
+    });
+}
+    
+let a = new AClass();
+a.add(5).then((number) =&amp;gt; console.log('added ' + number));
+// added 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;举例：面向对象方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class AClass {
+    add(number) {
+        return new Promise((resolve, reject) =&amp;gt; {
+            if(typeof number == 'number') {
+                resolve(number);
+            } else {
+                reject();
+            }
+        });
+    }
+}
+    
+let a = new AClass();
+a.add(5).then((number) =&amp;gt; console.log('added ' + number));
+// added 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们来比较一下Promiss和普通的回调函数发现，其差别在于，Promiss在每次调用的时候都需要指定处理回调的方法，而普通的回调需要显式设置回调函数。&lt;/p&gt;
+&lt;p&gt;通常Promise中执行的是异步操作，而且使用上更安全。如果你使用的是监听器，代码逻辑出现了把listener冲掉的错误而发生运行时错误。&lt;/p&gt;
+&lt;p&gt;Promise是如何实现的，具体可以参照&lt;a href="https://github.com/kriskowal/q/blob/master/q.js"&gt;Q.js&lt;/a&gt;。另外Promise还有很多优点，跟我们讨论主题关系不大就不展开了。&lt;/p&gt;
+&lt;h2 id=""&gt;观察者模式&lt;/h2&gt;
+&lt;p&gt;观察者（Observer）模式是针对回调模式的另外一种扩展。它允许被观察者（Subject，第一个例子中的AClass实例）添加多个观察者。&lt;/p&gt;
+&lt;p&gt;因此，在被观察者中需要维护一个观察者列表（ObserverList），当数据发生变化时，需要通知所有的观察者。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：原型链方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let Subject = function() {
+    this.observers = [];
+}
+    
+Subject.prototype.addObserver = function(obv) {
+    this.observers.push(obv);
+}
+    
+Subject.prototype.removeObserver = function(obv) {
+    let index = -1;
+    for(let i = 0; i &amp;lt; this.observers.length; i++) {
+        if(this.observers[i] === obv) {
+            index = i;
+            break;
+        }
+    }
+    if(index &amp;gt; 0) this.observers.splice(index, 1);
+}
+    
+Subject.prototype.notify = function(event) {
+    for(let obv of this.observers) {
+        obv.update(event)
+    }
+}
+    
+let Observer = function() { }
+    
+Observer.prototype.update = function(event) {
+    console.log(event)
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;举例：面向对象方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Subject {
+    constructor() {
+        this.observers = [];
+    }
+    
+    addObserver(obv) {
+        this.observers.push(obv);
+    }
+    
+    removeObserver(obv) {
+        let index = -1;
+        for(let i = 0; i &amp;lt; this.observers.length; i++) {
+            if(this.observers[i] === obv) {
+                index = i;
+                break;
+            }
+        }
+        if(index &amp;gt; 0) this.observers.splice(index, 1);
+    }
+    
+    notify(event) {
+        for(let obv of this.observers) {
+            obv.update(event)
+        }
+    }
+}
+    
+class Observer {
+    constructor() { }
+    
+    update(event) {
+        console.log(event)
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在业务逻辑中，通过继承的方式去实现观察者的回调逻辑和被观察者的通知逻辑：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：原型链方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let AClass = function() {};
+AClass.prototype = new Subject();
+AClass.prototype.constructor = AClass;
+AClass.prototype.add = function(number) {
+    this.notify(&amp;quot;added &amp;quot; + number);
+};
+
+let BClass = function() {};
+BClass.prototype = new Observer();
+BClass.prototype.constructor = BClass;
+
+// 这种方式进行原型链重载后无法调用父类属性同名函数
+let a = new AClass();
+let b = new BClass();
+a.addObserver(b);
+a.add(5);
+// added 5 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;举例：面向对象方式&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class AClass extends Subject {
+    constructor() {
+        super();
+    }
+    
+    add(number) {
+        super.notify(&amp;quot;added &amp;quot; + number);
+    }
+}
+    
+class BClass extends Observer {
+    constructor() {
+        super();
+    }
+}
+    
+class CClass extends Observer {
+    constructor() {
+        super();
+    }
+    
+    update(event) {
+        super.update(event)
+        console.log(&amp;quot;SubClass &amp;quot; + event)
+    }
+}
+    
+let a = new AClass();
+let b = new BClass();
+let c = new CClass();
+    
+a.addObserver(b);
+a.addObserver(c);
+    
+a.add(5);
+// added 5 
+// added 5
+// SubClass added 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;相对来说，观察者模式使用的范围更广，更灵活，只需要通过简单的继承以及方法的重载，就可以处处使用。&lt;/p&gt;
+&lt;h2 id="publishsubscribe"&gt;观察者模式的优化：发布(Publish)／订阅(Subscribe)模式&lt;/h2&gt;
+&lt;p&gt;在很多情况下，我们需要监听不同类型的消息，比如除了监听add消息之外，我还需要监听minus消息，这时候观察者模式处理起来就会比较复杂。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一部分用户只对add消息感兴趣&lt;/li&gt;
+&lt;li&gt;一部分用户只对minus消息感兴趣&lt;/li&gt;
+&lt;li&gt;一部分用户对所有消息都感兴趣&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;在这种情况下，我们如果将消息类型包裹到event数据中，那么对于某些用户来说，就需要进行筛选。为何不把筛选的事情交给框架来做呢？&lt;/p&gt;
+&lt;p&gt;那么，我们来改造一下观察者模式的代码。在以下代码里我们不再提供原型链的实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class Subject {
+    constructor() {
+        this.observers = {};
+    }
+    
+    subscribe(topic, obv) {
+        if(!this.observers[topic]) {
+            this.observers[topic] = [];
+        }
+        this.observers[topic].push(obv);
+    }
+    
+    unsubscribe(topic, obv) {
+        if(!this.observers[topic] || this.observers[topic].length == 0) return;
+        let index = -1;
+        for(let i = 0; i &amp;lt; this.observers[topic].length; i++) {
+            if(this.observers[topic][i] === obv) {
+                index = i;
+                break;
+            }
+        }
+        if(index &amp;gt; 0) this.observers[topic].splice(index, 1);
+    }
+    
+    publish(topic, event) {
+        if(!this.observers[topic] || this.observers[topic].length == 0) return;
+        for(let obv of this.observers[topic]) {
+            obv.update(topic, event)
+        }
+    }
+}
+    
+class Observer {
+    constructor() { }
+    
+    update(topic, event) {
+        console.log(topic, event);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在使用时，同样继承这两个类，观察者继承Observer，被观察者继承Subject。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class AClass extends Subject {
+    constructor() {
+        super();
+    }
+    
+    add(number) {
+        super.publish(&amp;quot;add&amp;quot;, number);
+    }
+    
+    minus(number) {
+        super.publish(&amp;quot;minus&amp;quot;, number);
+    }
+}
+    
+class BClass extends Observer {
+    constructor() {
+        super();
+    }
+    
+    update(topic, event) {
+        console.log(&amp;quot;B : &amp;quot;);
+        super.update(topic, event);
+    }
+}
+    
+class CClass extends Observer {
+    constructor() {
+        super();
+    }
+    
+    update(topic, event) {
+        console.log(&amp;quot;C : &amp;quot;);
+        super.update(topic, event);
+    }
+}
+    
+let a = new AClass();
+let b = new BClass();
+let c = new CClass();
+    
+a.subscribe('add', b);
+a.subscribe('minus', c);
+    
+a.add(5);
+// B : 
+// add 5
+a.minus(5);
+// C : 
+// minus 5
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="rxjs"&gt;Rx.js是什么？&lt;/h2&gt;
+&lt;p&gt;Rx.js在使用上集合了Promise和发布订阅模式的优点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;它在异步操作后生成数据，我们将其称作流(steam)&lt;/li&gt;
+&lt;li&gt;Rx.js为流提供了丰富的接口，允许我们对流进行过滤(filter)、累计(reduce)、映射(map)等。&lt;/li&gt;
+&lt;li&gt;它为异步操作提供了三个状态的回调：继续(next)、错误(error)和完成(complete)&lt;/li&gt;
+&lt;li&gt;核心依然是订阅。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;如何使用Rx.js不在本次讨论话题之内，它的API全面且实用，但是在使用之前不理解这门技术是如何产生的，在使用时候会发现一切都晦涩难懂。&lt;/p&gt;
+&lt;p&gt;下面我们提供一个Rx.js处理数据的例子来结束本次讨论的话题。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Observable.fromEvent(document.querySelector('input[type=text]'), 'input')
+    .map((event: any) =&amp;gt; event.target.value)
+    .filter(value =&amp;gt; value.length &amp;gt;= 2)
+    .subscribe({
+        next: (event: any) =&amp;gt; console.log(`You just typed ${event.target.value}!`),
+        error: (err) =&amp;gt; console.log(`Oops... ${err}`),
+        complete: () =&amp;gt; console.log(`Complete!`)
+    });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;</content:encoded></item><item><title>函数式编程基础：函数、this与闭包</title><description>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;什么是函数？&lt;/h2&gt;
+&lt;p&gt;函数的本质是数据的映射。函数接受一个输入，并输出映射结果。&lt;/p&gt;
+&lt;h2 id=""&gt;函数的返回值&lt;/h2&gt;
+&lt;p&gt;函数必然会有一个返回值，不论你是function表达式还是lambda表达式。如果没有显示写&lt;code&gt;return&lt;/code&gt;语句，则默认返回值为&lt;code&gt;undefined&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="functionthis"&gt;function表达式中的this指针&lt;/h2&gt;
+&lt;p&gt;在function表达式中，this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let a = function() {
+    console.log(this)
+}
+a();
+// Window { ... }
+
+let b = {
+    str: 'Hi',
+    fun: function() {
+        console.log(this)
+    }
+}
+b.fun();
+// Object {b: &amp;quot;hi&amp;quot;, fun: function ... }
+
+let c = b.fun();
+c();
+// Window&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/han-shu-shi-bian-cheng-ji-chu-han-shu-thisyu-bi-bao/</link><guid isPermaLink="false">5b14f001dea7fc165a4cba4b</guid><category>ECMAScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:53:55 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;h2 id=""&gt;什么是函数？&lt;/h2&gt;
+&lt;p&gt;函数的本质是数据的映射。函数接受一个输入，并输出映射结果。&lt;/p&gt;
+&lt;h2 id=""&gt;函数的返回值&lt;/h2&gt;
+&lt;p&gt;函数必然会有一个返回值，不论你是function表达式还是lambda表达式。如果没有显示写&lt;code&gt;return&lt;/code&gt;语句，则默认返回值为&lt;code&gt;undefined&lt;/code&gt;。&lt;/p&gt;
+&lt;h2 id="functionthis"&gt;function表达式中的this指针&lt;/h2&gt;
+&lt;p&gt;在function表达式中，this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let a = function() {
+    console.log(this)
+}
+a();
+// Window { ... }
+
+let b = {
+    str: 'Hi',
+    fun: function() {
+        console.log(this)
+    }
+}
+b.fun();
+// Object {b: &amp;quot;hi&amp;quot;, fun: function ... }
+
+let c = b.fun();
+c();
+// Window { ... }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="lambdathis"&gt;lambda表达式中的this指针&lt;/h2&gt;
+&lt;p&gt;lambda表达式中this在表达式定义时就决定了，this指向的是。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class AClass {
+	constructor() {
+		this.a = &amp;quot;hi&amp;quot;;
+	}
+	
+	say() {
+		setTimeout(function() {
+			console.log(this)
+		})
+	}
+}
+let oa = new AClass();
+oa.say();
+// Window { ... }. 
+// 由于setTimeout是window的函数，所以在setTimeout中的function实际上是被window对象所调用
+
+class BClass {
+	constructor() {
+		this.a = &amp;quot;hi&amp;quot;;
+	}
+	
+	say() {
+		setTimeout(() =&amp;gt; {
+			console.log(this)
+		})
+	}
+}
+let ob = new BClass();
+ob.say();
+// BClass {a: &amp;quot;hi&amp;quot;}
+// lambda在定义时就决定了是指向BClass内部。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="functionthis"&gt;function表达式中this指针的重置&lt;/h2&gt;
+&lt;p&gt;使用call、apply和bind会修改调用者对象，即修改this指针。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let a = {
+    hi: 'a',
+    sayHi: function() {
+        console.log('this is ' + this.hi);
+    }
+}
+a.sayHi();
+// this is a
+let b = {
+    hi: 'b'
+}
+a.sayHi.call(b);
+// this is b
+// call会立即调用这个函数
+a.sayHi.apply(b);
+// this is b
+// apply会立即调用这个函数
+a.sayHi.bind(b)();
+// this is b
+// bind会将调用者对象绑定后生成一个闭包，供其需要时调用
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=""&gt;闭包是什么&lt;/h2&gt;
+&lt;p&gt;闭包是缓存了环境参数和处理自由变量与环境参数映射的函数，在环境参数发生变化时，处理映射的函数可以相应发生变化而无须重新定义。&lt;/p&gt;
+&lt;p&gt;这个映射可以是一个算术表达式，也可以是一个外部环境处理自由变量的方法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let environmentObject = {
+    number: 1,
+    sayHi: function(what) {
+        console.log('this is ' + what);
+    }
+};
+
+let closureAdd = function(environment) {
+    return function(free_variable) {
+        return environment.number+free_variable;
+    }
+}
+
+let closureFunction = function(environment) {
+    return function(free_variable) {
+        return environment.sayHi(free_variable);
+    }
+}
+
+let closureSet = function(environment) {
+    return function(free_variable) {
+        environment.number = free_variable;
+    }
+}
+
+let add = closureAdd(environmentObject);
+let say = closureFunction(environmentObject);
+add(5);
+// 6
+say('apple');
+// this is apple
+
+environmentObject.number = 2;
+environmentObject.sayHi = function(what) {
+    console.log('this is not ' + what);
+}
+add(5);
+// 7
+say('apple');
+// this is not apple
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=""&gt;闭包有什么用？&lt;/h2&gt;
+&lt;p&gt;如果我们需要处理一个数组，将数组中每一个数字都乘以某个数，通常会怎么做呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function times(arr, number) {
+    let newArr = [];
+    for(let item of arr) {
+        newArr.push(item * numbber);
+    }
+    return newArr;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是如果我们需求变了，需要对每个数字都除以5，我们又需要去将整个for循环写一遍。这时候我们可以考虑用闭包来优化：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;举例&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let map = (arr) =&amp;gt; {
+    return (handler) =&amp;gt; {
+        let newArr = [];
+        for(let item of arr) {
+            newArr.push(handler(item))
+        }
+        return newArr;
+    }
+}
+
+let times = (number) =&amp;gt; {
+    return (item) =&amp;gt; number * item
+};
+
+map([1,2,3,4,5])(times(5))
+// (5) [5, 10, 15, 20, 25]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没错，我们将迭代和映射分开了。在map闭包中，我们提供了迭代功能，而在times闭包中，我们提供了数据的映射。我们只要保证map能迭代，times能对每个输入的值能准确相乘，就能完成整个功能。&lt;/p&gt;
+&lt;p&gt;所以我们在使用数组时，可以使用&lt;code&gt;Array.map((item) =&amp;gt; {})&lt;/code&gt;来进行迭代的原因就是在数组的原型中实现了map闭包。&lt;/p&gt;
+&lt;h2 id=""&gt;什么是函数式编程？&lt;/h2&gt;
+&lt;p&gt;首先我们回到最先看看函数本质是什么。函数的本质是数据的映射，即通过一种关系从一个状态变成另一个状态。程序又是函数的集合。因此函数式编程的目的就是：将数据的处理流程分解成一个个小环节，保证每个环节的映射是对的，那就能保证整个流程是对的。因此在函数式编程中，函数是一等公民。是函数成为一等公民不是目的，而是方式。而其中闭包就是个很好的工具。&lt;/p&gt;
+&lt;h2 id=""&gt;下一步是什么？&lt;/h2&gt;
+&lt;p&gt;函数式编程中还有很多概念，比如柯里化，都不在这里继续展开，在以后的文章中可能会专门再来聊这些概念。&lt;/p&gt;
+&lt;p&gt;函数式编程已经有很多库实现了，&lt;a href="https://lodash.com/"&gt;Lodash&lt;/a&gt;、&lt;a href="http://ramdajs.com/"&gt;Ramda&lt;/a&gt;都是其中非常优秀的库，挑选一个你觉得合适的，就可以将这种优秀的模式用在你的代码中。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>TypeScript：泛型</title><description>&lt;div class="kg-card-markdown"&gt;&lt;h2 id="generics"&gt;泛型：&lt;code&gt;Generics&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;软件工程的主要部分就是构建一些即有声明良好且稳定的API又可重用的组件。而这些组件能帮助我们构建一个健壮且可扩展性强的系统。&lt;/p&gt;
+&lt;p&gt;在高级语言中，我们创造了一种可重用的组件，叫做泛型(&lt;code&gt;Generics&lt;/code&gt;)，用来处理不同类型的对象而并非单一类型的对象。&lt;/p&gt;
+&lt;p&gt;我们先来看一个例子，这个例子描述了一个函数，这个函数的作用是输入什么就输出什么。在不使用泛型的情况下，我们通常会这么声明这个函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity(arg: any): any {
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是如果我们使用&lt;code&gt;any&lt;/code&gt;类型，在我们调用这个方法获得返回值后我们就失去了这个输出结果的数据类型。我们如果输入一个数字(&lt;code&gt;number&lt;/code&gt;)，那么能得到的就只有&lt;code&gt;any&lt;/code&gt;类型。&lt;/p&gt;
+&lt;p&gt;因此，我们需要使用类型捕捉的方式来进行类型的获取。这样我们在获取返回值时也可以获取到返回值的类型。在这里，我们使用一种叫做&lt;em&gt;类型变量&lt;/em&gt;(&lt;code&gt;type variable&lt;/code&gt;)的特殊变量。这种变量专门处理变量的类型而不是变量的值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity&amp;lt;T&amp;gt;(arg: T): T&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/typescript-fan-xing/</link><guid isPermaLink="false">5b14efd8dea7fc165a4cba48</guid><category>TypeScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:53:07 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;h2 id="generics"&gt;泛型：&lt;code&gt;Generics&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;软件工程的主要部分就是构建一些即有声明良好且稳定的API又可重用的组件。而这些组件能帮助我们构建一个健壮且可扩展性强的系统。&lt;/p&gt;
+&lt;p&gt;在高级语言中，我们创造了一种可重用的组件，叫做泛型(&lt;code&gt;Generics&lt;/code&gt;)，用来处理不同类型的对象而并非单一类型的对象。&lt;/p&gt;
+&lt;p&gt;我们先来看一个例子，这个例子描述了一个函数，这个函数的作用是输入什么就输出什么。在不使用泛型的情况下，我们通常会这么声明这个函数。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity(arg: any): any {
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;但是如果我们使用&lt;code&gt;any&lt;/code&gt;类型，在我们调用这个方法获得返回值后我们就失去了这个输出结果的数据类型。我们如果输入一个数字(&lt;code&gt;number&lt;/code&gt;)，那么能得到的就只有&lt;code&gt;any&lt;/code&gt;类型。&lt;/p&gt;
+&lt;p&gt;因此，我们需要使用类型捕捉的方式来进行类型的获取。这样我们在获取返回值时也可以获取到返回值的类型。在这里，我们使用一种叫做&lt;em&gt;类型变量&lt;/em&gt;(&lt;code&gt;type variable&lt;/code&gt;)的特殊变量。这种变量专门处理变量的类型而不是变量的值。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;现在我们添加了一个类型变量&lt;code&gt;T&lt;/code&gt;到函数中，这个变量允许我们获取用户在使用这个函数时所提供的变量类型。这个函数里我们将类型&lt;code&gt;T&lt;/code&gt;作为参数类型和返回值类型。我们可以在一个函数里使用某一种类型作为参数类型，而返回值类型则是另外一种。此时，我们就可以称上面那个函数为泛型的。&lt;/p&gt;
+&lt;p&gt;我们现在用两种方式来调用这个函数。第一种就是我们将参数的类型和参数本身传给这个函数。需要注意的是类型参数需要用&lt;code&gt;&amp;lt;&amp;gt;&lt;/code&gt;包裹。如：&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let output = identity&amp;lt;string&amp;gt;(&amp;quot;myString&amp;quot;);  // type of output will be 'string'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同样，我们可以通过只传递参数来隐式调用函数，编译器会通过&lt;em&gt;类型参数推理&lt;/em&gt;(&lt;code&gt;type argument inference&lt;/code&gt;)的方式告知编译器我们使用了哪种类型作为类型&lt;code&gt;T&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;let output = identity(&amp;quot;myString&amp;quot;);  // type of output will be 'string'
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这种方式看起来更易读易写，但是在因对复杂的情况时，请不要省略类型变量，以防止造成不必要的错误。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="workingwithgenerictypevariables"&gt;使用泛型类型变量:&lt;code&gt;Working with Generic Type Variables&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;在你使用泛型时，编译器会强制要求你的函数体内每一个使用了泛型类型的变量的属性是准确的。&lt;/p&gt;
+&lt;p&gt;我们先来看一下例子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function loggingIdentity&amp;lt;T&amp;gt;(arg: T): T {
+    console.log(arg.length);  // Error: T doesn't have .length
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个地方会报错，原因是&lt;code&gt;T&lt;/code&gt;类型的数据并不一定包含&lt;code&gt;length&lt;/code&gt;这个属性。再来看下一个例子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function loggingIdentity&amp;lt;T&amp;gt;[](arg: T[]): T[] {
+    console.log(arg.length);  // Array has a .length, so no more error
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此处没有错误，原因是一个数组是有长度的。如果我们希望传入的是一个&lt;code&gt;T&lt;/code&gt;类型的数据且它有&lt;code&gt;length&lt;/code&gt;属性，我们应该怎么做呢？下面我们来介绍泛型类型。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="generictype"&gt;泛型类型:&lt;code&gt;Generic Type&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;我们来看一下完整的泛型函数定义。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+let myIdentity: &amp;lt;T&amp;gt;(arg: T) =&amp;gt; T = identity;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们可以在函数定义时修改函数中类型参数的参数名。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+let myIdentity: &amp;lt;U&amp;gt;(arg: U) =&amp;gt; U = identity;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同样，我们可以通过类似写对象的方式来写泛型的调用签名。（关于调用签名，我们可以回顾接口章节）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+let myIdentity: {&amp;lt;T&amp;gt;(arg: T): T} = identity;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;此外，我们还可以定义一个描述泛型函数类型的接口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;interface GenericIdentityFn {
+    &amp;lt;T&amp;gt;(arg: T): T;
+}
+function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+let myIdentity: GenericIdentityFn = identity;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;更进一步，我们可以通过将泛型类型变量提取到接口描述中，使接口中所有的函数、属性都接受泛型类型的描述，使其成为一个泛型接口。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;interface GenericIdentityFn&amp;lt;T&amp;gt; {
+    (arg: T): T;
+}
+function identity&amp;lt;T&amp;gt;(arg: T): T {
+    return arg;
+}
+let myIdentity: GenericIdentityFn&amp;lt;number&amp;gt; = identity;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在此时，我们使用接口来描述一个变量时，就要告知这个接口接收什么样的类型来描述泛型。&lt;/p&gt;
+&lt;p&gt;和描述一个泛型接口类似的，我们来描述一个泛型类。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class GenericNumber&amp;lt;T&amp;gt; {
+    zeroValue: T;
+    add: (x: T, y: T) =&amp;gt; T;
+}
+let myGenericNumber = new GenericNumber&amp;lt;number&amp;gt;();
+myGenericNumber.zeroValue = 0;
+myGenericNumber.add = function(x, y) { return x + y; };
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们在讨论类的时候说到类其实有两个部分，一个是静态部分一个是实例部分。而泛型只覆盖了实例部分。而在使用类的静态部分时，我们无法使用泛型来描述它的静态部分。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="genericconstraints"&gt;泛型约束：&lt;code&gt;Generic Constraints&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;我们现在来讨论一下泛型的兼容性。回到之前的一个例子。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function loggingIdentity&amp;lt;T&amp;gt;(arg: T): T {
+    console.log(arg.length);  // Error: T doesn't have .length
+    return arg;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在这个例子中，我们需要访问&lt;code&gt;arg&lt;/code&gt;的&lt;code&gt;length&lt;/code&gt;属性，而编译器不能确保所有的类型全都有这个属性，所以它会报错。而通常我们在使用这个函数时，我们期望的并不是所有的类型，而是带有&lt;code&gt;length&lt;/code&gt;属性的类型。所以如果一个变量有一些成员，且某些成员是必须的，我们就需要列出需求清单来约束传入的类型。&lt;/p&gt;
+&lt;p&gt;为了解决这个问题，我们通过声明一个接口来描述我们的约束。在这里，我们创建一个带有&lt;code&gt;length&lt;/code&gt;属性的接口，并使类型&lt;code&gt;T&lt;/code&gt;扩展它来作为约束。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;interface Lengthwise {
+    length: number;
+}
+function loggingIdentity&amp;lt;T extends Lengthwise&amp;gt;(arg: T): T {
+    console.log(arg.length);  // Now we know it has a .length property, so no more error
+    return arg;
+}
+loggingIdentity(3);  // Error, number doesn't have a .length property
+loggingIdentity({length: 10, value: 3});
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样就意味着在做类型检查时，我们会对参数进行检查，看看这个类型是否符合接口的描述——即传入的对象必须有一个实例部分的属性，名字叫做&lt;code&gt;length&lt;/code&gt;且类型是&lt;code&gt;number&lt;/code&gt;。如果调用的参数不符合这个约束，则编译器会报错。&lt;/p&gt;
+&lt;p&gt;同样我们可以使用泛型来扩展泛型。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function copyFields&amp;lt;T extends U, U&amp;gt;(target: T, source: U): T {
+    for (let id in source) {
+        target[id] = source[id];
+    }
+    return target;
+}
+
+let x = { a: 1, b: 2, c: 3, d: 4 };
+copyFields(x, { b: 10, d: 20 }); // okay
+copyFields(x, { Q: 90 });  // error: property 'Q' isn't declared in 'x'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个描述表示的是，我们接受两个泛型类型的参数用作函数的参数，而第一个类型要被第二个类型所约束，即第二个类型的对象属性必须存在于第一个类型的对象属性列表中。否则就会报错。我们可以将第一个类型看成是子类而第二个类型看成是父类，但是要求并不如继承那样严格罢了。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="usingclasstypesingenerics"&gt;在泛型中使用类类型：&lt;code&gt;Using Class Types in Generics&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;我们可以讲一个类作为类型传入到泛型声明的函数中。所以我们需要对其做一个约束：我们判断传入的类型是否存在一个&lt;code&gt;new&lt;/code&gt;的函数，且这个函数返回一个该类型的对象。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;function create&amp;lt;T&amp;gt;(c: {new(): T; }): T {
+    return new c();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个代码分为几个部分。接受的参数为&lt;code&gt;c: {new(): T; }&lt;/code&gt;，表示传入的参数名为&lt;code&gt;c&lt;/code&gt;，它有一个名为&lt;code&gt;new()&lt;/code&gt;的属性(这个属性恰好就是构造函数)，且这个属性的返回值为&lt;code&gt;T&lt;/code&gt;，这就决定了传入的&lt;code&gt;c&lt;/code&gt;是类类型，即类的类型而不是对象，作为一个参数传入函数中。如果要理解这个模型我们可以借助接口章节的范例来理解。其次，我们定义了返回类型为&lt;code&gt;T&lt;/code&gt;的返回值，而在函数体内，我们通过&lt;code&gt;new&lt;/code&gt;来新建类型&lt;code&gt;c&lt;/code&gt;的对象。&lt;/p&gt;
+&lt;p&gt;这和接口章节的范例有些类似。此处我们通过泛型这种方式创建的是任意一种类型的对象*(此处可以考证一下如果我们对&lt;code&gt;new()&lt;/code&gt;的参数列表进行约束是否会影响传入的类)*。而使用接口描述一个符合构造函数约束的类，然后用接口作为类型检查的标准来检查这个传入的类是否实现了该接口。区别就在于这个类是否是一个接口的实现。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;示例:&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;class BeeKeeper {
+    hasMask: boolean;
+}
+class ZooKeeper {
+    nametag: string;
+}
+class Animal {
+    numLegs: number;
+}
+class Bee extends Animal {
+    keeper: BeeKeeper;
+}
+class Lion extends Animal {
+    keeper: ZooKeeper;
+}
+function findKeeper&amp;lt;A extends Animal, K&amp;gt; (a: {new(): A; prototype: {keeper: K}}): K {
+    return a.prototype.keeper;
+}
+findKeeper(Lion).nametag;  // typechecks!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;(此处需要理解&lt;em&gt;new&lt;/em&gt;操作符和&lt;em&gt;prototype&lt;/em&gt;)&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>使用Angular和ionic构建Hybrid App（二）—— 准备篇</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;俗话说“工欲善其事，必先利其器”。作为一个需要开发App的Web开发者来说，直接动手之前，必然需要做一些准备性的调研。这里，我就列举几个大家比较关心并且很大概率会去调研的问题。&lt;/p&gt;
+&lt;h2 id=""&gt;如何解决用户体验的问题&lt;/h2&gt;
+&lt;p&gt;都说Native App如丝般顺滑，Web App的表现就难说了。这句话其实不无道理，在Android 5.0之前，Android手机自带的WebView（应用内嵌浏览器）性能真的堪忧，况且各大厂商还喜欢魔改浏览器，导致兼容性、性能都存在很大问题。&lt;/p&gt;
+&lt;p&gt;在Android 5.0之后，Android系统自带的WebView就被替换成了Chromium，性能提升的非常明显，而iOS设备上的WebView一直性能都很出色，所以现在的最大问题就是Android 5.0以下的设备如何提升性能的问题。&lt;/p&gt;
+&lt;p&gt;这个时候（其实很早之前）intel就站出来解决了这个问题。一个名叫&lt;a href="https://crosswalk-project.org/"&gt;Crosswalk Project&lt;/a&gt;的项目，解决了低版本以及低端设备上的性能问题。Crosswalk的WebView也是基于Chromium，但是为低端、低版本设备做了良好的适配。从此你无需再为不同设备的WebView考虑适配的问题，现在你只需要适配Chromium，还能得到良好的用户体验。&lt;/p&gt;
+&lt;p&gt;在新的ionic版本中，默认就为你集成了Crosswalk，不需要自己再次安装。如果你是用的是ionic&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-er-zhun-bei-pian/</link><guid isPermaLink="false">5b14ef84dea7fc165a4cba45</guid><category>ionic</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:51:42 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;俗话说“工欲善其事，必先利其器”。作为一个需要开发App的Web开发者来说，直接动手之前，必然需要做一些准备性的调研。这里，我就列举几个大家比较关心并且很大概率会去调研的问题。&lt;/p&gt;
+&lt;h2 id=""&gt;如何解决用户体验的问题&lt;/h2&gt;
+&lt;p&gt;都说Native App如丝般顺滑，Web App的表现就难说了。这句话其实不无道理，在Android 5.0之前，Android手机自带的WebView（应用内嵌浏览器）性能真的堪忧，况且各大厂商还喜欢魔改浏览器，导致兼容性、性能都存在很大问题。&lt;/p&gt;
+&lt;p&gt;在Android 5.0之后，Android系统自带的WebView就被替换成了Chromium，性能提升的非常明显，而iOS设备上的WebView一直性能都很出色，所以现在的最大问题就是Android 5.0以下的设备如何提升性能的问题。&lt;/p&gt;
+&lt;p&gt;这个时候（其实很早之前）intel就站出来解决了这个问题。一个名叫&lt;a href="https://crosswalk-project.org/"&gt;Crosswalk Project&lt;/a&gt;的项目，解决了低版本以及低端设备上的性能问题。Crosswalk的WebView也是基于Chromium，但是为低端、低版本设备做了良好的适配。从此你无需再为不同设备的WebView考虑适配的问题，现在你只需要适配Chromium，还能得到良好的用户体验。&lt;/p&gt;
+&lt;p&gt;在新的ionic版本中，默认就为你集成了Crosswalk，不需要自己再次安装。如果你是用的是ionic 1，请参考这个&lt;a href="https://crosswalk-project.org/documentation/cordova.html"&gt;教程&lt;/a&gt;进行安装。&lt;/p&gt;
+&lt;h2 id=""&gt;如何解决启动过慢的问题&lt;/h2&gt;
+&lt;p&gt;其实ionic启动时的确存在大家考虑的启动过慢的问题。ionic在启动时会展示启动画面（Splash），启动画面之后再进行进一步的加载WebView，而此时界面时纯白的，因为Angular启动也需要一段时间（哪怕你是AOT编译后）。通常我们在PC的浏览器中打开一个Angular应用时，都会给他提供一个Loading界面来避免Angular启动等待白屏所带来的尴尬。但是在App中，原生应用本身存在启动画面（而且适配良好），你进入到WebView之后，又看一次启动画面，先不说等待时间长，适配也存在一个问题。&lt;/p&gt;
+&lt;p&gt;那么如何解决这个问题？&lt;/p&gt;
+&lt;p&gt;首先在ionic的配置项中，可以选择这么配置启动画面：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;  &amp;lt;preference name=&amp;quot;FadeSplashScreenDuration&amp;quot; value=&amp;quot;0&amp;quot;/&amp;gt;
+  &amp;lt;preference name=&amp;quot;SplashShowOnlyFirstTime&amp;quot; value=&amp;quot;false&amp;quot;/&amp;gt;
+  &amp;lt;preference name=&amp;quot;SplashScreenDelay&amp;quot; value=&amp;quot;100&amp;quot;/&amp;gt;
+  &amp;lt;preference name=&amp;quot;AutoHideSplashScreen&amp;quot; value=&amp;quot;false&amp;quot;/&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;解释一下这个配置项：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FadeSplashScreenDuration&lt;/code&gt;指的是启动画面的消失动画延续时间。我们将其取消。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SplashShowOnlyFirstTime&lt;/code&gt;指的是是否仅仅在首次启动（或者杀死应用后再次启动）的时候展示启动画面。我们选择false表示每次启动应用都展示。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SplashScreenDelay&lt;/code&gt;指的是启动话面出现多久后启动应用（实际上你可以把它当作启动WebView）。我们配置了100ms这个比较短的时间。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;AutoHideSplashScreen&lt;/code&gt;指的是是否需要自动关闭启动画面。这个配置很重要，我们会把它设置成false，就是说如果我来控制启动画面你要在什么时候关闭。很明显的，我们只要在启动完Angular再来调用启动画面的关闭就可以解决了刚才所说的问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;ionic（Angular）的启动到页面加载完成需要1～3s，之后页面完全加载后再来关闭启动画面，这个时间展示启动画面足矣，还能带来良好体验，一举两得。&lt;/p&gt;
+&lt;h2 id=""&gt;能否集成热更新&lt;/h2&gt;
+&lt;p&gt;答案当然是没问题。我在这里提供两个解决方案：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href="https://github.com/nordnet/cordova-hot-code-push"&gt;Cordova-hot-code-push&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://ionicframework.com/docs/native/code-push/"&gt;ionic code push&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;前者是我一直在用的一个热更新插件，而后者是ionic官方文档中提供的一个解决方案，大家选择自己喜欢的来用就行。&lt;/p&gt;
+&lt;h2 id="ionicnative"&gt;如果ionic Native不能满足自己的需求怎么办&lt;/h2&gt;
+&lt;p&gt;去&lt;a href="http://cordova.apache.org/plugins/"&gt;Cordova官方库&lt;/a&gt;和GitHub上找一找吧。基本上都能找到你想要的插件。&lt;/p&gt;
+&lt;p&gt;大家对一个新事物的顾虑大多是“这玩意儿看起来挺好的，但是直到你用的时候才知道有哪些坑”，我这篇文章不知道能否打消大部分同学的顾虑，但是就我的经验来说，大部分问题都可以被妥善又不是优雅的解决，这就是为什么我喜欢使用ionic的原因。&lt;/p&gt;
+&lt;p&gt;如果大家有什么问题，也欢迎留言或者私信讨论，如果有必要的话，我还会在下篇文章发布之前更新这篇准备篇，为大家在使用ionic前打消大多数的顾虑，或者解决大多数人都会碰到的问题。谢谢大家。&lt;/p&gt;
+&lt;p&gt;下一篇，我会聊一聊ionic使用上的一些事情。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>使用Angular和ionic构建Hybrid App（一）—— 介绍篇</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问&lt;a href="https://www.zhihu.com/question/67888211"&gt;Angular如何构建原生应用&lt;/a&gt;，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://ionicframework.com/"&gt;ionic&lt;/a&gt;是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。&lt;/p&gt;
+&lt;p&gt;ionic用于开发Hybrid App，那么Hybrid App又是什么呢？&lt;/p&gt;
+&lt;p&gt;通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。&lt;/p&gt;
+&lt;p&gt;那相对应的，在浏览器中运行的应用我们通常称做Web App。&lt;/p&gt;
+&lt;p&gt;Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/</link><guid isPermaLink="false">5b14ef3cdea7fc165a4cba42</guid><category>ionic</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:50:29 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问&lt;a href="https://www.zhihu.com/question/67888211"&gt;Angular如何构建原生应用&lt;/a&gt;，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href="http://ionicframework.com/"&gt;ionic&lt;/a&gt;是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。&lt;/p&gt;
+&lt;p&gt;ionic用于开发Hybrid App，那么Hybrid App又是什么呢？&lt;/p&gt;
+&lt;p&gt;通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。&lt;/p&gt;
+&lt;p&gt;那相对应的，在浏览器中运行的应用我们通常称做Web App。&lt;/p&gt;
+&lt;p&gt;Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、电话、短信、播放音乐等）时，我们需要使用到Native的代码来实现功能，而其他的部分依托于内嵌在原生应用WebView中的Web部分（HTML、JavaScript和CSS）来实现的应用；或者大部分功能依托于原生代码来实现，而仅仅只有类似活动页等等经常需要运营的功能使用内嵌浏览器进行实现。总之，就是原生和Web各取所长，用于构建应用的一种方式。&lt;/p&gt;
+&lt;p&gt;ionic使用的就是第一种方式。它以&lt;a href="https://cordova.apache.org/"&gt;Cordova&lt;/a&gt;为基础，提供了原生的调用能力和调用标准，并且解决跨平台（不只有iOS和Android平台）的问题；使用&lt;a href="https://angular.cn/"&gt;Angular&lt;/a&gt;和ionic内建组件来作为UI和业务逻辑的编写工具，按需带来统一和差异化的用户体验，一次编写，跨平台部署，降低了许多的开发成本。&lt;/p&gt;
+&lt;p&gt;这么说太官方了。我们以走马观花的方式，看看ionic到底给我们带来了什么。&lt;/p&gt;
+&lt;h2 id="uicomponent"&gt;&lt;a href="http://ionicframework.com/docs/components/"&gt;UI Component&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;ionic内置了许多的组件：我们需要用的Button、Select、Checkbox这些最基本的基本组件肯定不在话下，另外还提供了多种样式的弹窗（Alert、Prompt、ActionSheet、Modal、Loading等等），以及页面模版（侧滑栏、Tab）可供选择，并且内置了许多font icon可以使用。&lt;/p&gt;
+&lt;h2 id="api"&gt;&lt;a href="http://ionicframework.com/docs/api/"&gt;API&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;API介绍了页面的生命周期、跳转等等最常用也最需要关心的功能之外，还提供了下拉刷新、上拉加载等等常用模版组件使用方式和事件响应处理。&lt;/p&gt;
+&lt;h2 id="ionicnative"&gt;&lt;a href="http://ionicframework.com/docs/native/"&gt;ionic Native&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;这是官方支持的Native组件库，简单的诸如电话短信、设备信息，复杂的有文件上传下载、App全包或者热更新、扫码、地理位置信息，一应俱全。&lt;/p&gt;
+&lt;p&gt;如果你使用了第三方服务，不少的第三方服务提供商也提供了Cordova插件可以供大家使用：比如支付有Ping++，推送有JPush等等。&lt;/p&gt;
+&lt;h2 id="theming"&gt;&lt;a href="http://ionicframework.com/docs/theming/"&gt;Theming&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;ionic定义了不少的主题风格，但是如果依然不符合你的需求，你可以自定义风格来实现界面的样式和颜色。&lt;/p&gt;
+&lt;h2 id="cli"&gt;&lt;a href="http://ionicframework.com/docs/cli/"&gt;CLI&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;ionic的CLI提供了页面的自动生成、编译、打包等功能，这些都是必备的。但是有个超级使用的功能真是不得不推荐：就是icon和启动画面生成器。使用命令行，就能为你的应用生成全套的icon，不论是Android还是iOS。&lt;/p&gt;
+&lt;p&gt;在这些工具的帮助下，作为一个原生开发0基础的前端工程师，足够有能力构建一个你想要的应用了吧！&lt;/p&gt;
+&lt;p&gt;下一篇，我们再来聊聊关于ionic开发你所要准备好的一切。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>使用Angular和ionic构建Hybrid App（三）—— 导航、生命周期和浏览器</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：这篇文章的草稿在我的电脑里躺了半年。这段时间困惑非常多，这篇文章也是其中之一，就是这个系列接下来应该用哪种方式来帮助大家了解和使用ionic。很多东西文档上已经写的很清楚，大家看看文档不就行了吗？这个疑惑尽管现在还没有解开，所以还希望各位读者能留言，来谈谈大家想要看到什么。谢谢大家的支持！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;ionic尽管使用了Angular作为实现的框架，它内部的导航方式却不同于Angular这种基于路由方式，而是视图栈。&lt;/p&gt;
+&lt;p&gt;什么是视图栈？其实从字面意思就能理解，无非就是我们把视图的导航以栈的形式缓存，而我们显示的永远是栈顶，在需要显示的时候压栈，在返回的时候出栈。&lt;/p&gt;
+&lt;p&gt;在ionic中，用&lt;a href="https://ionicframework.com/docs/api/navigation/NavController/"&gt;NavController&lt;/a&gt;来管理整个应用的视图栈。它提供了两个最基本的方法来管理视图栈，push()和pop()，在我们需要显示一个页面的时候，通过调用push()方法来展示，这个方法在你需要的时候还能从上一个页面传递参数，而返回上个页面，也仅仅需要调用pop()。另外，还可以通过popToRoot()来返回到根部页面，insert()在堆栈间插入某个页面等等。&lt;/p&gt;
+&lt;p&gt;这时候可能会问，如果我需要做返回到上个页面后刷新之类的需求，应该怎么处理呢？这里就要介绍一下生命周期机制了。&lt;/p&gt;
+&lt;p&gt;生命周期，就是一个页面存在在整个业务流程中间的某些状态，比如创建视图、视图加载中、视图加载完成、视图准备销毁、视图销毁中、视图销毁完成等等，&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-san-dao-hang-sheng-ming-zhou-qi-he-liu-lan-qi/</link><guid isPermaLink="false">5b14ef1edea7fc165a4cba3f</guid><category>ionic</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:50:04 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：这篇文章的草稿在我的电脑里躺了半年。这段时间困惑非常多，这篇文章也是其中之一，就是这个系列接下来应该用哪种方式来帮助大家了解和使用ionic。很多东西文档上已经写的很清楚，大家看看文档不就行了吗？这个疑惑尽管现在还没有解开，所以还希望各位读者能留言，来谈谈大家想要看到什么。谢谢大家的支持！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;ionic尽管使用了Angular作为实现的框架，它内部的导航方式却不同于Angular这种基于路由方式，而是视图栈。&lt;/p&gt;
+&lt;p&gt;什么是视图栈？其实从字面意思就能理解，无非就是我们把视图的导航以栈的形式缓存，而我们显示的永远是栈顶，在需要显示的时候压栈，在返回的时候出栈。&lt;/p&gt;
+&lt;p&gt;在ionic中，用&lt;a href="https://ionicframework.com/docs/api/navigation/NavController/"&gt;NavController&lt;/a&gt;来管理整个应用的视图栈。它提供了两个最基本的方法来管理视图栈，push()和pop()，在我们需要显示一个页面的时候，通过调用push()方法来展示，这个方法在你需要的时候还能从上一个页面传递参数，而返回上个页面，也仅仅需要调用pop()。另外，还可以通过popToRoot()来返回到根部页面，insert()在堆栈间插入某个页面等等。&lt;/p&gt;
+&lt;p&gt;这时候可能会问，如果我需要做返回到上个页面后刷新之类的需求，应该怎么处理呢？这里就要介绍一下生命周期机制了。&lt;/p&gt;
+&lt;p&gt;生命周期，就是一个页面存在在整个业务流程中间的某些状态，比如创建视图、视图加载中、视图加载完成、视图准备销毁、视图销毁中、视图销毁完成等等，通过生命周期事件，我们可以在业务代码中控制我们需要的初始化、数据更新、数据销毁等等。例如：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { Component } from '@angular/core';
+
+@Component({
+    template: 'Hello World'
+})
+class HelloWorld {
+    ionViewDidLoad() {
+        console.log(&amp;quot;I'm alive!&amp;quot;);
+    }
+    ionViewWillLeave() {
+        console.log(&amp;quot;Looks like I'm about to leave :(&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;ionic在页面导航中提供了一系列的生命周期事件：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ionViewDidLoad： 页面加载完毕。在ionic中，每个页面在创建后只会加载一次，因此这个事件只会触发一次，通常会在这个事件中放置一些初始化代码。
+ionViewWillEnter： 页面准备展示。在ionViewDidLoad后触发。每次页面进入栈顶就会触发。
+ionViewDidEnter： 页面展示完成。在ionViewWillEnter后触发。每次页面进入栈顶就会触发。
+ionViewWillLeave： 页面准备退出，不代表销毁。每次页面退出栈顶就会触发。
+ionViewDidLeave： 页面退出完毕，不代表销毁。每次页面退出栈顶就会触发。
+ionViewWillUnload：页面将会被销毁。页面销毁前会触发，赶紧缓存一下重要的数据，离开这该死的鬼地方。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;通常，我们经常会需要用到返回到上个页面后刷新，就可以在页面中注册ionViewWillEnter事件来进行页面的刷新。&lt;/p&gt;
+&lt;p&gt;我们将ionic代码编译打包成native app之后，发现在Android平台上返回键能正常的按照我们想要的逻辑进行返回。这得益于ionic提供的Platform插件中可以注册监听返回键registerBackButtonAction()。这时候，我遇到了一个问题，就是我昨天说，我希望能&lt;a href="https://zhuanlan.zhihu.com/p/35043093"&gt;All in Web&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;据我所知，ionic在serve阶段（就是我们开发的时候会使用ionic serve命令在浏览器中进行开发）就会生成带有service worker的PWA工程。Platform插件是通过js-bridge来和Android层交互，获取返回键的事件，那我们如何在浏览器中让Android返回键也能很好工作呢？&lt;/p&gt;
+&lt;p&gt;在Android系统的浏览器中，点击返回键触发的是history.back()事件，而在这个时候，我们可以监听到popstate事件，那么配合ionic我们应该怎么去做返回呢？我直接上&lt;a href="https://github.com/ionic-team/ionic/issues/6363"&gt;代码&lt;/a&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { Component, ViewChild } from &amp;quot;@angular/core&amp;quot;;
+import { Nav, Platform, MenuController, IonicApp, App } from &amp;quot;ionic-angular&amp;quot;;
+import { SplashScreen } from &amp;quot;@ionic-native/splash-screen&amp;quot;;
+import { StatusBar } from &amp;quot;@ionic-native/status-bar&amp;quot;;
+import * as moment from &amp;quot;moment&amp;quot;;
+
+import { environment } from &amp;quot;../environments/environment&amp;quot;;
+import { IdleService, RedirectService, SessionService } from &amp;quot;../core&amp;quot;;
+import { HomePage, LoginPage, PageA, PageB } from &amp;quot;../pages&amp;quot;;
+
+@Component({
+    templateUrl: &amp;quot;app.html&amp;quot;
+})
+export class MyApp {
+    @ViewChild(Nav) nav: Nav;
+
+    private version = environment.deployDateTime;
+
+    public rootPage: any = LoginPage;
+    public pages: Array&amp;lt;{ title: string, component: any }&amp;gt;;
+    public routeHistory: Array&amp;lt;any&amp;gt;;
+
+    constructor(
+        public menu: MenuController,
+        public platform: Platform,
+        private ionicApp: IonicApp,
+        private idleService: IdleService,
+        private redirectService: RedirectService,
+        private sessionService: SessionService,
+        private splashScreen: SplashScreen,
+        private statusBar: StatusBar) {
+
+        this.routeHistory = [];
+
+        this.initializeApp();
+
+        // used for an example of ngFor and navigation
+        this.pages = [
+            { title: &amp;quot;Home&amp;quot;, component: HomePage },
+            { title: &amp;quot;Page A&amp;quot;, component: PageA },
+            { title: &amp;quot;Page B&amp;quot;, component: PageB }
+        ];
+
+        this.setRootPage();
+
+        this.redirectService.redirectToLogin$.subscribe(() =&amp;gt; { this.nav.setRoot(LoginPage); });
+    }
+
+    public setRootPage(): void {
+        const token: string = this.sessionService.accessToken();
+        const tokenExpiration: Date = this.sessionService.expires();
+
+        const currentUtcDate: Date = moment(new Date()).utc().toDate();
+
+        if (token == null || token.length === 0 || tokenExpiration == null || tokenExpiration &amp;lt; currentUtcDate) {
+            this.rootPage = LoginPage;
+        } else {
+            this.rootPage = HomePage;
+            this.idleService.startIdleWatch();
+        }
+    }
+
+    public initializeApp(): void {
+        this.platform.ready().then(() =&amp;gt; {
+            this.setupBrowserBackButtonBehavior();
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
+        });
+    }
+
+    public openPage(page: any): void {
+        // reset the content nav to have just this page
+        // we wouldn't want the back button to show in this scenario
+        this.nav.setRoot(page.component);
+    }
+
+    private pushRouteHistory(page: any): void {
+
+        let component: any = page;
+
+        if(page.component) {
+            component = page.component;
+        }
+
+        if(
+            this.routeHistory.length === 0 ||
+            this.routeHistory.length &amp;gt; 0 &amp;amp;&amp;amp; this.routeHistory[this.routeHistory.length - 1] !== component) {
+
+            this.routeHistory.push(component);
+        }
+    }
+
+    private setupBrowserBackButtonBehavior(): void {
+        window.onpopstate = (event) =&amp;gt; {
+
+            console.log(&amp;quot;&amp;lt;- Back Button Pressed&amp;quot;);
+
+            if(this.menu.isOpen()) {
+                this.menu.close();
+                return;
+            }
+
+            if(this.ionicApp) {
+                let activePortal: any =
+                    this.ionicApp._loadingPortal.getActive() ||
+                    this.ionicApp._modalPortal.getActive() ||
+                    this.ionicApp._toastPortal.getActive() ||
+                    this.ionicApp._overlayPortal.getActive();
+
+                if(activePortal) {
+                    activePortal.dismiss();
+                    return;
+                }
+            }
+
+            if(this.routeHistory.length &amp;gt; 1) {
+
+                this.routeHistory.pop();
+
+                if(this.nav.canGoBack()) {
+                    this.nav.pop().catch((reason) =&amp;gt; {
+                        console.log(&amp;quot;Unable to navigate back:&amp;quot; + reason);
+                    });
+                } else {
+                    this.nav.setRoot(this.routeHistory[this.routeHistory.length - 1]);
+                }
+            }
+        };
+        
+        this.nav.viewWillEnter.subscribe((page) =&amp;gt; {
+            this.pushRouteHistory(page);
+        });
+        
+        this.nav.viewDidEnter.subscribe((app) =&amp;gt; {
+            if(this.routeHistory.length &amp;gt; 1) {
+                history.pushState(null, null, &amp;quot;&amp;quot;);
+            }
+        });
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个问题其实早就有人碰到——毕竟太阳底下无新鲜事，这段代码的核心就在setupBrowserBackButtonBehavior()中，通过注册监听viewWillEnter和viewDidEnter事件（在此之前我的确不知道这两个事件可以这种方式进行监听），创建一个假state到history中，并且在获取到浏览器的返回事件中通过nav.pop()来移除栈顶页面，来达到和native app一样的效果。&lt;/p&gt;
+&lt;p&gt;有人问我，能不能聊聊ionic中蓝牙插件使用的事。我在之前有做过一点尝试，那么下次我们就来聊聊看，ionic中，怎么用蓝牙插件。&lt;/p&gt;
+&lt;p&gt;谢谢大家！&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>ionic的未来展望（下）：关于Capacitor和对ionic团队的看法</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：上篇文章我们在聊Stencil.js，一个ionic团队从去年年底就开始的项目。Stencil.js致力于解决前端框架过多而组件不通用的问题，因此引入一个新的框架（笑，他们自己管Stencil.js叫做Compiler），希望使用Stencil.js做出来的组件大家都能用。现在我们再来聊聊Capacitor，另一个ionic团队开的新坑。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="capacitor"&gt;什么是Capacitor&lt;/h1&gt;
+&lt;p&gt;Capacitor致力于帮助开发者构建跨平台的渐进式应用的构建。他们同时支持构建PWA，Electron App，iOS和Android应用。希望一次编写，处处部署。ionic团队管这个叫做Native Progressive Web Apps。&lt;/p&gt;
+&lt;p&gt;其实Capacitor有点类似于Cordova（也支持部分的Cordova插件，但不是全部的），只不过多支持了PWA和Electron而已。构建的思路也是一样，将Web和Native分离，再通过Plugin和Bridge使Web应用具备Native的能力。&lt;/p&gt;
+&lt;p&gt;由于项目正在Alpha测试阶段，我也不做过多的赘述。大家可以看看&lt;a href="https://capacitor.ionicframework.com/"&gt;Capacitor的文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;其实现在React有React Native，Vue有Weex，他们自己能高度自洽而且构建的是真·原生应用，而Capacitor功能又和Cordova高度重合，如果ionic本身支持PWA，如果需要使用Electron可能费点力，但是Cordova现在的生态很棒，React Native现在的生态也很棒，我觉得Capacitor将来可能也会成为前端或者Hybrid历史长河中的一粒沙。&lt;/p&gt;
+&lt;h1 id="stenciljscapacitor"&gt;为什么是Stencil.&lt;/h1&gt;&lt;/div&gt;</description><link>http://localhost:2368/ionicde-wei-lai-zhan-wang-xia-guan-yu-capacitorhe-dui-ionictuan-dui-de-kan-fa/</link><guid isPermaLink="false">5b14eed0dea7fc165a4cba3c</guid><category>ionic</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:48:43 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：上篇文章我们在聊Stencil.js，一个ionic团队从去年年底就开始的项目。Stencil.js致力于解决前端框架过多而组件不通用的问题，因此引入一个新的框架（笑，他们自己管Stencil.js叫做Compiler），希望使用Stencil.js做出来的组件大家都能用。现在我们再来聊聊Capacitor，另一个ionic团队开的新坑。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="capacitor"&gt;什么是Capacitor&lt;/h1&gt;
+&lt;p&gt;Capacitor致力于帮助开发者构建跨平台的渐进式应用的构建。他们同时支持构建PWA，Electron App，iOS和Android应用。希望一次编写，处处部署。ionic团队管这个叫做Native Progressive Web Apps。&lt;/p&gt;
+&lt;p&gt;其实Capacitor有点类似于Cordova（也支持部分的Cordova插件，但不是全部的），只不过多支持了PWA和Electron而已。构建的思路也是一样，将Web和Native分离，再通过Plugin和Bridge使Web应用具备Native的能力。&lt;/p&gt;
+&lt;p&gt;由于项目正在Alpha测试阶段，我也不做过多的赘述。大家可以看看&lt;a href="https://capacitor.ionicframework.com/"&gt;Capacitor的文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;其实现在React有React Native，Vue有Weex，他们自己能高度自洽而且构建的是真·原生应用，而Capacitor功能又和Cordova高度重合，如果ionic本身支持PWA，如果需要使用Electron可能费点力，但是Cordova现在的生态很棒，React Native现在的生态也很棒，我觉得Capacitor将来可能也会成为前端或者Hybrid历史长河中的一粒沙。&lt;/p&gt;
+&lt;h1 id="stenciljscapacitor"&gt;为什么是Stencil.js和Capacitor？&lt;/h1&gt;
+&lt;p&gt;ionic团队的确意识到一个问题了：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;各个前端框架并不互通，写的优秀组件不能复用。&lt;/li&gt;
+&lt;li&gt;前端工程师有构建原生应用的需求，哪怕我只用原生ES。特别是跨平台应用，我需要学许多工具集来解决这个问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;这个需求是不是伪需求，这点非常值得探讨，但是，Capacitor为我们提供了一种可能性：你只需要知道怎么写Web页面，我就可以为你构建出你想要的各个平台的应用。&lt;/p&gt;
+&lt;p&gt;这和ionic不一样——ionic需要你会使用Angular；这也和Cordova不一样——Cordova致力于Native，而毫无PWA和Electron的能力。&lt;/p&gt;
+&lt;p&gt;Capacitor正好填补了这块空白。Web层，你可以使用React，可以使用Vue，或者Ember和jQuery，你负责写好页面，我帮你打包成你所需的东西。&lt;/p&gt;
+&lt;p&gt;加之Stencil的出现，未来ionic团队应该会将React\Vue\Angular甚至新的前端框架做好适配和编译即可（我觉得这就是为什么Stencil.js把自己叫做Compiler的原因吧）。&lt;/p&gt;
+&lt;p&gt;现在Stencil进入@ionic/core而Angular被剥离到@ionic/angular，将来我们甚至可能看到@ionic/react、@ionic/vue、@ionic/ember，Stencil负责将各个框架的代码编译成Web Component ，而开发者仅需要用自己喜欢的框架完成你要做的事，并且完全感受不到Stencil的存在。而且你使用你喜欢的框架，做出来的插件可以经过编译可以变成别的框架也能复用的代码。这种事，不挺符合开源精神吗？&lt;/p&gt;
+&lt;p&gt;反正，至少我挺希望将来能看到Stencil和Capacitor能够成功的。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>ionic的未来展望（上）：关于Stencil.js和吐槽</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="stenciljs"&gt;什么是Stencil.js&lt;/h1&gt;
+&lt;p&gt;ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\Ember.js\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频&lt;a href="https://www.youtube.com/watch?v=UfD-k7aHkQE&amp;amp;t=11s"&gt;Using Web Components in Ionic (Polymer Summit 2017)&lt;/a&gt;，来自YouTube）。&lt;/p&gt;
+&lt;p&gt;Stencil在文档中写到：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Stencil is a compiler that generates Web Components (more specifically,&lt;/p&gt;&lt;/blockquote&gt;&lt;/div&gt;</description><link>http://localhost:2368/ionicde-wei-lai-zhan-wang-shang-guan-yu-stencil-jshe-tu-cao/</link><guid isPermaLink="false">5b14eeb8dea7fc165a4cba39</guid><category>ionic</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:48:21 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：ionic团队我越来越看不懂了。据说是从React团队获得了启发，为ionic 4.0做了一系列的breaking change，Stencil就是其中之一。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="stenciljs"&gt;什么是Stencil.js&lt;/h1&gt;
+&lt;p&gt;ionic团队在介绍Stencil的诞生时聊了这样一件事情：最早在做ionic的时候，他们希望能开发一套组件，为Angular.js\Ember.js\jQuery等等所有框架（工具）所共用，但是那时候失败了，因为要做太多的工作去解决这个问题。现在，他们收到了React的启发（我也不知道受到了什么启发）决定完成当初的梦想。这时，Stencil.js诞生了。（详见视频&lt;a href="https://www.youtube.com/watch?v=UfD-k7aHkQE&amp;amp;t=11s"&gt;Using Web Components in Ionic (Polymer Summit 2017)&lt;/a&gt;，来自YouTube）。&lt;/p&gt;
+&lt;p&gt;Stencil在文档中写到：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Stencil is a compiler that generates Web Components (more specifically, Custom Elements). Stencil combines the best concepts of the most popular frameworks into a simple build-time tool.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但是看完文档我想说这玩意儿跟Framework基本上也差不多了。他们用到了以下这些工具或技术：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Virtual DOM&lt;/li&gt;
+&lt;li&gt;Async rendering (inspired by React Fiber)&lt;/li&gt;
+&lt;li&gt;Reactive data-binding&lt;/li&gt;
+&lt;li&gt;TypeScript&lt;/li&gt;
+&lt;li&gt;JSX&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通过这些工具，Stencil.js可以将你写的Web Component编译成Web Element（就是普通的HTML Element），使其可以在任何框架中很好的工作。而且，由于经过优化，编译速度得到了提升，渲染效率也得到了提高（据说是得益于React团队的启发）。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;吐槽一下，这个思路其实很棒也很蠢：很棒的原因在于，我们可以直接使用第三方通过Stencil开发的视图组件在各个框架中使用。很蠢的地方在于，Framework高度自洽，所有的东西都封装好了，如果你需要修改某个Stencil开发的组件，就不得不用到相关的工具，这时候你需要学习怎么样用Stencil去开发，维护成本感觉提高了不少。总之，这不是什么令人兴奋的好事。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="stencil"&gt;Stencil里都有什么&lt;/h1&gt;
+&lt;p&gt;Stencil的目的是为了开发一套工具，使通过Stencil开发的组件在各个框架中都能使用，那么最重要的部分肯定是组件（Component）。他们使用了TypeScript和JSX，最终组件看起来像是这样子的：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;my-first-component.tsx&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Component, Prop } from '@stencil/core';
+@Component({
+    tag: 'my-first-component',
+    styleUrl: 'my-first-component.scss'
+})
+export class MyComponent {
+    // Indicate that name should be a public property on the component
+    @Prop() name: string;
+    render() {
+        return (
+            &amp;lt;p&amp;gt; My name is {this.name} &amp;lt;/p&amp;gt;
+        );
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没错，满满的Angular和React混搭的感觉（可能更像用TS开发React多一点）。渲染函数中直接放入HTML代码片段，通过@Prop()装饰器装饰相应数据（Reactive Data）。外部在使用的时候，可以直接通过&lt;code&gt;&amp;lt;my-first-component name=&amp;quot;Max&amp;quot;&amp;gt;&amp;lt;/my-first-component&amp;gt;&lt;/code&gt;就可以进行组件的加载。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;吐槽一下，我只是不喜欢把HTML写在JS或TS里。这种代码风格让我无法接受。哪怕你写一个装饰器叫做@Template，指向一个HTML文件，然后再在编译前将HTML文件内联进自动化生成的渲染函数里，我都觉得好很多。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;其次就是装饰器。装饰器在TS中是一个很重要的存在，他协助我们能够更快的去定义一些行为而减少代码量。比如@Component装饰器就表示这个类他是一个组件，我们在处理这个类的时候就把它当作一个组件去处理。&lt;/p&gt;
+&lt;p&gt;在Stencil中，也提供了不少的装饰器，包括：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;@Prop()：属性，作为组件的外部数据输入来使用。&lt;/li&gt;
+&lt;li&gt;@Watch()：当属性发生变化的时候进行事件监听。&lt;/li&gt;
+&lt;li&gt;@State()：状态，通常作为组件内部数据与渲染的绑定，即状态发生变化，视图会重新渲染。&lt;/li&gt;
+&lt;li&gt;@Method()：组件对外暴露的接口。&lt;/li&gt;
+&lt;li&gt;@Element()：就是一个HTMLElement。&lt;/li&gt;
+&lt;li&gt;@Event()@Listen()：事件通知和监听。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;等等。大家可以去看看相关的文档，这里就不赘述这些装饰器的用法了。&lt;/p&gt;
+&lt;p&gt;除此之外，还有全局上下文（Context用于缓存全局数据，生命周期属于页面）、路由等功能。剩下的就是一些服务端渲染、预渲染、PWA等等工具的支持。&lt;/p&gt;
+&lt;h1 id="stenciljsionic"&gt;Stencil.js在ionic中的应用&lt;/h1&gt;
+&lt;p&gt;在ionic 4.0.0中，最核心的部分就是Stencil。ionic团队将angular从核心部分剥离：ionic-angular将会被剥离到@ionic/angular中。而Stencil.js，将会进入核心部分@ionic/core。我觉得将来我们甚至会看到@ionic/react、@ionic/vue存在的可能性。&lt;/p&gt;
+&lt;p&gt;最后，附上&lt;a href="https://stenciljs.com/"&gt;Stencil.js官网&lt;/a&gt;和&lt;a href="https://github.com/ionic-team/stencil"&gt;GitHub地址&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写在最后：后面的文章我来聊聊ionic团队在做的另外一个东西，就是正在Alpha测试的Capacitor，以及我对ionic团队这两个项目的一些思考。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;</content:encoded></item><item><title>深入Angular：组件(Component)动态加载</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;对于一个系统的框架设计来说，业务是一种桎梏，如果在框架中做了太多业务有关的事情，那么这个框架就变得狭隘且难以复用，它变成了你业务逻辑的一部分。在从会写代码开始，许多人就在追求代码上的自由：动态、按需加载你需要的部分。此时框架才满足足够抽象和需求无关的这种条件。所以高度抽象的前提是高度动态，今天我们先来聊聊关于Angular动态加载组件（这里的所有组件均指Component，下同）相关的问题。&lt;/p&gt;
+&lt;h1 id="angular"&gt;Angular如何在组件中声明式加载组件&lt;/h1&gt;
+&lt;p&gt;在开始之前，我们按照管理，通过&lt;code&gt;angular-cli&lt;/code&gt;创建一个工程，并且生成一个&lt;code&gt;a&lt;/code&gt;组件。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ng new dynamic-loader
+cd dynamic-loader
+ng g component a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用&lt;code&gt;ng serve&lt;/code&gt;运行这个工程后，我们可以看到一行&lt;code&gt;app works!&lt;/code&gt;的文字。如果我们需要在&lt;code&gt;app.comonent&lt;/code&gt;中加载&lt;code&gt;a.component&lt;/code&gt;，会在&lt;code&gt;app.comonent.&lt;/code&gt;&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/shen-ru-angular-zu-jian-component-dong-tai-jia-zai/</link><guid isPermaLink="false">5b14ee81dea7fc165a4cba36</guid><category>Angular</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:47:26 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;对于一个系统的框架设计来说，业务是一种桎梏，如果在框架中做了太多业务有关的事情，那么这个框架就变得狭隘且难以复用，它变成了你业务逻辑的一部分。在从会写代码开始，许多人就在追求代码上的自由：动态、按需加载你需要的部分。此时框架才满足足够抽象和需求无关的这种条件。所以高度抽象的前提是高度动态，今天我们先来聊聊关于Angular动态加载组件（这里的所有组件均指Component，下同）相关的问题。&lt;/p&gt;
+&lt;h1 id="angular"&gt;Angular如何在组件中声明式加载组件&lt;/h1&gt;
+&lt;p&gt;在开始之前，我们按照管理，通过&lt;code&gt;angular-cli&lt;/code&gt;创建一个工程，并且生成一个&lt;code&gt;a&lt;/code&gt;组件。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ng new dynamic-loader
+cd dynamic-loader
+ng g component a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;使用&lt;code&gt;ng serve&lt;/code&gt;运行这个工程后，我们可以看到一行&lt;code&gt;app works!&lt;/code&gt;的文字。如果我们需要在&lt;code&gt;app.comonent&lt;/code&gt;中加载&lt;code&gt;a.component&lt;/code&gt;，会在&lt;code&gt;app.comonent.html&lt;/code&gt;中加入一行&lt;code&gt;&amp;lt;app-a&amp;gt;&amp;lt;/app-a&amp;gt;&lt;/code&gt;（这个&lt;code&gt;selector&lt;/code&gt;也是由&lt;code&gt;angular-cli&lt;/code&gt;进行生成），在浏览器中打开&lt;code&gt;http://localhost:4200&lt;/code&gt;，可以看到两行文字：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;app works!
+a works!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;第二行文字（&lt;code&gt;a.component&lt;/code&gt;是由&lt;code&gt;angular-cli&lt;/code&gt;进行生成，通常生成的HTML中是&lt;code&gt;a works!&lt;/code&gt;）就是组件加载成功的标志。&lt;/p&gt;
+&lt;h1 id="angular"&gt;Angular如何在组件中动态加载组件&lt;/h1&gt;
+&lt;p&gt;在Angular中，我们通常需要一个宿主（Host）来给动态加载的组件提供一个容器。这个宿主在Angular中就是&lt;code&gt;&amp;lt;ng-template&amp;gt;&lt;/code&gt;。我们需要找到组件中的容器，并且将目标组件加载到这个宿主中，就需要通过创建一个指令（Directive）来对容器进行标记。&lt;/p&gt;
+&lt;p&gt;我们编辑&lt;code&gt;app.comonent.html&lt;/code&gt;文件：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.html&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;
+    {{title}}
+&amp;lt;/h1&amp;gt;
+&amp;lt;ng-template dl-host&amp;gt;&amp;lt;/ng-template&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到，我们在&lt;code&gt;&amp;lt;ng-template&amp;gt;&lt;/code&gt;上加入了一个属性&lt;code&gt;dl-host&lt;/code&gt;（为了方便理解，解释一下这其实就是dynamic-load-host的简写），然后我们添加一个用于标记这个属性的指令&lt;code&gt;dl-host.directive&lt;/code&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dl-host.directive.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Directive, ViewContainerRef } from '@angular/core';
+@Directive({
+    selector: '[dl-host]'
+})
+export class DlHostDirective {
+    constructor(public viewContainerRef: ViewContainerRef) { }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们在这里注入了一个&lt;code&gt;ViewContainerRef&lt;/code&gt;的服务，它的作用就是为组件提供容器，并且提供了一系列的管理这些组件的方法。我们可以在&lt;code&gt;app.component&lt;/code&gt;中通过&lt;code&gt;@ViewChild&lt;/code&gt;获取到&lt;code&gt;dl-host&lt;/code&gt;的实例，因此进而获取到其中的&lt;code&gt;ViewContainerRef&lt;/code&gt;。另外，我们需要为&lt;code&gt;ViewContainerRef&lt;/code&gt;提供需要创建组件A的工厂，所以还需要在&lt;code&gt;app.component&lt;/code&gt;中注入一个工厂生成器&lt;code&gt;ComponentFactoryResolver&lt;/code&gt;，并且在&lt;code&gt;app.module&lt;/code&gt;中将需要生成的组件注册为一个&lt;code&gt;@NgModule.entryComponent&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Component, ViewChild, ComponentFactoryResolver } from '@angular/core';
+import { DlHostDirective } from './dl-host.directive';
+import { AComponent } from './a/a.component';
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+    title = 'app works!';
+    @ViewChild(DlHostDirective) dlHost: DlHostDirective;
+    constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+    
+    ngAfterViewInit() {
+    	this.dlHost.viewContainerRef.createComponent(
+            this.componentFactoryResolver.resolveComponentFactory(AComponent)
+    	);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.module.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppComponent } from './app.component';
+import { AComponent } from './a/a.component';
+import { DlHostDirective } from './dl-host.directive';
+
+@NgModule({
+    declarations: [AppComponent, AComponent, DlHostDirective],
+    imports: [BrowserModule, FormsModule, HttpModule],
+    entryComponents: [AComponent],
+    providers: [],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里就不得不提到一句什么是&lt;code&gt;entry component&lt;/code&gt;。以下是文档原文：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An entry component is any component that Angular loads imperatively by type.&lt;br&gt;
+所有通过类型进行命令式加载的组件都是入口组件。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这时候我们再去验证一下，界面展示应该和声明式加载组件相同。&lt;/p&gt;
+&lt;h1 id="angular"&gt;Angular中如何动态添加宿主&lt;/h1&gt;
+&lt;p&gt;我们不可能在每一个需要动态添加一个宿主组件，因为我们甚至都不会知道一个组件会在哪儿被创建出来并且被添加到页面中——就比如一个模态窗口，你希望在你需要使用的时候就能打开，而并非受限与宿主。在这种需求的前提下，我们就需要动态添加一个宿主到组件中。&lt;/p&gt;
+&lt;p&gt;现在，我们将&lt;code&gt;app.component&lt;/code&gt;作为宿主的载体，但是并不提供宿主的显式声明，我们动态去生成宿主。那么就先将&lt;code&gt;app.comonent.html&lt;/code&gt;文件改回去。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.html&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;
+    {{title}}
+&amp;lt;/h1&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;现在这个界面什么都没有了，就只剩下一个标题。那么接下来我们需要往DOM中注入一个Node，例如一个&lt;code&gt;&amp;lt;div&amp;gt;&lt;/code&gt;节点作为页面上的宿主，再通过工厂生成一个&lt;code&gt;AComponent&lt;/code&gt;并将这个组件的根节点添加到宿主上。这种情况下我们需要通过工厂直接创建组件，而不是&lt;code&gt;ComponentContanerRef&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import {
+    Component, ComponentFactoryResolver, Injector, ElementRef,
+    ComponentRef, AfterViewInit, OnDestroy
+} from '@angular/core';
+
+import { AComponent } from './a/a.component';
+
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnDestroy {
+    title = 'app works!';
+    component: ComponentRef&amp;lt;AComponent&amp;gt;;
+    
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private elementRef: ElementRef,
+        private injector: Injector
+    ) {
+        this.component = this.componentFactoryResolver
+            .resolveComponentFactory(AComponent)
+            .create(this.injector);
+    }
+
+    ngAfterViewInit() {
+        let host = document.createElement(&amp;quot;div&amp;quot;);
+        host.appendChild((this.component.hostView as any).rootNodes[0]);
+        this.elementRef.nativeElement.appendChild(host);
+    }
+    
+    ngOnDestroy() {
+        this.component.destroy();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这时候我们再去验证一下，界面展示应该也和声明式加载组件相同。&lt;/p&gt;
+&lt;p&gt;但是通过这种方式添加的组件有一个问题，那就是无法对数据进行脏检查，比如我们对&lt;code&gt;a.component.html&lt;/code&gt;以及&lt;code&gt;a.component.ts&lt;/code&gt;做点小修改：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a.comonent.html&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;
+    {{title}}
+&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-a',
+    templateUrl: './a.component.html',
+    styleUrls: ['./a.component.css']
+})
+
+export class AComponent {
+    title = 'a works!';
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个时候你会发现并不会显示&lt;code&gt;a works!&lt;/code&gt;这行文字。因此我们需要通知应用去处理这个组件的视图，对这个组件进行脏检查：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import {
+    Component, ComponentFactoryResolver, Injector, ElementRef,
+    ComponentRef, ApplicationRef, AfterViewInit, OnDestroy
+} from '@angular/core';
+
+import { AComponent } from './a/a.component';
+
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnDestroy {
+    title = 'app works!';
+    component: ComponentRef&amp;lt;AComponent&amp;gt;;
+    
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private elementRef: ElementRef,
+        private injector: Injector,
+        private appRef: ApplicationRef
+    ) {
+        this.component = this.componentFactoryResolver
+            .resolveComponentFactory(AComponent)
+            .create(this.injector);
+        appRef.attachView(this.component.hostView);
+    }
+
+    ngAfterViewInit() {
+        let host = document.createElement(&amp;quot;div&amp;quot;);
+        host.appendChild((this.component.hostView as any).rootNodes[0]);
+        this.elementRef.nativeElement.appendChild(host);
+    }
+    
+    ngOnDestroy() {
+        this.appRef.detachView(this.component.hostView);
+        this.component.destroy();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=""&gt;如何与动态添加后的组件进行通信&lt;/h1&gt;
+&lt;p&gt;组件间通信在声明式加载组件中通常直接写在了组件的属性中：&lt;code&gt;[]&lt;/code&gt;表示&lt;code&gt;@Input&lt;/code&gt;，&lt;code&gt;()&lt;/code&gt;表示&lt;code&gt;@Output&lt;/code&gt;，动态加载组件也是同理。比如我们期望通过外部传入&lt;code&gt;a.component&lt;/code&gt;的&lt;code&gt;title&lt;/code&gt;，并在&lt;code&gt;title&lt;/code&gt;被单击后由外部可以知道。所以我们先对动态加载的组件本身进行修改：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a.comonent.html&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;p (click)=&amp;quot;onTitleClick()&amp;quot;&amp;gt;
+    {{title}}
+&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;a.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Component, Output, Input, EventEmitter } from '@angular/core';
+
+@Component({
+    selector: 'app-a',
+    templateUrl: './a.component.html',
+    styleUrls: ['./a.component.css']
+})
+
+export class AComponent {
+
+    @Input() title = 'a works!';
+    @Output() onTitleChange = new EventEmitter&amp;lt;any&amp;gt;();
+    
+    onTitleClick() {
+    	this.onTitleChange.emit();
+    }
+    
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后再来修改外部组件：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;app.comonent.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import {
+    Component, ComponentFactoryResolver, Injector, ElementRef,
+    ComponentRef, ApplicationRef, AfterViewInit, OnDestroy
+} from '@angular/core';
+
+import { AComponent } from './a/a.component';
+
+@Component({
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css']
+})
+
+export class AppComponent implements OnDestroy {
+    title = 'app works!';
+    component: ComponentRef&amp;lt;AComponent&amp;gt;;
+    
+    constructor(
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private elementRef: ElementRef,
+        private injector: Injector,
+        private appRef: ApplicationRef
+    ) {
+        this.component = this.componentFactoryResolver
+            .resolveComponentFactory(AComponent)
+            .create(this.injector);
+        appRef.attachView(this.component.hostView);
+        (&amp;lt;AComponent&amp;gt;this.component.instance).onTitleChange
+            .subscribe(() =&amp;gt; {
+                console.log(&amp;quot;title clicked&amp;quot;)
+            });
+        (&amp;lt;AComponent&amp;gt;this.component.instance).title = &amp;quot;a works again!&amp;quot;;
+    }
+
+    ngAfterViewInit() {
+        let host = document.createElement(&amp;quot;div&amp;quot;);
+        host.appendChild((this.component.hostView as any).rootNodes[0]);
+        this.elementRef.nativeElement.appendChild(host);
+    }
+    
+    ngOnDestroy() {
+        this.appRef.detachView(this.component.hostView);
+        this.component.destroy();
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;查看页面可以看到界面就显示了&lt;code&gt;a works again!&lt;/code&gt;的文字，点击这行文字，就可以看到console中输入了&lt;code&gt;title clicked&lt;/code&gt;。&lt;/p&gt;
+&lt;h1 id=""&gt;写在后面&lt;/h1&gt;
+&lt;p&gt;动态加载这项技术本身的目的是为了完成“框架业务无关化”，在接下来的相关文章中，还会围绕如何使用Angular实现框架设计的业务解耦进行展开。尽情期待。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>深入Angular：使用Schematics编写Angular代码自动生成器</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="schematics"&gt;什么是Schematics&lt;/h1&gt;
+&lt;p&gt;在聊&lt;a href="https://www.npmjs.com/package/@angular-devkit/schematics"&gt;Schematics&lt;/a&gt;之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如&lt;code&gt;ng g component component-name&lt;/code&gt;来生成一个&lt;code&gt;component&lt;/code&gt;模版，或者用相应的参数生成&lt;code&gt;service&lt;/code&gt;\&lt;code&gt;directive&lt;/code&gt;\&lt;code&gt;pipe&lt;/code&gt;模版等等，并且引入到&lt;code&gt;ngModule&lt;/code&gt;里，这是怎么做到的？这里就利用到里&lt;code&gt;Schematics&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Schematics&lt;/code&gt;可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。&lt;/p&gt;
+&lt;p&gt;另外@&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/shen-ru-angular-shi-yong-schematicsbian-xie-angulardai-ma-zi-dong-sheng-cheng-qi/</link><guid isPermaLink="false">5b14ee5ddea7fc165a4cba33</guid><category>Angular</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:46:45 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id="schematics"&gt;什么是Schematics&lt;/h1&gt;
+&lt;p&gt;在聊&lt;a href="https://www.npmjs.com/package/@angular-devkit/schematics"&gt;Schematics&lt;/a&gt;之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如&lt;code&gt;ng g component component-name&lt;/code&gt;来生成一个&lt;code&gt;component&lt;/code&gt;模版，或者用相应的参数生成&lt;code&gt;service&lt;/code&gt;\&lt;code&gt;directive&lt;/code&gt;\&lt;code&gt;pipe&lt;/code&gt;模版等等，并且引入到&lt;code&gt;ngModule&lt;/code&gt;里，这是怎么做到的？这里就利用到里&lt;code&gt;Schematics&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Schematics&lt;/code&gt;可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。&lt;/p&gt;
+&lt;p&gt;另外@Trotyl Yu在&lt;a href="https://www.zhihu.com/question/278109954"&gt;我的一个提问下有提到&lt;/a&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;实际上，Schematics 的实现机制完全与 Angular 无关，其它项目也可以通过 Schematics CLI 来使用。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因此我们甚至可以基于Schematics创建一个&lt;code&gt;React&lt;/code&gt;\&lt;code&gt;Vue&lt;/code&gt;的代码生成器。&lt;/p&gt;
+&lt;h1 id="schematicscli"&gt;Schematics CLI的安装和使用&lt;/h1&gt;
+&lt;p&gt;Schematics提供了一个CLI。通过&lt;code&gt;npm i @angular-devkit/schematics-cli -g&lt;/code&gt;安装即可。安装完毕之后可以通过&lt;code&gt;schematics blank --name=schematics-name&lt;/code&gt;进行生成一个空的schmatics项目。&lt;/p&gt;
+&lt;h1 id="schematics"&gt;Schematics的一些基本概念&lt;/h1&gt;
+&lt;p&gt;在使用Schematics之前我们要先理解一些概念，我们会在下文中用到它们。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Schematics：Schematics全称是Schematics Scematics。顾名思义，就是按照一系列的步骤来做完一些事情。一个Schematics就是对代码文件一系列操作的合集。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Collection：一个Collection是数个Schematics合集，因此Collection又被称作Schematics Collection。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Tree：在Schematics中，Tree将真实文件目录（项目中的代码文件）数据拷贝进一个树状结构里，你对代码文件的所有操作都会被缓存在Tree中，而不会对文件进行实时操作。你可以将它理解成一个沙盒。Tree有两个部分，一个是base（真实文件目录），一个是staging area（沙盒），你的变动都会发生在staging area，除非你写入了base部分。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Rule：一个Rule是一个方法。它获取一个Tree，并返回经过改变的一个新的Tree。因此我们对Tree的操作也基本上在Rule中发生。所以可以说，一个Schematic就是一个Rule。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Source：用来从真实文件目录创建Tree。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Action：对Tree的具体操作。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;由此看来，一个Schematics工程由Collection组成，一个Collection中有若干个Schematics，每一个Schematics又会有若干个Rules去处理一个或多个Tree（如果需要的话）。以上这些就是Schematics你暂时需要了解的所有基本概念。具体的信息可以查看&lt;a href="https://www.npmjs.com/package/@angular-devkit/schematics"&gt;使用文档&lt;/a&gt;。&lt;/p&gt;
+&lt;h1 id=""&gt;编辑你的模版代码&lt;/h1&gt;
+&lt;p&gt;安装完毕之后可以通过&lt;code&gt;schematics blank --name=schematics-name&lt;/code&gt;进行生成一个空的schmatics项目后，我们可以来看看工程目录下的&lt;code&gt;collection.json&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;../node_modules/@angular-devkit/schematics/collection-schema.json&amp;quot;,
+    &amp;quot;schematics&amp;quot;: {
+        &amp;quot;schematics-name&amp;quot;: {
+          &amp;quot;description&amp;quot;: &amp;quot;A blank schematic.&amp;quot;,
+          &amp;quot;factory&amp;quot;: &amp;quot;./schematics-name/index#schematicsName&amp;quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以看到的是我们在&lt;code&gt;&amp;quot;schematics&amp;quot;&lt;/code&gt;中定义了一个schematic。我们通常不会直接用这个空白的schematic，而是从&lt;code&gt;@schematics/angular&lt;/code&gt;中复制并添加一个作为初始模版。&lt;/p&gt;
+&lt;p&gt;通过使用&lt;code&gt;npm i @schematics/angular&lt;/code&gt;命令我们将&lt;code&gt;@schematics/angular&lt;/code&gt;安装到我们的这个schematics工程中，安装完成后可以去node-module中查看Angular提供了哪些预设好的schematics，比如我们最常用的&lt;code&gt;component&lt;/code&gt;，然后复制到我们目录并修改&lt;code&gt;collection.json&lt;/code&gt;和目录文件夹。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;collection.json&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;../node_modules/@angular-devkit/schematics/collection-schema.json&amp;quot;,
+    &amp;quot;schematics&amp;quot;: {
+        &amp;quot;my-component&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;My component based on Angular component schema .&amp;quot;,
+            &amp;quot;factory&amp;quot;: &amp;quot;./my-component&amp;quot;,
+            &amp;quot;schema&amp;quot;: &amp;quot;./my-component/schema.json&amp;quot;
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在上图中我们可以在my-component文件夹中有一个files文件夹，这个文件夹就存放了我们将要修改的component模版。我们可以看看&lt;code&gt;__name@dasherize__.component.ts&lt;/code&gt;这个文件：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;name@dasherize&lt;/strong&gt;.component.ts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;import { Component, OnInit&amp;lt;% if (!!viewEncapsulation) { %&amp;gt;, ViewEncapsulation &amp;lt;% }%&amp;gt; &amp;lt;% if (changeDetection !== 'Default') { %&amp;gt;, ChangeDetectionStrategy &amp;lt;% }%&amp;gt; } from '@angular/core';
+
+@Component({
+	selector: '&amp;lt;%= selector %&amp;gt;',
+	&amp;lt;% if (inlineTemplate) { %&amp;gt;
+	    template: `
+        &amp;lt;p&amp;gt;
+          &amp;lt;%= dasherize(name) %&amp;gt; works!
+        &amp;lt;/p&amp;gt;
+      `,
+    &amp;lt;% } else { %&amp;gt;
+	    templateUrl: './&amp;lt;%= dasherize(name) %&amp;gt;.component.html', 
+	&amp;lt;% } if (inlineStyle) { %&amp;gt;
+	    styles: [] 
+	&amp;lt;% } else { %&amp;gt;
+	    styleUrls: ['./&amp;lt;%= dasherize(name) %&amp;gt;.component.&amp;lt;%= styleext %&amp;gt;'] 
+	&amp;lt;% } %&amp;gt;
+	&amp;lt;% if (!!viewEncapsulation) { %&amp;gt;,
+	    encapsulation: ViewEncapsulation.&amp;lt;%= viewEncapsulation %&amp;gt;
+	&amp;lt;% } if (changeDetection !== 'Default') { %&amp;gt;,
+	    changeDetection: ChangeDetectionStrategy.&amp;lt;%= changeDetection %&amp;gt; 
+	&amp;lt;% } %&amp;gt;
+})
+export class &amp;lt;%= classify(name) %&amp;gt; Component implements OnInit {
+	constructor() { }
+	ngOnInit() { }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;其实不难看出是要做什么。其实就是一些基本的模版语法，对CLI的传参进行判断，然后对模版做相应的处理。而参数的定义就在&lt;code&gt;schema.json&lt;/code&gt;文件中。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;schema.json&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;{
+    &amp;quot;$schema&amp;quot;: &amp;quot;http://json-schema.org/schema&amp;quot;,
+    &amp;quot;id&amp;quot;: &amp;quot;SchematicsAngularComponent&amp;quot;,
+    &amp;quot;title&amp;quot;: &amp;quot;Angular Component Options Schema&amp;quot;,
+    &amp;quot;type&amp;quot;: &amp;quot;object&amp;quot;,
+    &amp;quot;properties&amp;quot;: {
+        &amp;quot;path&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;path&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The path to create the component.&amp;quot;,
+            &amp;quot;visible&amp;quot;: false
+        },
+        &amp;quot;project&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The name of the project.&amp;quot;,
+            &amp;quot;$default&amp;quot;: {
+                &amp;quot;$source&amp;quot;: &amp;quot;projectName&amp;quot;
+            }
+        },
+        &amp;quot;name&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The name of the component.&amp;quot;,
+            &amp;quot;$default&amp;quot;: {
+                &amp;quot;$source&amp;quot;: &amp;quot;argv&amp;quot;,
+                &amp;quot;index&amp;quot;: 0
+            }
+        },
+        &amp;quot;inlineStyle&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies if the style will be in the ts file.&amp;quot;,
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;default&amp;quot;: false,
+            &amp;quot;alias&amp;quot;: &amp;quot;s&amp;quot;
+        },
+        &amp;quot;inlineTemplate&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies if the template will be in the ts file.&amp;quot;,
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;default&amp;quot;: false,
+            &amp;quot;alias&amp;quot;: &amp;quot;t&amp;quot;
+        },
+        &amp;quot;viewEncapsulation&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies the view encapsulation strategy.&amp;quot;,
+            &amp;quot;enum&amp;quot;: [&amp;quot;Emulated&amp;quot;, &amp;quot;Native&amp;quot;, &amp;quot;None&amp;quot;],
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;alias&amp;quot;: &amp;quot;v&amp;quot;
+        },
+        &amp;quot;changeDetection&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies the change detection strategy.&amp;quot;,
+            &amp;quot;enum&amp;quot;: [&amp;quot;Default&amp;quot;, &amp;quot;OnPush&amp;quot;],
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;default&amp;quot;: &amp;quot;Default&amp;quot;,
+            &amp;quot;alias&amp;quot;: &amp;quot;c&amp;quot;
+        },
+        &amp;quot;prefix&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The prefix to apply to generated selectors.&amp;quot;,
+            &amp;quot;alias&amp;quot;: &amp;quot;p&amp;quot;,
+            &amp;quot;oneOf&amp;quot;: [{
+                    &amp;quot;maxLength&amp;quot;: 0
+                },
+                {
+                    &amp;quot;minLength&amp;quot;: 1,
+                    &amp;quot;format&amp;quot;: &amp;quot;html-selector&amp;quot;
+                }
+            ]
+        },
+        &amp;quot;styleext&amp;quot;: {
+            &amp;quot;description&amp;quot;: &amp;quot;The file extension to be used for style files.&amp;quot;,
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;default&amp;quot;: &amp;quot;css&amp;quot;
+        },
+        &amp;quot;spec&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies if a spec file is generated.&amp;quot;,
+            &amp;quot;default&amp;quot;: true
+        },
+        &amp;quot;flat&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;Flag to indicate if a dir is created.&amp;quot;,
+            &amp;quot;default&amp;quot;: false
+        },
+        &amp;quot;skipImport&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;Flag to skip the module import.&amp;quot;,
+            &amp;quot;default&amp;quot;: false
+        },
+        &amp;quot;selector&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;html-selector&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;The selector to use for the component.&amp;quot;
+        },
+        &amp;quot;module&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;string&amp;quot;,
+            &amp;quot;description&amp;quot;: &amp;quot;Allows specification of the declaring module.&amp;quot;,
+            &amp;quot;alias&amp;quot;: &amp;quot;m&amp;quot;
+        },
+        &amp;quot;export&amp;quot;: {
+            &amp;quot;type&amp;quot;: &amp;quot;boolean&amp;quot;,
+            &amp;quot;default&amp;quot;: false,
+            &amp;quot;description&amp;quot;: &amp;quot;Specifies if declaring module exports the component.&amp;quot;
+        }
+    },
+    &amp;quot;required&amp;quot;: []
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在&lt;code&gt;schema.json&lt;/code&gt;文件中的&lt;code&gt;properties&lt;/code&gt;和&lt;code&gt;schema.d.ts&lt;/code&gt;就是对参数的定义。而对参数的处理，就在一堆类似&lt;code&gt;&amp;lt;% if (inlineTemplate) { %&amp;gt;&lt;/code&gt;的模版语法中。甚至你会发现，&lt;code&gt;file&lt;/code&gt;文件夹中文件名都可以作为一个参数进行处理。而处理的逻辑就在&lt;code&gt;index.js&lt;/code&gt;中。你可以按照这个代码模版来创建你所需的代码生成器（我会参考这个js文件来写一个ts文件），然后通过&lt;code&gt;npm run build&lt;/code&gt;进行编译。&lt;/p&gt;
+&lt;h1 id=""&gt;如何在项目中添加你的模版代码&lt;/h1&gt;
+&lt;p&gt;在我们做测试时，可以通过&lt;code&gt;npm link&lt;/code&gt;将这个schematics添加到全局，然后在测试项目中使用&lt;code&gt;npm link our-collection-name&lt;/code&gt;将这个schematics添加到你的项目中，最后使用&lt;code&gt;ng g schematics-name -c our-collection-name&lt;/code&gt;来进行安装使用。&lt;/p&gt;
+&lt;p&gt;你还可以发布到npm上，然后通过&lt;code&gt;npm i -D our-collection-name&lt;/code&gt;来安装，并且通过&lt;code&gt;ng generate schematics-name --collection our-collection-name&lt;/code&gt;命令来将生成一个你的自定义组件。&lt;/p&gt;
+&lt;h1 id=""&gt;除了这些，我们还能做些什么？&lt;/h1&gt;
+&lt;p&gt;我司有大量的管理后台需要去实现，因此为了节省时间，我就考虑使用配置文件来自动化生成整个管理后台。只要在配置文件中写明结构目录（定义好业务板块和子业务的配置树，配置这个业务是否需要对应的CRUD页面，以及业务的相应页面返回时要去的业务），再通过一个小的node程序去获取这个配置，就应该能生成页面和路由。&lt;/p&gt;
+&lt;p&gt;现在这个项目已经启动了，还在开发阶段，我将它放在了GitHub上，其中分为三部分：&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/lordmos/Natrium"&gt;Natrium&lt;/a&gt;：它是就是自动化生成器，通过读取一个叫&lt;code&gt;natrium.profile.json&lt;/code&gt;的文件，就可以为你安装所有Natrium需要用到的依赖，并且生成代码结构和路由。最后你只需要关心业务逻辑即可。&lt;/p&gt;
+&lt;p&gt;NatriumSchematics：顾名思义，它就是自动化生成器的模版部分。自动化生成器会自动帮你安装模版。现在还未放到GitHub中。&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/lordmos/NatriumLib"&gt;NatriumLib&lt;/a&gt;：最基本的部分，就是基础的组件部分。我会定义一些基本组件和一些复合组件，为NatriumSchematics提供组件的支持。自动化生成器也会自动帮你安装。&lt;/p&gt;
+&lt;p&gt;在Natrium整个项目完成后（立个Flag，不会太久，大概三个月，毕竟这个项目就我一个人在维护），我会专门为Natrium写几篇专栏，来介绍（营销）这个项目的用法，讨论将来的RoadMap，以及我在整个项目中的思考。&lt;/p&gt;
+&lt;p&gt;除此之外，&lt;code&gt;React&lt;/code&gt;\&lt;code&gt;Vue&lt;/code&gt;的开发者，你也可以考虑使用Schematics创造一个属于你的代码自动化机器人。&lt;/p&gt;
+&lt;p&gt;当然，现在也有很多人已经在做了这个事情，比如阿里的&lt;a href="https://github.com/NG-ZORRO/ng-zorro-antd"&gt;NG-ZORRO&lt;/a&gt;和他对应的Schematics：&lt;a href="https://github.com/cipchk/ng-alain"&gt;ng-alain&lt;/a&gt;。大家可以试试看！&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;写在最后：Schematics的资料实在是太少了。如果这篇专栏有什么纰漏或者问题，欢迎大家斧正。另外Natrium的Flag已经立下了，那么就硬着头皮往前赶吧。接下来我会介绍一下nvm这个node版本管理工具，我想很多人都知道，也可能很多人也都不知道，不管怎么说，到时候你要用Natrium势必会用到这个工具（逃）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;</content:encoded></item><item><title>深入Angular：使用Routing和NgModule设计一个模块化的应用框架</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;在某些情况下，我们需要统一多个角色的登录入口，比如这是一个博客的入口，访客在登录后可以对博客进行评论，而博客主在登录后还能编辑自己的文章，这个时候我们要如何通过Angular来实现呢？&lt;/p&gt;
+&lt;p&gt;我们定义了主模块（AppModule），在&lt;code&gt;main.ts&lt;/code&gt;中通过&lt;code&gt;platformBrowserDynamic().bootstrapModule(AppModule)&lt;/code&gt;启动，并且我们在主模块中加载我们需要的路由模块（AppRoutingModule）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;main.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/modules/app/app.module';
+platformBrowserDynamic().bootstrapModule(AppModule);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;app.module.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { BrowserModule } from&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/shen-ru-angular-shi-yong-routinghe-ngmoduleshe-ji-yi-ge-mo-kuai-hua-de-ying-yong-kuang-jia/</link><guid isPermaLink="false">5b14ee3bdea7fc165a4cba30</guid><category>Angular</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:46:18 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;在某些情况下，我们需要统一多个角色的登录入口，比如这是一个博客的入口，访客在登录后可以对博客进行评论，而博客主在登录后还能编辑自己的文章，这个时候我们要如何通过Angular来实现呢？&lt;/p&gt;
+&lt;p&gt;我们定义了主模块（AppModule），在&lt;code&gt;main.ts&lt;/code&gt;中通过&lt;code&gt;platformBrowserDynamic().bootstrapModule(AppModule)&lt;/code&gt;启动，并且我们在主模块中加载我们需要的路由模块（AppRoutingModule）。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;main.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/modules/app/app.module';
+platformBrowserDynamic().bootstrapModule(AppModule);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;app.module.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { PathLocationStrategy, LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './pages/app/app.component';
+import { LoginComponent } from './pages/login/login.component';
+    
+@NgModule({
+    declarations: [
+        AppComponent,
+        LoginComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule
+    ],
+    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们在路由中定义了两个模块的路由，并通过&lt;code&gt;loadChildren&lt;/code&gt;，并且为路由提供&lt;code&gt;UserTypeFilterService&lt;/code&gt;对路由安全进行守护，使不匹配的角色无法进入其他角色的路径。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;app-routing.module.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { UserTypeFilterService } from '../../services/user-type-filter.service';
+import { LoginComponent } from './pages/login/login.component';
+import { AppComponent } from './pages/app/app.component';
+    
+const mainRoutes: Routes = [{
+    path: 'admin',
+    canActivate: [UserTypeFilterService],
+    loadChildren: 'app/modules/admin/admin.module#AdminModule',
+}, {
+    path: 'user',
+    canActivate: [UserTypeFilterService],
+    loadChildren: 'app/modules/user/user.module#UserModule',
+}, {
+    path: '', redirectTo: 'admin', pathMatch: 'full'
+}];
+    
+const appRoutes: Routes = [{
+    path: '', component: AppComponent, children: mainRoutes, canActivate: [UserTypeFilterService]
+}, {
+    path: 'login', component: LoginComponent, canActivate: [UserTypeFilterService]
+}, {
+    path: '**', redirectTo: ''
+}];
+    
+@NgModule({
+    imports: [RouterModule.forRoot(appRoutes, { useHash: true })],
+    exports: [RouterModule],
+    providers: [UserTypeFilterService]
+})
+export class AppRoutingModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;user-type-filter.service.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { Injectable } from '@angular/core';
+import {
+    CanActivate, Router,
+    ActivatedRouteSnapshot,
+    RouterStateSnapshot
+} from '@angular/router';
+import { Global } from './global.service';
+    
+@Injectable()
+export class UserTypeFilterService implements CanActivate {
+    constructor(private global: Global, private router: Router, private userService: UserService) { }
+    
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        return this.checkUserType(state.url);
+    }
+    
+    checkUserType(url: string): boolean {
+        if (!this.global.getUserInfo()) {
+            if (url == &amp;quot;/login&amp;quot;) {
+            	return true;
+            } else {
+            	this.router.navigate(['/login']);
+            	return false;
+            }
+        } else {
+            if (url == &amp;quot;/login&amp;quot;) {
+                switch (this.global.getUserInfo().userType) {
+                    case 'admin':
+                        this.router.navigate(['/admin'])
+                        break;
+                    case 'user':
+                        this.router.navigate(['/user'])
+                        break;
+                    default:
+                        this.router.navigate([''])
+                }
+                return false;
+            } else {
+                switch (this.global.getUserInfo().userType) {
+                    case 'admin':
+                        if (url.indexOf('/admin') != 0) {
+                            this.router.navigate(['/admin']);
+                            return false;
+                        }
+                        break;
+                    case 'user':
+                        if (url.indexOf('/user') != 0) {
+                            this.router.navigate(['/user'])
+                            return false;
+                        }
+                        break;
+                    }
+                return true;
+            }
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这时候我们定义了&lt;code&gt;AdminModule&lt;/code&gt;和&lt;code&gt;UserModule&lt;/code&gt;这两个模块和它的路由。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;user.module.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { UserRoutingModule } from './user-routing.module';
+import { UserComponent } from './pages/user/user.component';
+import { BlogModule } from '../../modules/blog/blog.module';
+    
+@NgModule({
+    imports: [
+        CommonModule,
+        UserRoutingModule,
+        BlogModule
+    ],
+    declarations: [
+        UserComponent
+    ]
+})
+export class UserModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;user-routing.module&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { UserComponent } from './pages/user/user.component';
+import { BlogListComponent } from '../blog/blog-list/blog-list.component';
+import { BlogDetailComponent } from '../blog/blog-detail/blog-detail.component';
+    
+const routes: Routes = [{
+	path: '', redirectTo: 'blog-list', pathMatch: 'full'
+}, {
+	path: 'blog-list', component: BlogListComponent
+}, {
+	path: 'blog-detail', component: BlogDetailComponent
+}, {
+	path: 'user', component: UserComponent
+}]
+    
+@NgModule({
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
+})
+export class UserRoutingModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;admin.module.ts&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './pages/admin/admin.component';
+import { BlogModule } from '../../modules/blog/blog.module';
+    
+@NgModule({
+    imports: [
+        CommonModule,
+        AdminRoutingModule,
+        BlogModule
+    ],
+    declarations: [
+        AdminComponent
+    ]
+})
+export class AdminModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;admin-routing.module&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AdminComponent } from './pages/admin/admin.component';
+import { BlogListComponent } from '../blog/blog-list/blog-list.component';
+import { BlogDetailComponent } from '../blog/blog-detail/blog-detail.component';
+import { BlogEditComponent } from '../blog/blog-edit/blog-edit.component';
+    
+const routes: Routes = [{
+	path: '', redirectTo: 'blog-list', pathMatch: 'full'
+}, {
+	path: 'blog-list', component: BlogListComponent
+}, {
+	path: 'blog-detail', component: BlogDetailComponent
+}, {
+	path: 'blog-edit', component: BlogEditComponent
+}, {
+	path: 'admin', component: AdminComponent
+}]
+    
+@NgModule({
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule]
+})
+export class AdminRoutingModule { }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在这个例子中，我们将业务逻辑分散到了四个NgModule上，分别是Admin、User、Blog和App，首先App是入口，通过路由来指定不同角色加载不同的功能模块。同时，我们还允许Blog这个共有模块可以被Admin和User模块进行使用，以此来实现模块化。&lt;/p&gt;
+&lt;p&gt;我们可以看到，在&lt;code&gt;Admin&lt;/code&gt;路由中我们可以跳转到&lt;code&gt;Blog&lt;/code&gt;模块中的博客列表、博客详情和博客编辑，而在&lt;code&gt;User&lt;/code&gt;路由中我们只能跳转到&lt;code&gt;Blog&lt;/code&gt;模块中的博客列表和博客详情。可以看出，尽管不同的模块（Admin、Blog）加载了同一个外部公共模块，我们还是可以通过路由来控制模块中页面跳转的权限。&lt;/p&gt;
+&lt;p&gt;通过以上种种手段，我们就完成了一个模块化的Angular Web App的框架设计。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>2018年和纯Web App有关的碎碎念</title><description>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;琐事缠身小半年，2018年也过去了四分之一，很久没有更新专栏，向大家道歉——对不起我偷懒了（逃）。&lt;/p&gt;
+&lt;p&gt;我司前端用Angular.js/Angular/ionic一把梭做项目也有一段时间了，各种业务，从最基本的仓库管理系统、Web IM、物联网的集控系统和市面上看到的绝大多数应用，基本都有做过（毕竟是一个外包公司）。做得越久越发现，我们做的事情慢慢的会从Hybrid App到纯Web App过度，为什么这么说？现在Web的解决方案越来越多了，即使他是experimental的解决方案。&lt;/p&gt;
+&lt;p&gt;从最早2016年开始，我用Angular.js做Web IM，那时候我还不知道RX.js，写起来要多痛苦有多痛苦。现在，我觉得拿Rx.js重新写一遍，代码应该漂亮很多。&lt;/p&gt;
+&lt;p&gt;玩过一段时间的WebRTC，写了一个项目在&lt;a href="https://github.com/lordmos/simple-webrtc-demo"&gt;GitHub&lt;/a&gt;上，思考了如何用P2P和WebRTC来做直播解决方案。&lt;/p&gt;
+&lt;p&gt;项目越来越多，时间也越来越少，QR-Code-Scanner、Push、Application Upgrader、Image-Cropper（其实我写过一套Angular.js的，没有移植到Angular上）&lt;/p&gt;&lt;/div&gt;</description><link>http://localhost:2368/2018nian-he-chun-web-appyou-guan-de-sui-sui-nian/</link><guid isPermaLink="false">5b14edfcdea7fc165a4cba2d</guid><category>杂记</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:45:09 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;p&gt;琐事缠身小半年，2018年也过去了四分之一，很久没有更新专栏，向大家道歉——对不起我偷懒了（逃）。&lt;/p&gt;
+&lt;p&gt;我司前端用Angular.js/Angular/ionic一把梭做项目也有一段时间了，各种业务，从最基本的仓库管理系统、Web IM、物联网的集控系统和市面上看到的绝大多数应用，基本都有做过（毕竟是一个外包公司）。做得越久越发现，我们做的事情慢慢的会从Hybrid App到纯Web App过度，为什么这么说？现在Web的解决方案越来越多了，即使他是experimental的解决方案。&lt;/p&gt;
+&lt;p&gt;从最早2016年开始，我用Angular.js做Web IM，那时候我还不知道RX.js，写起来要多痛苦有多痛苦。现在，我觉得拿Rx.js重新写一遍，代码应该漂亮很多。&lt;/p&gt;
+&lt;p&gt;玩过一段时间的WebRTC，写了一个项目在&lt;a href="https://github.com/lordmos/simple-webrtc-demo"&gt;GitHub&lt;/a&gt;上，思考了如何用P2P和WebRTC来做直播解决方案。&lt;/p&gt;
+&lt;p&gt;项目越来越多，时间也越来越少，QR-Code-Scanner、Push、Application Upgrader、Image-Cropper（其实我写过一套Angular.js的，没有移植到Angular上）都直接去Google找现成可兼容的稳定解决方案或者服务提供商，等我回过头来思考我接下来要怎么做事的时候，我突然觉得，是不是可以慢慢的放弃一些Native Plugin了呢？&lt;/p&gt;
+&lt;p&gt;一个普通的应用，除了一些标准的业务逻辑，比如数据的CRUD和交互之外，还有一些之前Web（我认为）实现不了的东西，貌似都有了Web的解决方案了。比如：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;拍照、录像、录音、扫码：WebRTC和背后的Stream API等等&lt;/li&gt;
+&lt;li&gt;离线能力、推送、位置服务：Service Work、Notification API、Geolocation API&lt;/li&gt;
+&lt;li&gt;游戏：egret等引擎&lt;/li&gt;
+&lt;li&gt;AR：ARCore、ARKit实现&lt;/li&gt;
+&lt;li&gt;电话、短信、普通的下载：a标签下的href&lt;/li&gt;
+&lt;li&gt;蓝牙、NFC：有experimental API&lt;/li&gt;
+&lt;li&gt;本地文件：File相关的Web API或许可以&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;细细思考一下，哪些业务没办法用纯Web的方式实现：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;联系人、通讯录、通话历史记录&lt;/li&gt;
+&lt;li&gt;本地的多媒体播放器&lt;/li&gt;
+&lt;li&gt;需要蓝牙、NFC（用Web存在兼容性问题）&lt;/li&gt;
+&lt;li&gt;各种手机管家（抱歉我真没开发过）&lt;/li&gt;
+&lt;li&gt;桌面背景、系统美化（真的跟Web没什么关系）&lt;/li&gt;
+&lt;li&gt;VPN（这还用说吗）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;而我们大多数情况的App是怎么样的呢？&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;视频、音乐、漫画&lt;/li&gt;
+&lt;li&gt;聊天、直播&lt;/li&gt;
+&lt;li&gt;游戏（其实egret做大型Web游戏还要有一段距离）&lt;/li&gt;
+&lt;li&gt;购物、共享租赁、旅行&lt;/li&gt;
+&lt;li&gt;美颜相机&lt;/li&gt;
+&lt;li&gt;新闻、咨询订阅（微博也算吧）&lt;/li&gt;
+&lt;li&gt;笔记、词典（其实用的应该不多）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;那这么看来，是不是大部分的应用的确似乎不需要安装就能click and run才对。&lt;/p&gt;
+&lt;p&gt;今年，这个专栏的基调大概就是这样了吧。&lt;/p&gt;
+&lt;h1 id="allinweb"&gt;All in Web&lt;/h1&gt;
+&lt;p&gt;多么浪漫。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item><item><title>TypeScript：从零开始的前端面向对象RPG</title><description>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。&lt;/p&gt;
+&lt;p&gt;道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！&lt;/p&gt;
+&lt;h1 id=""&gt;创世界：准备工作&lt;/h1&gt;
+&lt;p&gt;上路之前，你要准备好一些东西，比如Node.js和npm。&lt;a href="https://nodejs.org/zh-cn/"&gt;安装Node.js的传送门在这里。&lt;/a&gt;然后还需要一个世界转换器TypeScript：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g typescript
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;function hello(hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero);
+}
+var&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description><link>http://localhost:2368/typescript-cong-ling-kai-shi-de-qian-duan-mian-xiang-dui-xiang-rpg/</link><guid isPermaLink="false">5b14eb5adea7fc165a4cba24</guid><category>TypeScript</category><dc:creator>Hui Zhong</dc:creator><pubDate>Mon, 04 Jun 2018 07:35:44 GMT</pubDate><content:encoded>&lt;div class="kg-card-markdown"&gt;&lt;blockquote&gt;
+&lt;p&gt;耶稣说：“凯撒的物当归给凯撒，神的物当归给神。”——《马太福音22:21》&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;抱歉我其实不是个基督徒。我用这句话的原因是因为这句话很符合面向对象思想：让一个角色做好它该做的事。如何理解这句话呢？就好比你去拿着一堆的原材料去找一个铁匠，他就能给你打造一把你想要的武器；如果你拿着同样这堆原材料去找一个厨子，他会拿炒勺弄死你。&lt;/p&gt;
+&lt;p&gt;道理我们都懂？但是这个跟写代码有什么关系吗？当然有关系！勇者哟，在踏上征途之前，我们先在新手村做一些准备工作吧！&lt;/p&gt;
+&lt;h1 id=""&gt;创世界：准备工作&lt;/h1&gt;
+&lt;p&gt;上路之前，你要准备好一些东西，比如Node.js和npm。&lt;a href="https://nodejs.org/zh-cn/"&gt;安装Node.js的传送门在这里。&lt;/a&gt;然后还需要一个世界转换器TypeScript：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;npm install -g typescript
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;TypeScript现在是这个世界的规则。它跟JavaScript世界很像，嗯，甚至没什么差别，比如：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;function hello(hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero);
+}
+var hero = &amp;quot;勇者&amp;quot;;
+
+hello(hero);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们需要将&lt;code&gt;ts-the-rpg.ts&lt;/code&gt;变成JavaScript世界的才能玩。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tsc ts-the-rpg.ts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这个时候我们发现生成了&lt;code&gt;ts-the-rpg.js&lt;/code&gt;。我们打开看看，发现，怎么这两个世界一模一样？&lt;/p&gt;
+&lt;p&gt;没错，这两个世界几乎一样。但是接下来不一样的来了：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v2）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;function hello(hero: string) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero);
+}
+var hero1 = &amp;quot;勇者&amp;quot;;
+var hero2 = 2;
+
+hello(hero1);
+hello(hero2);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你在转换世界的时候发现，怎么出了一个问题？&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ts-the-rpg.ts(8,7): error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;看起来有一个怪物混入了勇者的队伍之中啊。勇者都有自己的名字，你却是一个数字？你想蒙混过关？世界转换器就会告诉你，你很危险了勇者。&lt;/p&gt;
+&lt;p&gt;但是即使这样，世界转换器很公正，它还是把TypeScript世界的一切带到了JavaScript世界。因为JavaScript世界中，勇者、怪物，傻傻分不清楚。转换后的世界：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.js&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;function hello(hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero);
+}
+var hero1 = &amp;quot;勇者&amp;quot;;
+var hero2 = 2;
+hello(hero1);
+hello(hero2);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你是一个创世者，也是一个游戏玩家，世界转换器告诉了你这个世界有问题，但是你的世界你来决定。我建议，为了这个世界不至于在最后分崩离析，还是好好处理完问题再上路吧。&lt;/p&gt;
+&lt;p&gt;数据类型，是构建这个世界的基础。这个世界本身由这么几个基本数据类型组成：&lt;a href="https://www.typescriptlang.org/docs/handbook/basic-types.html"&gt;string、number、array、enum、any……等等&lt;/a&gt;。我们怎么判断它是不是这种类型的怎么做？只要把类型带在你的声明之中。比如&lt;code&gt;function hello(hero: string)&lt;/code&gt;就表示，你必须是一个&lt;code&gt;string&lt;/code&gt;类型的数据，才能通过这里。&lt;/p&gt;
+&lt;h1 id=""&gt;新手村：欢迎你，勇者&lt;/h1&gt;
+&lt;p&gt;“你好，勇者！”突然你看到了一阵光，看板娘站在光中，笑靥如画。&lt;/p&gt;
+&lt;p&gt;你想起来了，你是一个勇者。等等，什么是勇者？你作为一个创世者，深深的陷入了思考，最后得出一个结论：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v3）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;var hero = {
+    name: &amp;quot;勇者&amp;quot;,
+    hp: 10
+}
+function hello(hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero.name);
+}
+hello(hero);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;不对，这样做不是依然什么样的牛鬼蛇神都能以勇者的身份进入这个世界吗？嗯，作为一个先知，我告诉你怎么做：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v4）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;// 定义什么是勇者
+class Hero {
+    name: string;   // 每个勇者都有一个名字
+    hp: number;     // 每个勇者有自己的HP值
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero(&amp;quot;勇者&amp;quot;, 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero.name);
+}
+
+hello(hero);
+hello(&amp;quot;我也是一个勇者啊！&amp;quot;);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们先来试试看转换这个世界，之后再来解释一下为什么这么做。开始转换：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ts-the-rpg.ts(21,7): error TS2345: Argument of type 'string' is not assignable to parameter of type 'Hero'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;最后一个假装是勇者的字符串想要蒙混过关，被转换器拦住了。等等，转换器怎么知道勇者长什么样？&lt;/p&gt;
+&lt;p&gt;没错，我们这时候祭出了勇者召唤的特殊形式：&lt;code&gt;class&lt;/code&gt;。我们通过定义一个叫Hero的数据类型来告诉世界，这个世界开始有勇者了。那么以后，我们就可以在入口处判断你是不是一个Hero。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;class&lt;/code&gt;由这么几个部分组成：它是什么（定义的数据类型名）、它由什么构成（类的成员数据）、它能做什么（定义数据类型的行为）、它需要哪些素材才能被召唤出来（构造函数）。&lt;/p&gt;
+&lt;p&gt;从&lt;code&gt;ts-the-rpg.ts（v4）&lt;/code&gt;上看，我们定义了它是勇者（&lt;code&gt;class Hero&lt;/code&gt;），它有名字（&lt;code&gt;name: string;&lt;/code&gt;）和血量（&lt;code&gt;hp: number;&lt;/code&gt;），召唤他的规则就是必须要给他起个名字并提供血量（&lt;code&gt;constructor(name: string, hp: number){ this.name = name; this.hp = hp; }&lt;/code&gt;）,然后通过特殊仪式召唤它（&lt;code&gt;var hero = new Hero(&amp;quot;勇者&amp;quot;, 10);&lt;/code&gt;）。&lt;/p&gt;
+&lt;p&gt;那你会问，如果有一个史莱姆，伪装的特别像一个勇者，就像下面这样，世界转换器会怎么做？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v5）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;// 定义什么是勇者
+class Hero {
+    name: string;   // 每个勇者都有一个名字
+    hp: number;     // 每个勇者有自己的HP值
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero(&amp;quot;勇者&amp;quot;, 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero.name);
+}
+
+hello(hero);
+// 伪装成勇者的史莱姆
+hello({ name: &amp;quot;我不是史莱姆&amp;quot;, hp: 1 });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我们试着转换到普通世界后，怎么世界转换器什么都没做？于是你陷入了深深的恐惧。没错，这样召唤一个勇者肯定一瞬间就被危险的史莱姆识破并且伪装，这个时候我们需要把勇者不为人知的一面隐藏起来，比如勇者有hp这件事。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v6）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;// 定义什么是勇者
+class Hero {
+    name: string;           // 每个勇者都有一个名字
+    private hp: number;     // 每个勇者有自己的HP值，但是受保护
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero(&amp;quot;勇者&amp;quot;, 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero.name);
+}
+
+hello(hero);
+hello({ name: &amp;quot;我不是史莱姆&amp;quot;, hp: 1 });
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这时候我们转换这个世界，你看史莱姆被拦在了外面：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ts-the-rpg.ts(21,7): error TS2345: Argument of type '{ name: string; hp: number; }' is not assignable to parameter of type 'Hero'.
+
+Property 'hp' is private in type 'Hero' but not in type '{ name: string; hp: number; }'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没错，你一个堂堂史莱姆，把hp值这种对于勇者如此重要的属性暴露在外面，这种作风肯定不是勇者所为，你出去。&lt;/p&gt;
+&lt;p&gt;这时候史莱姆又来搞事情，它想，如果这样，我也隐藏我的hp，除了定义不一样，其他的都一摸一样，那样我一定能进去。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v7）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;// 定义什么是勇者
+class Hero {
+    name: string;           // 每个勇者都有一个名字
+    private hp: number;     // 每个勇者有自己的HP值，但是受保护
+    // 召唤一个勇者的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 定义什么是史莱姆
+class Slime {
+    name: string;           // 每个史莱姆都有一个名字
+    private hp: number;     // 每个史莱姆有自己的HP值，但是受保护
+    // 召唤一个史莱姆的规则
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 召唤一个勇者
+var hero = new Hero(&amp;quot;勇者&amp;quot;, 10);
+var slime = new Slime(&amp;quot;勇者&amp;quot;, 10);
+
+// 只能由勇者通过的路
+function hello(hero: Hero) {
+    console.log(&amp;quot;Hello , &amp;quot; + hero.name);
+}
+
+hello(hero);
+hello(slime);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这时候世界转换器非常聪明：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ts-the-rpg.ts(33,7): error TS2345: Argument of type 'Slime' is not assignable to parameter of type 'Hero'.
+
+Types have separate declarations of a private property 'hp'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你作为一只史莱姆，身上流着史莱姆的血，你的血的味道，我一闻就能闻出来不一样。史莱姆直接被推了出去。&lt;/p&gt;
+&lt;p&gt;那你肯定这时候肯定觉得很奇怪&lt;code&gt;ts-the-rpg.ts（v5）&lt;/code&gt;和&lt;code&gt;ts-the-rpg.ts（v7）&lt;/code&gt;同样是将史莱姆伪装成了勇者，为什么v5成功了，v7却失败了？&lt;/p&gt;
+&lt;p&gt;世界转换器在这里是这么做处理的：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;v5部分因为所有的部分都是公开的，那么他只会判断是否存在，这种原理别处称作“鸭子模型”，就是说“呱呱叫又会游泳的鸟那就肯定是鸭子”，在这里就是“有名字有hp的肯定是勇者”，所以就放行了，这是一种弱的类型检查机制，可以抵挡住大部分的伪装。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;在v7中，有部分是隐藏的，那么不只会判断隐藏的部分是不是存在的，还会判断它是否来自不同的定义。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;好了，一切都安全了。你到这里应该明白了TypeScript世界的一部分，类型检查。这个特性能够在某种程度上保护你程序的安全，不至于让你在每个通道内设置关卡，判断进来的东西是勇者还是史莱姆，或者是伪装成勇者的史莱姆。在JavaScript的世界里，你需要处处小心，勇者即使进了城也要被处处浪费时间去盘问，而在TypeScript中，勇者只需要在城门口被盘问一边，确定你是勇者后，你在城里能得到所有你能得到的东西，而不用再一遍一遍的被盘问：“你是不是勇者？”&lt;/p&gt;
+&lt;h1 id=""&gt;转职：你依然是个勇者&lt;/h1&gt;
+&lt;p&gt;你站在新手村中心，不知所措的时候，边上有三个导师，分别在招揽着自己的学徒，分别是战士、魔法师和弓箭手：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v8）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log(&amp;quot;fireball&amp;quot;);
+    }
+}
+
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log(&amp;quot;shoot&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没错，三种职业有着自己的攻击方式。勇者你要学什么呢？&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v9）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 通过extends继承了勇者之力
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+// 通过extends继承了勇者之力
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log(&amp;quot;fireball&amp;quot;);
+    }
+}
+
+// 通过extends继承了勇者之力
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log(&amp;quot;shoot&amp;quot;);
+    }
+}
+
+function forest(hero: Hero) {
+    console.log(&amp;quot;Enter Forest !!&amp;quot;);
+}
+
+var hero1 = new Warrior(&amp;quot;warrior&amp;quot;, 10, &amp;quot;sword&amp;quot;);
+var hero2 = new Magician(&amp;quot;magician&amp;quot;, 10, &amp;quot;wand&amp;quot;);
+var hero3 = new Archer(&amp;quot;archer&amp;quot;, 10, &amp;quot;bow&amp;quot;);
+
+forest(hero1);
+forest(hero2);
+forest(hero3);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;世界转换器转换后发现，竟然战士、法师和弓箭手都能进入森林！&lt;/p&gt;
+&lt;p&gt;你要知道，即使你选择了职业，但是你体内的勇者之名和勇者之血都通过&lt;code&gt;extends Hero&lt;/code&gt;方式继承了下来。你的召唤方式变了，但是你的召唤规则里还通过&lt;code&gt;super(name, hp);&lt;/code&gt;这个方式保留着你的内心，这个就像是当初召唤你的方式，&lt;code&gt;new Hero(name , hp)&lt;/code&gt;。所以即使这时候你们用着不同的武器，有着不同的攻击方式，却依然内心都还是个勇者。&lt;/p&gt;
+&lt;h1 id=""&gt;技能训练：技能虽好，可不要偷师哦！&lt;/h1&gt;
+&lt;p&gt;这时候你犹豫了，你想去三个练功房都看看，再来考虑转职的事情：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v10）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Hero {
+    name: string;
+    private hp: number;
+    // 勇者的召唤方式
+    constructor(name: string, hp: number) {
+        this.name = name;
+        this.hp = hp;
+    }
+}
+
+// 通过extends继承了勇者之力
+class Warrior extends Hero {
+    weapon: string;
+    // 战士的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+// 通过extends继承了勇者之力
+class Magician extends Hero {
+    weapon: string;
+    // 魔法师的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    fireball() {
+        console.log(&amp;quot;fireball&amp;quot;);
+    }
+}
+
+// 通过extends继承了勇者之力
+class Archer extends Hero {
+    weapon: string;
+    // 弓箭手的召唤方式
+    constructor(name: string, hp: number , weapon: string) {
+        // 你的名字和你的血液是勇者的名字和勇者的血液，这是你的内心
+        super(name, hp);
+        this.weapon = weapon;
+    }
+    shoot() {
+        console.log(&amp;quot;shoot&amp;quot;);
+    }
+}
+
+function trainWarrior(hero: Warrior) {}
+function trainMagician(hero: Magician) {}
+function trainArcher(hero: Archer) {}
+
+var hero = new Hero(&amp;quot;普通勇者&amp;quot;, 10);
+
+trainWarrior(hero);
+trainMagician(hero);
+trainArcher(hero);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;毫不意外，你被三个练功房都踢了出来。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ts-the-rpg.ts(60,14): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Warrior'.
+
+Property 'weapon' is missing in type 'Hero'.
+
+ts-the-rpg.ts(61,15): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Magician'.
+
+Property 'weapon' is missing in type 'Hero'.
+
+ts-the-rpg.ts(62,13): error TS2345: Argument of type 'Hero' is not assignable to parameter of type 'Archer'.
+
+Property 'weapon' is missing in type 'Hero'.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;三个房间的导师都说，你没有武器，学不了技能。村长这个时候走过来告诉你真相：即使你有了武器，你也学不了。对，职人是继承了勇者的内心，职人永远都是勇者，而勇者没有转职，没有职人才有的能力，你永远只是个勇者，不是一个职人。这就是继承的真相。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;职人是勇者，勇者不是职人。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;职人是勇者，勇者不是职人。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;职人是勇者，勇者不是职人。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;你默默念了三遍。铭记在心。&lt;/p&gt;
+&lt;h1 id=""&gt;各式各样的武器：选一件吧少年&lt;/h1&gt;
+&lt;p&gt;实际上专职没有那么简单，你的武器不仅仅是个名字而已，这时候你的老师让你去挑一把武器带过来。你去了武器铺。武器铺的铁匠大叔一看到你是一个勇者，非常热心的跟你介绍了不同的武器。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v11）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+class Wand extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    fireball() {
+        console.log(&amp;quot;fireball&amp;quot;);
+    }
+}
+
+class Bow extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    shoot() {
+        console.log(&amp;quot;shoot&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你说你要转职成战士，你只看剑。他很热情，问问你是不是要附魔。有火焰效果和寒冰效果，然后可以给你打造一把独一无二的剑：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v12）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+interface Fire {
+    fire();
+}
+
+interface Ice {
+    ice();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;你想了想说，都要。铁匠一愣，笑了笑，你小子为难老夫！好，难不倒老夫，于是你的剑做好了：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ts-the-rpg.ts（v12）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;class Weapon {
+    name: string;
+    private: atk;
+    constructor(name: string, atk: number) {
+        this.name = name;
+        this.atk = atk;
+    }
+}
+
+class Sword extends Weapon {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+    }
+}
+
+interface Fire {
+    fire();
+}
+
+interface Ice {
+    ice();
+}
+
+class SwordOfIceAndFire extends Sword implements Ice, Fire {
+    constructor(name: string, atk: number) {
+        super(name, atk);
+    }
+    swing() {
+        console.log(&amp;quot;swing&amp;quot;);
+        this.ice();
+        this.fire();
+    }
+    ice() {
+        console.log(&amp;quot;ice&amp;quot;);
+    }
+    fire() {
+        console.log(&amp;quot;fire&amp;quot;);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;没错，interface在面向对象中就好像是附魔属性，只要你愿意，可以通过implements无限的往一把剑上叠加能力。但是，即使你无限叠加了能力，它还是一把剑，而不能成为魔杖或者弓箭。&lt;/p&gt;
+&lt;p&gt;冒险才刚刚开始，而我们的教程到了尾声。我们再来回顾一下有哪些概念：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;类和类型检查：一个史莱姆伪装的再好，还是史莱姆。&lt;/li&gt;
+&lt;li&gt;继承是什么：勇者转职之后还是勇者，不管他变成了剑士、魔法师还是弓箭手。&lt;/li&gt;
+&lt;li&gt;子类和父类的继承关系：一个职人是勇者，但是一个勇者不是职人。&lt;/li&gt;
+&lt;li&gt;接口是什么：附魔属性。&lt;/li&gt;
+&lt;li&gt;通过接口扩展类：只要你愿意，可以无限的往一把剑上叠加能力，让它成为一把新的剑。但是，即使你无限叠加了能力，它还是一把剑，而不能成为魔杖或者弓箭。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;希望通过这个教程帮助你理解TypeScript中面向对象的基础。&lt;/p&gt;
+&lt;/div&gt;</content:encoded></item></channel></rss>

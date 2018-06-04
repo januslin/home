@@ -1,0 +1,384 @@
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>使用Angular和ionic构建Hybrid App（一）—— 介绍篇</title>
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="../assets/built/screen.css?v=9948a6c51d">
+
+    <link rel="shortcut icon" href="../favicon.png" type="image/png">
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="amp/index.html">
+    
+    <meta property="og:site_name" content="LordMOS">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="使用Angular和ionic构建Hybrid App（一）—— 介绍篇">
+    <meta property="og:description" content="写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问Angular如何构建原生应用，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。 ionic是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。 ionic用于开发Hybrid App，那么Hybrid App又是什么呢？ 通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。 那相对应的，在浏览器中运行的应用我们通常称做Web App。 Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、电话、短信、">
+    <meta property="og:url" content="http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/">
+    <meta property="article:published_time" content="2018-06-04T07:50:29.000Z">
+    <meta property="article:modified_time" content="2018-06-04T07:50:29.000Z">
+    <meta property="article:tag" content="ionic">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="使用Angular和ionic构建Hybrid App（一）—— 介绍篇">
+    <meta name="twitter:description" content="写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问Angular如何构建原生应用，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。 ionic是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。 ionic用于开发Hybrid App，那么Hybrid App又是什么呢？ 通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。 那相对应的，在浏览器中运行的应用我们通常称做Web App。 Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、电话、短信、">
+    <meta name="twitter:url" content="http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Hui Zhong">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="ionic">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "LordMOS",
+        "logo": "http://localhost:2368/content/images/2018/06/2.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Hui Zhong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2018/06/emo-2.gif",
+            "width": 200,
+            "height": 200
+        },
+        "url": "http://localhost:2368/author/hui/",
+        "sameAs": []
+    },
+    "headline": "使用Angular和ionic构建Hybrid App（一）—— 介绍篇",
+    "url": "http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/",
+    "datePublished": "2018-06-04T07:50:29.000Z",
+    "dateModified": "2018-06-04T07:50:29.000Z",
+    "keywords": "ionic",
+    "description": "写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问Angular如何构建原生应用，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。 ionic是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。 ionic用于开发Hybrid App，那么Hybrid App又是什么呢？ 通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。 那相对应的，在浏览器中运行的应用我们通常称做Web App。 Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、电话、短信、",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <script src="../public/ghost-sdk.js?v=9948a6c51d"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "da54f220680d"
+});
+</script>
+    <meta name="generator" content="Ghost 1.23">
+    <link rel="alternate" type="application/rss+xml" title="LordMOS" href="../rss/index.html">
+
+</head>
+<body class="post-template tag-ionic">
+
+    <div class="site-wrapper">
+
+        
+
+<header class="site-header outer">
+    <div class="inner">
+        <nav class="site-nav">
+    <div class="site-nav-left">
+                <a class="site-nav-logo" href="../"><img src="../content/images/2018/06/2.jpg" alt="LordMOS"></a>
+            <ul class="nav" role="menu">
+    <li class="nav-home" role="menuitem"><a href="../">Home</a></li>
+    <li class="nav-angular" role="menuitem"><a href="../tag/angular/">Angular</a></li>
+    <li class="nav-typescript" role="menuitem"><a href="../tag/typescript/">TypeScript</a></li>
+    <li class="nav-ionic" role="menuitem"><a href="../tag/ionic/">ionic</a></li>
+    <li class="nav-ecmascript" role="menuitem"><a href="../tag/ecmascript/">ECMAScript</a></li>
+    <li class="nav-" role="menuitem"><a href="../tag/other-stuff/">杂记</a></li>
+</ul>
+
+    </div>
+    <div class="site-nav-right">
+        <div class="social-links">
+        </div>
+            <a class="rss-button" href="https://feedly.com/i/subscription/feed/http://localhost:2368/rss/" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><circle cx="6.18" cy="17.82" r="2.18"></circle><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"></path></svg>
+</a>
+    </div>
+</nav>
+    </div>
+</header>
+
+
+<main id="site-main" class="site-main outer">
+    <div class="inner">
+
+        <article class="post-full post tag-ionic no-image">
+
+            <header class="post-full-header">
+                <section class="post-full-meta">
+                    <time class="post-full-meta-date" datetime="2018-06-04">4 六月 2018</time>
+                        <span class="date-divider">/</span> <a href="../tag/ionic/">ionic</a>
+                </section>
+                <h1 class="post-full-title">使用Angular和ionic构建Hybrid App（一）—— 介绍篇</h1>
+            </header>
+
+
+            <section class="post-full-content">
+                <div class="kg-card-markdown"><blockquote>
+<p>写在前面：由于最近沉迷Splatoon 2和超级马里欧奥德赛，专栏鸽了将近两三个月（反正也没什么人看）。前两天有人在知乎上问<a href="https://www.zhihu.com/question/67888211">Angular如何构建原生应用</a>，我在下面安利了一下ionic，分析了一下优点，看到有位同学想要更深入的了解这方面的东西，那我想就以这个主题为契机（主要是奥德赛通关全收集封盘了等着异度神剑2，逃）来写一些面向前端工程是的应用开发分享吧。</p>
+</blockquote>
+<p><a href="http://ionicframework.com/">ionic</a>是一直以来我在使用的框架，利用这个框架我（司）开发过不少类型的应用，包括[哔——]、[哔——]和[哔——]等等——其实我司是一个外包公司，所以其实你能想到的业务场景我们都有做过——市面上你能想得到的大部分业务其实ionic基本都可以胜任。</p>
+<p>ionic用于开发Hybrid App，那么Hybrid App又是什么呢？</p>
+<p>通常我们将那些使用Java/Kotlin（如果用到NDK的话还会用到C/C++）开发的Android应用，使用Obj-C/Swift开发iOS应用，称做Native App——当然这种原生应用定义的方式不够严谨，但是可以知道的是这些应用跟Web没有任何关系。</p>
+<p>那相对应的，在浏览器中运行的应用我们通常称做Web App。</p>
+<p>Hybrid App只不过指的是一种应用构建的方式——例如在需要底层能力（比如蓝牙、电话、短信、播放音乐等）时，我们需要使用到Native的代码来实现功能，而其他的部分依托于内嵌在原生应用WebView中的Web部分（HTML、JavaScript和CSS）来实现的应用；或者大部分功能依托于原生代码来实现，而仅仅只有类似活动页等等经常需要运营的功能使用内嵌浏览器进行实现。总之，就是原生和Web各取所长，用于构建应用的一种方式。</p>
+<p>ionic使用的就是第一种方式。它以<a href="https://cordova.apache.org/">Cordova</a>为基础，提供了原生的调用能力和调用标准，并且解决跨平台（不只有iOS和Android平台）的问题；使用<a href="https://angular.cn/">Angular</a>和ionic内建组件来作为UI和业务逻辑的编写工具，按需带来统一和差异化的用户体验，一次编写，跨平台部署，降低了许多的开发成本。</p>
+<p>这么说太官方了。我们以走马观花的方式，看看ionic到底给我们带来了什么。</p>
+<h2 id="uicomponent"><a href="http://ionicframework.com/docs/components/">UI Component</a></h2>
+<p>ionic内置了许多的组件：我们需要用的Button、Select、Checkbox这些最基本的基本组件肯定不在话下，另外还提供了多种样式的弹窗（Alert、Prompt、ActionSheet、Modal、Loading等等），以及页面模版（侧滑栏、Tab）可供选择，并且内置了许多font icon可以使用。</p>
+<h2 id="api"><a href="http://ionicframework.com/docs/api/">API</a></h2>
+<p>API介绍了页面的生命周期、跳转等等最常用也最需要关心的功能之外，还提供了下拉刷新、上拉加载等等常用模版组件使用方式和事件响应处理。</p>
+<h2 id="ionicnative"><a href="http://ionicframework.com/docs/native/">ionic Native</a></h2>
+<p>这是官方支持的Native组件库，简单的诸如电话短信、设备信息，复杂的有文件上传下载、App全包或者热更新、扫码、地理位置信息，一应俱全。</p>
+<p>如果你使用了第三方服务，不少的第三方服务提供商也提供了Cordova插件可以供大家使用：比如支付有Ping++，推送有JPush等等。</p>
+<h2 id="theming"><a href="http://ionicframework.com/docs/theming/">Theming</a></h2>
+<p>ionic定义了不少的主题风格，但是如果依然不符合你的需求，你可以自定义风格来实现界面的样式和颜色。</p>
+<h2 id="cli"><a href="http://ionicframework.com/docs/cli/">CLI</a></h2>
+<p>ionic的CLI提供了页面的自动生成、编译、打包等功能，这些都是必备的。但是有个超级使用的功能真是不得不推荐：就是icon和启动画面生成器。使用命令行，就能为你的应用生成全套的icon，不论是Android还是iOS。</p>
+<p>在这些工具的帮助下，作为一个原生开发0基础的前端工程师，足够有能力构建一个你想要的应用了吧！</p>
+<p>下一篇，我们再来聊聊关于ionic开发你所要准备好的一切。</p>
+</div>
+            </section>
+
+
+            <footer class="post-full-footer">
+
+
+                    
+<section class="author-card">
+        <img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong">
+    <section class="author-card-content">
+        <h4 class="author-card-name"><a href="../author/hui/">Hui Zhong</a></h4>
+            <p>Read <a href="../author/hui/">more posts</a> by this author.</p>
+    </section>
+</section>
+<div class="post-full-footer-right">
+    <a class="author-card-button" href="../author/hui/">Read More</a>
+</div>
+
+
+            </footer>
+
+
+        </article>
+
+    </div>
+</main>
+
+<aside class="read-next outer">
+    <div class="inner">
+        <div class="read-next-feed">
+                <article class="read-next-card" style="background-image: url(https://casper.ghost.org/v1.0.0/images/blog-cover.jpg)">
+                    <header class="read-next-card-header">
+                        <small class="read-next-card-header-sitetitle">— LordMOS —</small>
+                        <h3 class="read-next-card-header-title"><a href="../tag/ionic/">ionic</a></h3>
+                    </header>
+                    <div class="read-next-divider"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path d="M13 14.5s2 3 5 3 5.5-2.463 5.5-5.5S21 6.5 18 6.5c-5 0-7 11-12 11C2.962 17.5.5 15.037.5 12S3 6.5 6 6.5s4.5 3.5 4.5 3.5"></path></svg>
+</div>
+                    <div class="read-next-card-content">
+                        <ul>
+                            <li><a href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-er-zhun-bei-pian/">使用Angular和ionic构建Hybrid App（二）—— 准备篇</a></li>
+                            <li><a href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-san-dao-hang-sheng-ming-zhou-qi-he-liu-lan-qi/">使用Angular和ionic构建Hybrid App（三）—— 导航、生命周期和浏览器</a></li>
+                            <li><a href="../ionicde-wei-lai-zhan-wang-xia-guan-yu-capacitorhe-dui-ionictuan-dui-de-kan-fa/">ionic的未来展望（下）：关于Capacitor和对ionic团队的看法</a></li>
+                        </ul>
+                    </div>
+                    <footer class="read-next-card-footer">
+                        <a href="../tag/ionic/">See all 4 posts →</a>
+                    </footer>
+                </article>
+
+                <article class="post-card post tag-ionic no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-er-zhun-bei-pian/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ionic</span>
+                <h2 class="post-card-title">使用Angular和ionic构建Hybrid App（二）—— 准备篇</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>俗话说“工欲善其事，必先利其器”。作为一个需要开发App的Web开发者来说，直接动手之前，必然需要做一些准备性的调研。这里，我就列举几个大家比较关心并且很大概率会去调研的问题。 如何解决用户体验的问题 都说Native App如丝般顺滑，Web App的表现就难说了。这句话其实不无道理，在Android 5.0之前，Android手机自带的WebView（应用内嵌浏览器）性能真的堪忧，况且各大厂商还喜欢魔改浏览器，导致兼容性、性能都存在很大问题。 在Android 5.0之后，Android系统自带的WebView就被替换成了Chromium，性能提升的非常明显，而iOS设备上的WebView一直性能都很出色，所以现在的最大问题就是Android 5.0以下的设备如何提升性能的问题。 这个时候（</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../author/hui/" class="static-avatar"><img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">5 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+                <article class="post-card post tag-ionic no-image">
+    <div class="post-card-content">
+        <a class="post-card-content-link" href="../shi-yong-angularhe-ionicgou-jian-hybrid-app-san-dao-hang-sheng-ming-zhou-qi-he-liu-lan-qi/">
+            <header class="post-card-header">
+                    <span class="post-card-tags">ionic</span>
+                <h2 class="post-card-title">使用Angular和ionic构建Hybrid App（三）—— 导航、生命周期和浏览器</h2>
+            </header>
+            <section class="post-card-excerpt">
+                <p>写在前面：这篇文章的草稿在我的电脑里躺了半年。这段时间困惑非常多，这篇文章也是其中之一，就是这个系列接下来应该用哪种方式来帮助大家了解和使用ionic。很多东西文档上已经写的很清楚，大家看看文档不就行了吗？这个疑惑尽管现在还没有解开，所以还希望各位读者能留言，来谈谈大家想要看到什么。谢谢大家的支持！ ionic尽管使用了Angular作为实现的框架，它内部的导航方式却不同于Angular这种基于路由方式，而是视图栈。 什么是视图栈？其实从字面意思就能理解，无非就是我们把视图的导航以栈的形式缓存，而我们显示的永远是栈顶，在需要显示的时候压栈，在返回的时候出栈。 在ionic中，用NavController来管理整个应用的视图栈。它提供了两个最基本的方法来管理视图栈，push()和pop()，在我们需要显示一个页面的时候，通过调用push()方法来展示，这个方法在你需要的时候还能从上一个页面传递参数，而返回上个页面，也仅仅需要调用pop()。另外，还可以通过popToRoot(</p>
+            </section>
+        </a>
+        <footer class="post-card-meta">
+
+            <ul class="author-list">
+                <li class="author-list-item">
+
+                    <div class="author-name-tooltip">
+                        Hui Zhong
+                    </div>
+
+                        <a href="../author/hui/" class="static-avatar"><img class="author-profile-image" src="../content/images/2018/06/emo-2.gif" alt="Hui Zhong"></a>
+                </li>
+            </ul>
+
+            <span class="reading-time">6 min read</span>
+
+        </footer>
+    </div>
+</article>
+
+        </div>
+    </div>
+</aside>
+
+<div class="floating-header">
+    <div class="floating-header-logo">
+        <a href="../">
+                <img src="../content/images/2018/06/10.png" alt="LordMOS icon">
+            <span>LordMOS</span>
+        </a>
+    </div>
+    <span class="floating-header-divider">—</span>
+    <div class="floating-header-title">使用Angular和ionic构建Hybrid App（一）—— 介绍篇</div>
+    <div class="floating-header-share">
+        <div class="floating-header-share-label">Share this <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+    <path d="M7.5 15.5V4a1.5 1.5 0 1 1 3 0v4.5h2a1 1 0 0 1 1 1h2a1 1 0 0 1 1 1H18a1.5 1.5 0 0 1 1.5 1.5v3.099c0 .929-.13 1.854-.385 2.748L17.5 23.5h-9c-1.5-2-5.417-8.673-5.417-8.673a1.2 1.2 0 0 1 1.76-1.605L7.5 15.5zm6-6v2m-3-3.5v3.5m6-1v2"></path>
+</svg>
+</div>
+        <a class="floating-header-share-tw" href="https://twitter.com/share?text=%E4%BD%BF%E7%94%A8Angular%E5%92%8Cionic%E6%9E%84%E5%BB%BAHybrid%20App%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%20%E4%BB%8B%E7%BB%8D%E7%AF%87&amp;url=http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/" onclick="window.open(this.href, 'share-twitter', 'width=550,height=235');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M30.063 7.313c-.813 1.125-1.75 2.125-2.875 2.938v.75c0 1.563-.188 3.125-.688 4.625a15.088 15.088 0 0 1-2.063 4.438c-.875 1.438-2 2.688-3.25 3.813a15.015 15.015 0 0 1-4.625 2.563c-1.813.688-3.75 1-5.75 1-3.25 0-6.188-.875-8.875-2.625.438.063.875.125 1.375.125 2.688 0 5.063-.875 7.188-2.5-1.25 0-2.375-.375-3.375-1.125s-1.688-1.688-2.063-2.875c.438.063.813.125 1.125.125.5 0 1-.063 1.5-.25-1.313-.25-2.438-.938-3.313-1.938a5.673 5.673 0 0 1-1.313-3.688v-.063c.813.438 1.688.688 2.625.688a5.228 5.228 0 0 1-1.875-2c-.5-.875-.688-1.813-.688-2.75 0-1.063.25-2.063.75-2.938 1.438 1.75 3.188 3.188 5.25 4.25s4.313 1.688 6.688 1.813a5.579 5.579 0 0 1 1.5-5.438c1.125-1.125 2.5-1.688 4.125-1.688s3.063.625 4.188 1.813a11.48 11.48 0 0 0 3.688-1.375c-.438 1.375-1.313 2.438-2.563 3.188 1.125-.125 2.188-.438 3.313-.875z"></path></svg>
+        </a>
+        <a class="floating-header-share-fb" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/shi-yong-angularhe-ionicgou-jian-hybrid-app-yi-jie-shao-pian/" onclick="window.open(this.href, 'share-facebook','width=580,height=296');return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 32 32"><path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path></svg>
+        </a>
+    </div>
+    <progress class="progress" value="0">
+        <div class="progress-container">
+            <span class="progress-bar"></span>
+        </div>
+    </progress>
+</div>
+
+
+
+
+        <footer class="site-footer outer">
+            <div class="site-footer-content inner">
+                <section class="copyright"><a href="../">LordMOS</a> © 2018</section>
+                <nav class="site-footer-nav">
+                    <a href="../">Latest Posts</a>
+                    
+                    
+                    <a href="https://ghost.org" target="_blank" rel="noopener">Ghost</a>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=9948a6c51d"></script>
+
+
+    <script>
+
+// NOTE: Scroll performance is poor in Safari
+// - this appears to be due to the events firing much more slowly in Safari.
+//   Dropping the scroll event and using only a raf loop results in smoother
+//   scrolling but continuous processing even when not scrolling
+$(document).ready(function () {
+    // Start fitVids
+    var $postContent = $(".post-full-content");
+    $postContent.fitVids();
+    // End fitVids
+
+    var progressBar = document.querySelector('progress');
+    var header = document.querySelector('.floating-header');
+    var title = document.querySelector('.post-full-title');
+
+    var lastScrollY = window.scrollY;
+    var lastWindowHeight = window.innerHeight;
+    var lastDocumentHeight = $(document).height();
+    var ticking = false;
+
+    function onScroll() {
+        lastScrollY = window.scrollY;
+        requestTick();
+    }
+
+    function onResize() {
+        lastWindowHeight = window.innerHeight;
+        lastDocumentHeight = $(document).height();
+        requestTick();
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(update);
+        }
+        ticking = true;
+    }
+
+    function update() {
+        var trigger = title.getBoundingClientRect().top + window.scrollY;
+        var triggerOffset = title.offsetHeight + 35;
+        var progressMax = lastDocumentHeight - lastWindowHeight;
+
+        // show/hide floating header
+        if (lastScrollY >= trigger + triggerOffset) {
+            header.classList.add('floating-active');
+        } else {
+            header.classList.remove('floating-active');
+        }
+
+        progressBar.setAttribute('max', progressMax);
+        progressBar.setAttribute('value', lastScrollY);
+
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    window.addEventListener('resize', onResize, false);
+
+    update();
+
+});
+</script>
+
+
+    
+
+</body>

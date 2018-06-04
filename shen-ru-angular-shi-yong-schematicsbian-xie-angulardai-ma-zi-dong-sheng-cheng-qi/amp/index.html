@@ -1,0 +1,330 @@
+
+<head>
+    <meta charset="utf-8">
+
+    <title>深入Angular：使用Schematics编写Angular代码自动生成器</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+
+    <link rel="shortcut icon" href="../../favicon.png">
+
+    <link rel="shortcut icon" href="../../favicon.png" type="image/png">
+    <link rel="canonical" href="../index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    
+    <meta property="og:site_name" content="LordMOS">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="深入Angular：使用Schematics编写Angular代码自动生成器">
+    <meta property="og:description" content="写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！ 什么是Schematics 在聊Schematics之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如ng g component component-name来生成一个component模版，或者用相应的参数生成service\directive\pipe模版等等，并且引入到ngModule里，这是怎么做到的？这里就利用到里Schematics。 Schematics可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。 另外@Trotyl Yu在我的一个提问下有提到： 实际上，Schematics 的实现机制完全与 Angular 无关，其它项目也可以通过 Schematics CLI 来使用。 因此我们甚至可以基于Schematics创建一个React\">
+    <meta property="og:url" content="http://localhost:2368/shen-ru-angular-shi-yong-schematicsbian-xie-angulardai-ma-zi-dong-sheng-cheng-qi/">
+    <meta property="article:published_time" content="2018-06-04T07:46:45.000Z">
+    <meta property="article:modified_time" content="2018-06-04T07:46:50.000Z">
+    <meta property="article:tag" content="Angular">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="深入Angular：使用Schematics编写Angular代码自动生成器">
+    <meta name="twitter:description" content="写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！ 什么是Schematics 在聊Schematics之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如ng g component component-name来生成一个component模版，或者用相应的参数生成service\directive\pipe模版等等，并且引入到ngModule里，这是怎么做到的？这里就利用到里Schematics。 Schematics可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。 另外@Trotyl Yu在我的一个提问下有提到： 实际上，Schematics 的实现机制完全与 Angular 无关，其它项目也可以通过 Schematics CLI 来使用。 因此我们甚至可以基于Schematics创建一个React\">
+    <meta name="twitter:url" content="http://localhost:2368/shen-ru-angular-shi-yong-schematicsbian-xie-angulardai-ma-zi-dong-sheng-cheng-qi/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Hui Zhong">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="Angular">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "LordMOS",
+        "logo": "http://localhost:2368/content/images/2018/06/2.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Hui Zhong",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2018/06/emo-2.gif",
+            "width": 200,
+            "height": 200
+        },
+        "url": "http://localhost:2368/author/hui/",
+        "sameAs": []
+    },
+    "headline": "深入Angular：使用Schematics编写Angular代码自动生成器",
+    "url": "http://localhost:2368/shen-ru-angular-shi-yong-schematicsbian-xie-angulardai-ma-zi-dong-sheng-cheng-qi/",
+    "datePublished": "2018-06-04T07:46:45.000Z",
+    "dateModified": "2018-06-04T07:46:50.000Z",
+    "keywords": "Angular",
+    "description": "写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！ 什么是Schematics 在聊Schematics之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如ng g component component-name来生成一个component模版，或者用相应的参数生成service\\directive\\pipe模版等等，并且引入到ngModule里，这是怎么做到的？这里就利用到里Schematics。 Schematics可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。 另外@Trotyl Yu在我的一个提问下有提到： 实际上，Schematics 的实现机制完全与 Angular 无关，其它项目也可以通过 Schematics CLI 来使用。 因此我们甚至可以基于Schematics创建一个React\\",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368/"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 1.23">
+    <link rel="alternate" type="application/rss+xml" title="LordMOS" href="../../rss/index.html">
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,600,400">
+    <style amp-custom>html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}dfn{font-style:italic}h1{margin:0.67em 0;font-size:2em}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{position:relative;vertical-align:baseline;font-size:75%;line-height:0}sup{top:-0.5em}sub{bottom:-0.25em}img{border:0}amp-img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace, monospace;font-size:1em}button,input,optgroup,select,textarea{margin:0;color:inherit;font:inherit}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{margin:0 2px;padding:0.35em 0.625em 0.75em;border:1px solid #c0c0c0}legend{padding:0;border:0}textarea{overflow:auto}optgroup{font-weight:bold}table{border-spacing:0;border-collapse:collapse}td,th{padding:0}html{max-height:100%;height:100%;font-size:62.5%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0)}body{max-height:100%;height:100%;color:#3a4145;background:#f4f8fb;letter-spacing:0.01rem;font-family:"Merriweather", serif;font-size:1.8rem;line-height:1.75em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-o-font-feature-settings:"kern" 1}::-moz-selection{background:#d6edff}::selection{background:#d6edff}h1,h2,h3,h4,h5,h6{margin:0 0 0.3em 0;color:#2e2e2e;font-family:"Open Sans", sans-serif;line-height:1.15em;text-rendering:geometricPrecision;-webkit-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-moz-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1;-o-font-feature-settings:"dlig" 1, "liga" 1, "lnum" 1, "kern" 1}h1{text-indent:-2px;letter-spacing:-1px;font-size:2.6rem}h2{letter-spacing:0;font-size:2.4rem}h3{letter-spacing:-0.6px;font-size:2.1rem}h4{font-size:1.9rem}h5{font-size:1.8rem}h6{font-size:1.8rem}a{color:#4a4a4a}a:hover{color:#111}p,ul,ol,dl{margin:0 0 2.5rem 0;font-size:1.5rem;text-rendering:geometricPrecision;-webkit-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-moz-font-feature-settings:"liga" 1, "onum" 1, "kern" 1;-o-font-feature-settings:"liga" 1, "onum" 1, "kern" 1}ol,ul{padding-left:2em}ol ol,ul ul,ul ol,ol ul{margin:0 0 0.4em 0;padding-left:2em}dl dt{float:left;clear:left;overflow:hidden;margin-bottom:1em;width:180px;text-align:right;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-bottom:1em;margin-left:200px}li{margin:0.4em 0}li li{margin:0}hr{display:block;margin:1.75em 0;padding:0;height:1px;border:0;border-top:#efefef 1px solid}blockquote{box-sizing:border-box;margin:1.75em 0 1.75em 0;padding:0 0 0 1.75em;border-left:#4a4a4a 0.4em solid;-moz-box-sizing:border-box}blockquote p{margin:0.8em 0;font-style:italic}blockquote small{display:inline-block;margin:0.8em 0 0.8em 1.5em;color:#ccc;font-size:0.9em}blockquote small:before{content:"\2014 \00A0"}blockquote cite{font-weight:700}blockquote cite a{font-weight:normal}mark{background-color:#fdffb6}code,tt{padding:1px 3px;border:#e3edf3 1px solid;background:#f7fafb;border-radius:2px;white-space:pre-wrap;font-family:Inconsolata, monospace, sans-serif;font-size:0.85em;font-feature-settings:"liga" 0;-webkit-font-feature-settings:"liga" 0;-moz-font-feature-settings:"liga" 0}pre{overflow:auto;box-sizing:border-box;margin:0 0 1.75em 0;padding:10px;width:100%;border:#e3edf3 1px solid;background:#f7fafb;border-radius:3px;white-space:pre;font-family:Inconsolata, monospace, sans-serif;font-size:0.9em;-moz-box-sizing:border-box}pre code,pre tt{padding:0;border:none;background:transparent;white-space:pre-wrap;font-size:inherit}kbd{display:inline-block;margin-bottom:0.4em;padding:1px 8px;border:#ccc 1px solid;background:#f4f4f4;border-radius:4px;box-shadow:0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 0 #fff inset;color:#666;text-shadow:#fff 0 1px 0;font-size:0.9em;font-weight:700}table{box-sizing:border-box;margin:1.75em 0;max-width:100%;width:100%;background-color:transparent;-moz-box-sizing:border-box}table th,table td{padding:8px;border-top:#efefef 1px solid;vertical-align:top;text-align:left;line-height:20px}table th{color:#000}table caption + thead tr:first-child th,table caption + thead tr:first-child td,table colgroup + thead tr:first-child th,table colgroup + thead tr:first-child td,table thead:first-child tr:first-child th,table thead:first-child tr:first-child td{border-top:0}table tbody + tbody{border-top:#efefef 2px solid}table table table{background-color:#fff}table tbody > tr:nth-child(odd) > td,table tbody > tr:nth-child(odd) > th{background-color:#f6f6f6}table.plain tbody > tr:nth-child(odd) > td,table.plain tbody > tr:nth-child(odd) > th{background:transparent}iframe,amp-iframe,.fluid-width-video-wrapper{display:block;margin:1.75em 0}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper amp-iframe{margin:0}textarea,select,input{margin:0 0 5px 0;padding:6px 9px;width:260px;outline:0;border:#e7eef2 1px solid;background:#fff;border-radius:4px;box-shadow:none;font-family:"Open Sans", sans-serif;font-size:1.6rem;line-height:1.4em;font-weight:100;-webkit-appearance:none}textarea{min-width:250px;min-height:80px;max-width:340px;width:100%;height:auto}input[type="text"]:focus,input[type="email"]:focus,input[type="search"]:focus,input[type="tel"]:focus,input[type="url"]:focus,input[type="password"]:focus,input[type="number"]:focus,input[type="date"]:focus,input[type="month"]:focus,input[type="week"]:focus,input[type="time"]:focus,input[type="datetime"]:focus,input[type="datetime-local"]:focus,textarea:focus{outline:none;outline-width:0;border:#bbc7cc 1px solid;background:#fff}select{width:270px;height:30px;line-height:30px}.clearfix:before,.clearfix:after{content:" ";display:table}.clearfix:after{clear:both}.clearfix{zoom:1}.main-header{position:relative;display:table;overflow:hidden;box-sizing:border-box;width:100%;height:50px;background:#5ba4e5 no-repeat center center;background-size:cover;text-align:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box}.content{background:#fff;padding-top:15px}.blog-title,.content{margin:auto;max-width:600px}.blog-title a{display:block;padding-right:16px;padding-left:16px;height:50px;color:#fff;text-decoration:none;font-family:"Open Sans", sans-serif;font-size:16px;line-height:50px;font-weight:600}.post{position:relative;margin-top:0;margin-right:16px;margin-left:16px;padding-bottom:0;max-width:100%;border-bottom:#ebf2f6 1px solid;word-wrap:break-word;font-size:0.95em;line-height:1.65em}.post-header{margin-bottom:1rem}.post-title{margin-bottom:0}.post-title a{text-decoration:none}.post-meta{display:block;margin:3px 0 0 0;color:#9eabb3;font-family:"Open Sans", sans-serif;font-size:1.3rem;line-height:2.2rem}.post-meta a{color:#9eabb3;text-decoration:none}.post-meta a:hover{text-decoration:underline}.post-meta .author{margin:0;font-size:1.3rem;line-height:1.3em}.post-date{display:inline-block;text-transform:uppercase;white-space:nowrap;font-size:1.2rem;line-height:1.2em}.post-image{margin:0;padding-top:3rem;padding-bottom:30px;border-top:1px #E8E8E8 solid}.post-content amp-img,.post-content amp-anim{position:relative;left:50%;display:block;padding:0;min-width:0;max-width:112%;width:calc(100% + 32px);height:auto;transform:translateX(-50%);-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%)}.footnotes{font-size:1.3rem;line-height:1.6em;font-style:italic}.footnotes li{margin:0.6rem 0}.footnotes p{margin:0}.footnotes p a:last-child{text-decoration:none}.site-footer{position:relative;margin:0 auto 20px auto;padding:1rem 15px;max-width:600px;color:rgba(0,0,0,0.5);font-family:"Open Sans", sans-serif;font-size:1.1rem;line-height:1.75em}.site-footer a{color:rgba(0,0,0,0.5);text-decoration:none;font-weight:bold}.site-footer a:hover{border-bottom:#bbc7cc 1px solid}.poweredby{display:block;float:right;width:45%;text-align:right}.copyright{display:block;float:left;width:45%}</style>
+
+    <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+    
+
+</head>
+
+<body class="amp-template">
+    <header class="main-header">
+        <nav class="blog-title">
+            <a href="../../">LordMOS</a>
+        </nav>
+    </header>
+
+    <main class="content" role="main">
+        <article class="post">
+
+            <header class="post-header">
+                <h1 class="post-title">深入Angular：使用Schematics编写Angular代码自动生成器</h1>
+                <section class="post-meta">
+                    <p class="author">by <a href="../../author/hui/">Hui Zhong</a></p>
+                    <time class="post-date" datetime="2018-06-04">2018-06-04</time>
+                </section>
+            </header>
+            <section class="post-content">
+
+                <div class="kg-card-markdown"><blockquote>
+<p>写在前面：众所周知我所在的是一家非著名外包公司，会接触到各种各样的项目，怎么样来提高生产效率就成了重中之重。借用《安娜卡列尼娜》卷首那句话就叫“业务代码处处不同，但是管理后台家家相似”。怎么样去避免重复劳动就成了我们必须思考的一部分。首先，我们就需要代码的自动化生成。特别感谢@汪志成和@Trotyl Yu的指点，两位来自ThoughtWork的大佬，十分感谢！</p>
+</blockquote>
+<h1 id="schematics">什么是Schematics</h1>
+<p>在聊<a href="https://www.npmjs.com/package/@angular-devkit/schematics">Schematics</a>之前我们先聊聊Angular Cli，这个ng-er每天都要用到的工具。我们经常使用一些命令，比如<code>ng g component component-name</code>来生成一个<code>component</code>模版，或者用相应的参数生成<code>service</code>\<code>directive</code>\<code>pipe</code>模版等等，并且引入到<code>ngModule</code>里，这是怎么做到的？这里就利用到里<code>Schematics</code>。</p>
+<p><code>Schematics</code>可以帮我们减少一些重复性劳动的工具，它可以协助你创建一些模版代码，并且可以使用Cli进行创建一个模版的实例代码，并且添加到项目代码中。</p>
+<p>另外@Trotyl Yu在<a href="https://www.zhihu.com/question/278109954">我的一个提问下有提到</a>：</p>
+<blockquote>
+<p>实际上，Schematics 的实现机制完全与 Angular 无关，其它项目也可以通过 Schematics CLI 来使用。</p>
+</blockquote>
+<p>因此我们甚至可以基于Schematics创建一个<code>React</code>\<code>Vue</code>的代码生成器。</p>
+<h1 id="schematicscli">Schematics CLI的安装和使用</h1>
+<p>Schematics提供了一个CLI。通过<code>npm i @angular-devkit/schematics-cli -g</code>安装即可。安装完毕之后可以通过<code>schematics blank --name=schematics-name</code>进行生成一个空的schmatics项目。</p>
+<h1 id="schematics">Schematics的一些基本概念</h1>
+<p>在使用Schematics之前我们要先理解一些概念，我们会在下文中用到它们。</p>
+<ol>
+<li>
+<p>Schematics：Schematics全称是Schematics Scematics。顾名思义，就是按照一系列的步骤来做完一些事情。一个Schematics就是对代码文件一系列操作的合集。</p>
+</li>
+<li>
+<p>Collection：一个Collection是数个Schematics合集，因此Collection又被称作Schematics Collection。</p>
+</li>
+<li>
+<p>Tree：在Schematics中，Tree将真实文件目录（项目中的代码文件）数据拷贝进一个树状结构里，你对代码文件的所有操作都会被缓存在Tree中，而不会对文件进行实时操作。你可以将它理解成一个沙盒。Tree有两个部分，一个是base（真实文件目录），一个是staging area（沙盒），你的变动都会发生在staging area，除非你写入了base部分。</p>
+</li>
+<li>
+<p>Rule：一个Rule是一个方法。它获取一个Tree，并返回经过改变的一个新的Tree。因此我们对Tree的操作也基本上在Rule中发生。所以可以说，一个Schematic就是一个Rule。</p>
+</li>
+<li>
+<p>Source：用来从真实文件目录创建Tree。</p>
+</li>
+<li>
+<p>Action：对Tree的具体操作。</p>
+</li>
+</ol>
+<p>由此看来，一个Schematics工程由Collection组成，一个Collection中有若干个Schematics，每一个Schematics又会有若干个Rules去处理一个或多个Tree（如果需要的话）。以上这些就是Schematics你暂时需要了解的所有基本概念。具体的信息可以查看<a href="https://www.npmjs.com/package/@angular-devkit/schematics">使用文档</a>。</p>
+<h1 id>编辑你的模版代码</h1>
+<p>安装完毕之后可以通过<code>schematics blank --name=schematics-name</code>进行生成一个空的schmatics项目后，我们可以来看看工程目录下的<code>collection.json</code>:</p>
+<pre><code>{
+    "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "schematics-name": {
+          "description": "A blank schematic.",
+          "factory": "./schematics-name/index#schematicsName"
+        }
+    }
+}
+</code></pre>
+<p>可以看到的是我们在<code>"schematics"</code>中定义了一个schematic。我们通常不会直接用这个空白的schematic，而是从<code>@schematics/angular</code>中复制并添加一个作为初始模版。</p>
+<p>通过使用<code>npm i @schematics/angular</code>命令我们将<code>@schematics/angular</code>安装到我们的这个schematics工程中，安装完成后可以去node-module中查看Angular提供了哪些预设好的schematics，比如我们最常用的<code>component</code>，然后复制到我们目录并修改<code>collection.json</code>和目录文件夹。</p>
+<blockquote>
+<p>collection.json</p>
+</blockquote>
+<pre><code>{
+    "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+    "schematics": {
+        "my-component": {
+            "description": "My component based on Angular component schema .",
+            "factory": "./my-component",
+            "schema": "./my-component/schema.json"
+        }
+    }
+}
+</code></pre>
+<p>在上图中我们可以在my-component文件夹中有一个files文件夹，这个文件夹就存放了我们将要修改的component模版。我们可以看看<code>__name@dasherize__.component.ts</code>这个文件：</p>
+<blockquote>
+<p><strong>name@dasherize</strong>.component.ts</p>
+</blockquote>
+<pre><code>import { Component, OnInit&lt;% if (!!viewEncapsulation) { %&gt;, ViewEncapsulation &lt;% }%&gt; &lt;% if (changeDetection !== 'Default') { %&gt;, ChangeDetectionStrategy &lt;% }%&gt; } from '@angular/core';
+
+@Component({
+	selector: '&lt;%= selector %&gt;',
+	&lt;% if (inlineTemplate) { %&gt;
+	    template: `
+        &lt;p&gt;
+          &lt;%= dasherize(name) %&gt; works!
+        &lt;/p&gt;
+      `,
+    &lt;% } else { %&gt;
+	    templateUrl: './&lt;%= dasherize(name) %&gt;.component.html', 
+	&lt;% } if (inlineStyle) { %&gt;
+	    styles: [] 
+	&lt;% } else { %&gt;
+	    styleUrls: ['./&lt;%= dasherize(name) %&gt;.component.&lt;%= styleext %&gt;'] 
+	&lt;% } %&gt;
+	&lt;% if (!!viewEncapsulation) { %&gt;,
+	    encapsulation: ViewEncapsulation.&lt;%= viewEncapsulation %&gt;
+	&lt;% } if (changeDetection !== 'Default') { %&gt;,
+	    changeDetection: ChangeDetectionStrategy.&lt;%= changeDetection %&gt; 
+	&lt;% } %&gt;
+})
+export class &lt;%= classify(name) %&gt; Component implements OnInit {
+	constructor() { }
+	ngOnInit() { }
+}
+</code></pre>
+<p>其实不难看出是要做什么。其实就是一些基本的模版语法，对CLI的传参进行判断，然后对模版做相应的处理。而参数的定义就在<code>schema.json</code>文件中。</p>
+<blockquote>
+<p>schema.json</p>
+</blockquote>
+<pre><code>{
+    "$schema": "http://json-schema.org/schema",
+    "id": "SchematicsAngularComponent",
+    "title": "Angular Component Options Schema",
+    "type": "object",
+    "properties": {
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path to create the component.",
+            "visible": false
+        },
+        "project": {
+            "type": "string",
+            "description": "The name of the project.",
+            "$default": {
+                "$source": "projectName"
+            }
+        },
+        "name": {
+            "type": "string",
+            "description": "The name of the component.",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "inlineStyle": {
+            "description": "Specifies if the style will be in the ts file.",
+            "type": "boolean",
+            "default": false,
+            "alias": "s"
+        },
+        "inlineTemplate": {
+            "description": "Specifies if the template will be in the ts file.",
+            "type": "boolean",
+            "default": false,
+            "alias": "t"
+        },
+        "viewEncapsulation": {
+            "description": "Specifies the view encapsulation strategy.",
+            "enum": ["Emulated", "Native", "None"],
+            "type": "string",
+            "alias": "v"
+        },
+        "changeDetection": {
+            "description": "Specifies the change detection strategy.",
+            "enum": ["Default", "OnPush"],
+            "type": "string",
+            "default": "Default",
+            "alias": "c"
+        },
+        "prefix": {
+            "type": "string",
+            "description": "The prefix to apply to generated selectors.",
+            "alias": "p",
+            "oneOf": [{
+                    "maxLength": 0
+                },
+                {
+                    "minLength": 1,
+                    "format": "html-selector"
+                }
+            ]
+        },
+        "styleext": {
+            "description": "The file extension to be used for style files.",
+            "type": "string",
+            "default": "css"
+        },
+        "spec": {
+            "type": "boolean",
+            "description": "Specifies if a spec file is generated.",
+            "default": true
+        },
+        "flat": {
+            "type": "boolean",
+            "description": "Flag to indicate if a dir is created.",
+            "default": false
+        },
+        "skipImport": {
+            "type": "boolean",
+            "description": "Flag to skip the module import.",
+            "default": false
+        },
+        "selector": {
+            "type": "string",
+            "format": "html-selector",
+            "description": "The selector to use for the component."
+        },
+        "module": {
+            "type": "string",
+            "description": "Allows specification of the declaring module.",
+            "alias": "m"
+        },
+        "export": {
+            "type": "boolean",
+            "default": false,
+            "description": "Specifies if declaring module exports the component."
+        }
+    },
+    "required": []
+}
+</code></pre>
+<p>在<code>schema.json</code>文件中的<code>properties</code>和<code>schema.d.ts</code>就是对参数的定义。而对参数的处理，就在一堆类似<code>&lt;% if (inlineTemplate) { %&gt;</code>的模版语法中。甚至你会发现，<code>file</code>文件夹中文件名都可以作为一个参数进行处理。而处理的逻辑就在<code>index.js</code>中。你可以按照这个代码模版来创建你所需的代码生成器（我会参考这个js文件来写一个ts文件），然后通过<code>npm run build</code>进行编译。</p>
+<h1 id>如何在项目中添加你的模版代码</h1>
+<p>在我们做测试时，可以通过<code>npm link</code>将这个schematics添加到全局，然后在测试项目中使用<code>npm link our-collection-name</code>将这个schematics添加到你的项目中，最后使用<code>ng g schematics-name -c our-collection-name</code>来进行安装使用。</p>
+<p>你还可以发布到npm上，然后通过<code>npm i -D our-collection-name</code>来安装，并且通过<code>ng generate schematics-name --collection our-collection-name</code>命令来将生成一个你的自定义组件。</p>
+<h1 id>除了这些，我们还能做些什么？</h1>
+<p>我司有大量的管理后台需要去实现，因此为了节省时间，我就考虑使用配置文件来自动化生成整个管理后台。只要在配置文件中写明结构目录（定义好业务板块和子业务的配置树，配置这个业务是否需要对应的CRUD页面，以及业务的相应页面返回时要去的业务），再通过一个小的node程序去获取这个配置，就应该能生成页面和路由。</p>
+<p>现在这个项目已经启动了，还在开发阶段，我将它放在了GitHub上，其中分为三部分：</p>
+<p><a href="https://github.com/lordmos/Natrium">Natrium</a>：它是就是自动化生成器，通过读取一个叫<code>natrium.profile.json</code>的文件，就可以为你安装所有Natrium需要用到的依赖，并且生成代码结构和路由。最后你只需要关心业务逻辑即可。</p>
+<p>NatriumSchematics：顾名思义，它就是自动化生成器的模版部分。自动化生成器会自动帮你安装模版。现在还未放到GitHub中。</p>
+<p><a href="https://github.com/lordmos/NatriumLib">NatriumLib</a>：最基本的部分，就是基础的组件部分。我会定义一些基本组件和一些复合组件，为NatriumSchematics提供组件的支持。自动化生成器也会自动帮你安装。</p>
+<p>在Natrium整个项目完成后（立个Flag，不会太久，大概三个月，毕竟这个项目就我一个人在维护），我会专门为Natrium写几篇专栏，来介绍（营销）这个项目的用法，讨论将来的RoadMap，以及我在整个项目中的思考。</p>
+<p>除此之外，<code>React</code>\<code>Vue</code>的开发者，你也可以考虑使用Schematics创造一个属于你的代码自动化机器人。</p>
+<p>当然，现在也有很多人已经在做了这个事情，比如阿里的<a href="https://github.com/NG-ZORRO/ng-zorro-antd">NG-ZORRO</a>和他对应的Schematics：<a href="https://github.com/cipchk/ng-alain">ng-alain</a>。大家可以试试看！</p>
+<blockquote>
+<p>写在最后：Schematics的资料实在是太少了。如果这篇专栏有什么纰漏或者问题，欢迎大家斧正。另外Natrium的Flag已经立下了，那么就硬着头皮往前赶吧。接下来我会介绍一下nvm这个node版本管理工具，我想很多人都知道，也可能很多人也都不知道，不管怎么说，到时候你要用Natrium势必会用到这个工具（逃）。</p>
+</blockquote>
+</div>
+
+            </section>
+
+        </article>
+    </main>
+    <footer class="site-footer clearfix">
+        <section class="copyright"><a href="../../">LordMOS</a> © 2018</section>
+        <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+    </footer>
+</body>
